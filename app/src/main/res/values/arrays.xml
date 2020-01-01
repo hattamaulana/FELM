@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Data TV Serial -->
+    <!-- Title -->
+    <string-array name="tv_db_title">
+
+    </string-array>
+    <!-- - -->
+    <!-- Title -->
+    <string-array name="tv_db_images">
+        <item>@drawable/poster_arrow</item>
+        <item>@drawable/poster_doom_patrol</item>
+        <item>@drawable/poster_dragon_ball</item>
+        <item>@drawable/poster_fairytail</item>
+        <item>@drawable/poster_family_guy</item>
+        <item>@drawable/poster_flash</item>
+        <item>@drawable/poster_god</item>
+        <item>@drawable/poster_gotham</item>
+        <item>@drawable/poster_grey_anatomy</item>
+        <item>@drawable/poster_hanna</item>
+        <item>@drawable/poster_iron_fist</item>
+        <item>@drawable/poster_naruto_shipudden</item>
+        <item>@drawable/poster_ncis</item>
+    </string-array>
+    <!-- - -->
+
+    <!-- Data Movie -->
+    <!-- Title -->
+    <string-array name="movie_db_title">
+        <item>The Shawsank Redemtion</item>
+        <item>The God Father</item>
+        <item>The God Father: Part II</item>
+        <item>The Dark Knight</item>
+        <item>The Irishmen</item>
+        <item>Joker</item>
+        <item>Avengers: Infinity War</item>
+        <item>Avengers: Endgame</item>
+        <item>Spider-Man: Into the Spider-Verse</item>
+        <item>Klaus</item>
+    </string-array>
+    <!---->
+    <!-- Image Name   -->
+    <string-array name="movie_db_image">
+        <!-- The Shawsank Redemtion -->
+        <item>@drawable/the_shawshank_redemption</item>
+
+        <!-- The God Father -->
+        <item>@drawable/the_god_father</item>
+
+        <!-- The God Father: Part II -->
+        <item>@drawable/the_god_father_2</item>
+
+        <!-- The Dark Knight -->
+        <item>@drawable/the_dark_knight</item>
+
+        <!-- The Irishmen -->
+        <item>@drawable/the_irisman</item>
+
+        <!-- Joker -->
+        <item>@drawable/joker</item>
+
+        <!-- Avengers: Infinity War -->
+        <item>@drawable/infinity_war</item>
+
+        <!-- Avengers: Endgame -->
+        <item>@drawable/endgame</item>
+
+        <!-- Spider-Man: Into the Spider-Vers -->
+        <item>@drawable/spiderman</item>
+
+        <!-- Klaus -->
+        <item>@drawable/klaus</item>
+    </string-array>
+    <!---->
+    <!-- Rating   -->
+    <string-array name="movie_db_ratings">
+        <item>9.2</item>
+        <item>9.1</item>
+        <item>9.0</item>
+        <item>9.0</item>
+        <item>8.1</item>
+        <item>8.6</item>
+        <item>8.4</item>
+        <item>8.4</item>
+        <item>8.4</item>
+        <item>8.4</item>
+    </string-array>
+    <!---->
+    <!-- Rating Release  -->
+    <string-array name="movie_db_releases">
+        <item>1994</item>
+        <item>1972</item>
+        <item>1974</item>
+        <item>2008</item>
+        <item>2019</item>
+        <item>2019</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2018</item>
+        <item>2019</item>
+    </string-array>
+    <!---->
+    <!-- Overview   -->
+    <string-array name="movie_db_overviews">
+        <item>@string/data_movie_overview01</item>
+        <item>@string/data_movie_overview02</item>
+        <item>@string/data_movie_overview03</item>
+        <item>@string/data_movie_overview04</item>
+        <item>@string/data_movie_overview05</item>
+        <item>@string/data_movie_overview06</item>
+        <item>@string/data_movie_overview07</item>
+        <item>@string/data_movie_overview08</item>
+        <item>@string/data_movie_overview09</item>
+        <item>@string/data_movie_overview10</item>
+    </string-array>
+    <!---->
+    <!-- Storyline   -->
+    <string-array name="movie_db_storylines">
+        <item>@string/data_movies_storyline01</item>
+        <item>@string/data_movies_storyline02</item>
+        <item>@string/data_movies_storyline03</item>
+        <item>@string/data_movies_storyline04</item>
+        <item>@string/data_movies_storyline05</item>
+        <item>@string/data_movies_storyline06</item>
+        <item>@string/data_movies_storyline07</item>
+        <item>@string/data_movies_storyline08</item>
+        <item>@string/data_movies_storyline09</item>
+        <item>@string/data_movies_storyline10</item>
+    </string-array>
+    <!---->
+    <!-- Genres   -->
+    <string-array name="movie_db_genres">
+        <item>@string/data_movies_genres01</item>
+        <item>@string/data_movies_genres02</item>
+        <item>@string/data_movies_genres03</item>
+        <item>@string/data_movies_genres04</item>
+        <item>@string/data_movies_genres05</item>
+        <item>@string/data_movies_genres06</item>
+        <item>@string/data_movies_genres07</item>
+        <item>@string/data_movies_genres08</item>
+        <item>@string/data_movies_genres09</item>
+        <item>@string/data_movies_genres10</item>
+    </string-array>
+    <!---->
+    <!-- language   -->
+    <string-array name="movie_db_languages">
+        <item>@string/data_movies_language01</item>
+        <item>@string/data_movies_language02</item>
+        <item>@string/data_movies_language03</item>
+        <item>@string/data_movies_language04</item>
+        <item>@string/data_movies_language05</item>
+        <item>@string/data_movies_language06</item>
+        <item>@string/data_movies_language07</item>
+        <item>@string/data_movies_language08</item>
+        <item>@string/data_movies_language09</item>
+        <item>@string/data_movies_language10</item>
+    </string-array>
+    <!---->
+</resources>
