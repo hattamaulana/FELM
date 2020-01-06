@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class MovieModel(
     var title: String?,
     var img: Int,
-    var release: Int?,
+    var release: String,
     var rating: Double?,
     var overview: String?,
     var storyLine: String?,

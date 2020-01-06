@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.hattamaulana.moviecatalogue.R
 import io.github.hattamaulana.moviecatalogue.MovieModel
-import kotlinx.android.synthetic.main.adapter_movie.view.*
+import kotlinx.android.synthetic.main.adapter_catalogue.view.*
 
-class CatalogueAdapter(private val mContext: Context)
-    : RecyclerView.Adapter<CatalogueAdapter.ViewHolder>() {
+class CatalogueAdapter(private val mContext: Context) :
+    RecyclerView.Adapter<CatalogueAdapter.ViewHolder>() {
 
     var movies = ArrayList<MovieModel>()
 
@@ -21,7 +21,7 @@ class CatalogueAdapter(private val mContext: Context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        LayoutInflater.from(mContext).inflate(R.layout.adapter_movie, parent, false)
+        LayoutInflater.from(mContext).inflate(R.layout.adapter_catalogue, parent, false)
     )
 
     override fun getItemCount(): Int = movies.size
@@ -30,13 +30,13 @@ class CatalogueAdapter(private val mContext: Context)
         holder.bind(movies[position])
     }
 
-    inner class ViewHolder(private val v: View): RecyclerView.ViewHolder(v) {
-        fun bind (movie: MovieModel) = with (v) {
+    inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
+        fun bind(movie: MovieModel) = with(v) {
             img_movie.setImageResource(movie.img)
 
-            txt_genre.text    = movie.genres
-            txt_title.text    = movie.title
-            txt_rating.text   = movie.rating.toString()
+            txt_genre.text = movie.genres
+            txt_title.text = movie.title
+            txt_rating.text = movie.rating.toString()
             txt_overview.text = movie.overview
 
             v.setOnClickListener { mOnItemCallback?.onItemClicked(movie) }
