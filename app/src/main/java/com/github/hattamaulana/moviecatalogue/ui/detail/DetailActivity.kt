@@ -1,38 +1,57 @@
 package com.github.hattamaulana.moviecatalogue.ui.detail
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueFragment
-import io.github.hattamaulana.moviecatalogue.MovieModel
+import com.github.hattamaulana.moviecatalogue.model.DataModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
+
+    companion object {
+        const val EXTRA_TAG = "EXTRA_TAG"
+        const val EXTRA_MOVIE_DETAIL = "EXTRA_MOVIE_DETAIL"
+    }
+
+    private lateinit var mViewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
 
-        val movie = intent
-            .getParcelableExtra<MovieModel>(CatalogueFragment.ARG_DATA_MOVIE)
+        val tag = intent.getStringExtra(EXTRA_TAG)
+        val data = intent.getParcelableExtra<DataModel>(EXTRA_MOVIE_DETAIL)
 
-        movie?.let {
-            img_movie.setImageResource(it.img)
+        supportActionBar?.title = data?.title
+        txt_overview.text = data?.overview
+        Glide.with(this)
+            .load("https://image.tmdb.org/t/p/w780/${data?.img}")
+            .addListener(this)
+            .into(img_movie)
 
-            txt_title.text = it.title
-            txt_overview.text = it.overview
-            txt_rating.text = it.rating.toString()
-            txt_release.text = it.release
-            txt_genre.text = it.genres
-            txt_storyline.text = it.storyLine
-        }
+        mViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            .get(DetailViewModel::class.java)
+
+        mViewModel.context = this
+        mViewModel.getGenre(tag, data?.genre ?: ArrayList())
+            .observe(this, Observer { list ->
+                txt_genre.text = list.joinToString(" ")
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -59,5 +78,24 @@ class DetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onLoadFailed(
+        e: GlideException?,
+        model: Any?,
+        target: Target<Drawable>?,
+        isFirstResource: Boolean
+    ): Boolean {
+        progressBar2.visibility = View.VISIBLE
+        return false
+    }
 
+    override fun onResourceReady(
+        resource: Drawable?,
+        model: Any?,
+        target: Target<Drawable>?,
+        dataSource: DataSource?,
+        isFirstResource: Boolean
+    ): Boolean {
+        progressBar2.visibility = View.GONE
+        return false
+    }
 }

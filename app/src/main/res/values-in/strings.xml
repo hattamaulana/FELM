@@ -4,6 +4,8 @@
     <string name="tab_movie">Film</string>
     <string name="tab_tv_series">Serial TV</string>
 
+    <string name="warning_error_load">Data Tidak dapat diload</string>
+
     <string name="lbl_genre">Aliran</string>
     <string name="lbl_storyline">Alur Cerita</string>
     <string name="lbl_overview">Gambaran</string>
@@ -130,7 +132,7 @@
     <string name="data_movies_language03">Bahasa Inggris Italia Spanish Latin Sicilian</string>
     <!-- The Dark Knight -->
     <string name="data_movies_language04">Bahasa Inggris Mandarin</string>
-        <!-- The Irishmen -->
+    <!-- The Irishmen -->
     <string name="data_movies_language05">Bahasa Inggris Italia Spanish</string>
     <!-- Joker -->
     <string name="data_movies_language06">Bahasa Inggris</string>

@@ -5,5 +5,5 @@
         android:id="@+id/menu_language"
         android:icon="@drawable/ic_language_24dp"
         android:title="Change Language"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

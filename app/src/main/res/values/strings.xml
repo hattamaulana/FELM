@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MOVIE DB</string>
 
+    <string name="warning_error_load">Can not Load Data</string>
+
     <string name="tab_movie">Movie</string>
     <string name="tab_tv_series">TV Series</string>
 

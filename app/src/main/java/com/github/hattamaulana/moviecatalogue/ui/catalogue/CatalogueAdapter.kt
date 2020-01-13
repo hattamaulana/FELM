@@ -5,16 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.github.hattamaulana.moviecatalogue.R
-import io.github.hattamaulana.moviecatalogue.MovieModel
+import com.github.hattamaulana.moviecatalogue.model.DataModel
 import kotlinx.android.synthetic.main.adapter_catalogue.view.*
 
 class CatalogueAdapter(private val mContext: Context) :
     RecyclerView.Adapter<CatalogueAdapter.ViewHolder>() {
 
-    var movies = ArrayList<MovieModel>()
+    private var movies: ArrayList<DataModel> = ArrayList()
 
     private var mOnItemCallback: OnItemClickCallback? = null
+
+    fun setData(arg: ArrayList<DataModel>) {
+        movies.clear()
+        movies.addAll(arg)
+
+        notifyDataSetChanged()
+    }
 
     fun setOnItemClckCallback(onItemClickCallback: OnItemClickCallback) {
         mOnItemCallback = onItemClickCallback
@@ -31,19 +39,31 @@ class CatalogueAdapter(private val mContext: Context) :
     }
 
     inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
-        fun bind(movie: MovieModel) = with(v) {
-            img_movie.setImageResource(movie.img)
+        fun bind(movie: DataModel) = with(v) {
+            Glide.with(mContext)
+                .load("https://image.tmdb.org/t/p/w185/${movie.img}")
+                .fitCenter()
+                .into(img_movie)
 
-            txt_genre.text = movie.genres
+            val overview = movie.overview!!
+
             txt_title.text = movie.title
             txt_rating.text = movie.rating.toString()
-            txt_overview.text = movie.overview
+            txt_overview.text = if (overview.length >= 200) {
+                val strCut = overview.substring(0 until 200)
+                val split = strCut.split(" ".toRegex())
+                val res = split.dropLast(1)
+
+                "${res.joinToString(" ")} ..."
+            } else {
+                overview
+            }
 
             v.setOnClickListener { mOnItemCallback?.onItemClicked(movie) }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(movie: MovieModel)
+        fun onItemClicked(movie: DataModel)
     }
 }
