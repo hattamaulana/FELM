@@ -8,7 +8,7 @@ apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.github.hattamaulana.moviecatalogue"
         minSdkVersion 21
@@ -45,8 +45,8 @@ dependencies {
     // Anddroid Jetpack
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha04'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0-alpha04'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0-rc03'
 
     // Android Fast Networking
     implementation 'com.amitshekhar.android:jackson-android-networking:1.0.2'

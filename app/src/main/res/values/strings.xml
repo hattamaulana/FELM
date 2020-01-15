@@ -1,140 +1,26 @@
 <resources>
     <string name="app_name">MOVIE DB</string>
 
-    <string name="warning_error_load">Can not Load Data</string>
-
+    <!-- Label   -->
     <string name="tab_movie">Movie</string>
     <string name="tab_tv_series">TV Series</string>
-
     <string name="lbl_genre">Genre</string>
     <string name="lbl_storyline">Storyline</string>
     <string name="lbl_overview">Overview</string>
 
+    <!-- Warning   -->
+    <string name="warning_error_load">Can not Load Data</string>
+
     <!-- Sample Data Movie -->
     <string name="sample_title_movie">The Shawsank Redemtion</string>
     <string name="sample_rating_movie">9.2</string>
-    <string name="sample_overview_movie">Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.</string>
-    <string name="sample_storyline_movie">Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit. The film portrays the mans unique way of dealing with his new, torturous life. along the way he befriends a number of fellow prisoners, most notably a wise long-term inmate named Red.</string>
-    <string name="sample_release_movie">Drama</string>
-    <string name="sample_language_movie">English</string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movie_overview01">
+    <string name="sample_overview_movie">
         Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
     </string>
-    <!-- The God Father -->
-    <string name="data_movie_overview02">
-        The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.
-    </string>
-    <!-- The God Father: Part 2 -->
-    <string name="data_movie_overview03">
-        The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.
-    </string>
-    <!-- The Dark Knight -->
-    <string name="data_movie_overview04">
-        When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.
-    </string>
-    <!-- The Irishmen -->
-    <string name="data_movie_overview05">
-        A mob hitman recalls his possible involvement with the slaying of Jimmy Hoffa.
-    </string>
-    <!-- Joker -->
-    <string name="data_movie_overview06">
-        In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.
-    </string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movie_overview07">
-        The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.
-    </string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movie_overview08">
-        After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos actions and restore balance to the universe.
-    </string>
-    <!-- Spider-Man: Into the Spider-Ver -->
-    <string name="data_movie_overview09">
-        Teen Miles Morales becomes Spider-Man of his reality, crossing his path with five counterparts from other dimensions to stop a threat for all realities.
-    </string>
-    <!-- Klaus -->
-    <string name="data_movie_overview10">
-        A simple act of kindness always sparks another, even in a frozen, faraway place. When Smeerensburgs new postman, Jesper, befriends toymaker Klaus, their gifts melt an age-old feud and deliver a sleigh full of holiday traditions.
-    </string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movies_storyline01">
+    <string name="sample_storyline_movie">
         Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit. The film portrays the mans unique way of dealing with his new, torturous life. along the way he befriends a number of fellow prisoners, most notably a wise long-term inmate named Red.
     </string>
-    <!-- The God Father -->
-    <string name="data_movies_storyline02">
-        The Godfather "Don" Vito Corleone is the head of the Corleone mafia family in New York. He is at the event of his daughters wedding. Michael, Vitos youngest son and a decorated WW II Marine is also present at the wedding. Michael seems to be uninterested in being a part of the family business. Vito is a powerful man, and is kind to all those who give him respect but is ruthless against those who do not. But when a powerful and treacherous rival wants to sell drugs and needs the Dons influence for the same, Vito refuses to do it. What follows is a clash between Vitos fading old values and the new ways which may cause Michael to do the thing he was most reluctant in doing and wage a mob war against all the other mafia families which could tear the Corleone family apart.
-    </string>
-    <!-- The God Father: Part 2 -->
-    <string name="data_movies_storyline03">
-        The continuing saga of the Corleone crime family tells the story of a young Vito Corleone growing up in Sicily and in 1910s New York. and follows Michael Corleone in the 1950s as he attempts to expand the family business into Las Vegas, Hollywood and Cuba.
-    </string>
-    <!-- The Dark Knight -->
-    <string name="data_movies_storyline04">
-        Set within a year after the events of Batman Begins (2005), Batman, Lieutenant James Gordon, and new District Attorney Harvey Dent successfully begin to round up the criminals that plague Gotham City, until a mysterious and sadistic criminal mastermind known only as "The Joker" appears in Gotham, creating a new wave of chaos. Batmans struggle against The Joker becomes deeply personal, forcing him to "confront everything he believes" and improve his technology to stop him. A love triangle develops between Bruce Wayne, Dent, and Rachel Dawes.
-    </string>
-    <!-- The Irishmen -->
-    <string name="data_movies_storyline05">
-        Frank "The Irishman" Sheeran is a man with a lot on his mind. The former labor union high official and hitman, learned to kill serving in Italy during the Second World War. He now looks back on his life and the hits that defined his mob career, maintaining connections with the Bufalino crime family. In particular, the part he claims to have played in the disappearance of his life-long friend, Jimmy Hoffa, the former president of the International Brotherhood of Teamsters, who mysteriously vanished in late July 1975 at the age of 62
-    </string>
-    <!-- Joker -->
-    <string name="data_movies_storyline06">
-        Joker centers around an origin of the iconic arch nemesis and is an original, standalone story not seen before on the big screen. Todd Phillips exploration of Arthur Fleck (Joaquin Phoenix), a man disregarded by society is not only a gritty character study, but also a broader cautionary tale.
-    </string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movies_storyline07">
-        As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment, the fate of Earth and existence has never been more uncertain.
-    </string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movies_storyline08">
-        After the devastating events of Avengers: Infinity War (2018), the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanoss actions and undo the chaos to the universe, no matter what consequences may be in store, and no matter who they face .
-    </string>
-    <!-- Spider-Man: Into the Spider-Vers -->
-    <string name="data_movies_storyline09">
-        Miles Morales is a New York teen struggling with school, friends and, on top of that, being the new Spider-Man. When he comes across Peter Parker, the erstwhile saviour of New York, in the multiverse, Miles must train to become the new protector of his city.
-    </string>
-    <!-- Klaus -->
-    <string name="data_movies_storyline10">
-        When Jesper (Jason Schwartzman) distinguishes himself as the postal academys worst student, he is stationed on a frozen island above the Arctic Circle, where the feuding locals hardly exchange words let alone letters. Jesper is about to give up when he finds an ally in local teacher Alva (Rashida Jones), and discovers Klaus (Oscar® winner J.K. Simmons), a mysterious carpenter who lives alone in a cabin full of handmade toys. These unlikely friendships return laughter to Smeerensburg, forging a new legacy of generous neighbors, magical lore and stockings hung by the chimney with care. An animated Christmas comedy directed by Despicable Me co-creator Sergio Pablos, KLAUS co-stars Rashida Jones, Jason Schwartzman and JK Simmons
-    </string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movies_genres01">Drama</string>
-    <!-- The God Father -->
-    <string name="data_movies_genres02">Crime Drama</string>
-    <!-- The God Father: Part II -->
-    <string name="data_movies_genres03">Crime Drama</string>
-    <!-- The Dark Knight -->
-    <string name="data_movies_genres04">Action Crime Drama Thriller</string>
-    <!-- The Irishmen -->
-    <string name="data_movies_genres05">Biography Crime Drama</string>
-    <!-- Joker -->
-    <string name="data_movies_genres06">Crime Drama Thriller</string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movies_genres07"> Action Adventure Sci-Fi</string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movies_genres08">Action Adventure Drama Sci-Fi</string>
-    <!-- Spider-Man: Into the Spider-Vers -->
-    <string name="data_movies_genres09"> Animation Action Adventure Family Sci-Fi </string>
-    <!-- Klaus -->
-    <string name="data_movies_genres10"> Animation Adventure Comedy Family </string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movies_language01">English</string>
-    <!-- The God Father -->
-    <string name="data_movies_language02">English Italian Latin</string>
-    <!-- The God Father: Part II -->
-    <string name="data_movies_language03">English Italian Spanish Latin Sicilian</string>
-    <!-- The Dark Knight -->
-    <string name="data_movies_language04">English Mandarin</string>
-    <!-- The Irishmen -->
-    <string name="data_movies_language05"> English Italian Latin Spanish</string>
-    <!-- Joker -->
-    <string name="data_movies_language06">English</string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movies_language07">English</string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movies_language08">English Japanese Xhosa German</string>
-    <!-- Spider-Man: Into the Spider-Vers -->
-    <string name="data_movies_language09">English Spanish</string>
-    <!-- Klaus -->
-    <string name="data_movies_language10">English Saami</string>
+    <string name="sample_release_movie">Drama</string>
+    <string name="sample_language_movie">English</string>
+    <string name="change_language">Change Language</string>
 </resources>

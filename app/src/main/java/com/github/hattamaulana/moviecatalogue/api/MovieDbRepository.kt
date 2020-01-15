@@ -9,25 +9,29 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.github.hattamaulana.moviecatalogue.R
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.Data.API_KEY
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.API_URI
+import com.github.hattamaulana.moviecatalogue.model.DataModel
 import com.github.hattamaulana.moviecatalogue.model.GenreModel
 import org.json.JSONObject
 import java.util.*
 
-class TheMovieDbRepository(private val context: Context) : JSONObjectRequestListener {
+class MovieDbRepository(private val context: Context) : JSONObjectRequestListener {
 
     private val TAG = this.javaClass.simpleName
-    private val URL = "https://api.themoviedb.org/3"
-    private val API_KEY = "08de0941b7963667bad17331070237dd"
 
-    private lateinit var mFactory: TheMovieDbFactory.Callback
+    private lateinit var mFactory: DataModel.Callback
     private lateinit var mGenreCallback: GenreModel.Callback
     private lateinit var mTag: String
 
-    fun getDiscover(tag: String, callback: TheMovieDbFactory.Callback) {
+    fun getDiscover(tag: String, callback: DataModel.Callback) {
         mTag = tag
         mFactory = callback
 
-        val req = request("$URL/discover/$tag", mapOf("sort_by" to "popularity.desc"))
+        val req = request(
+            "$API_URI/discover/$tag", mapOf("sort_by" to "popularity.desc")
+        )
+
         req.getAsJSONObject(this)
     }
 
@@ -35,14 +39,16 @@ class TheMovieDbRepository(private val context: Context) : JSONObjectRequestList
         mTag = tag
         mGenreCallback = callback
 
-        val req = request("$URL/genre/$tag/list")
+        val req = request(
+            "$API_URI/genre/$tag/list"
+        )
         req.getAsJSONObject(this)
 
         Log.d(TAG, "getGenre: ${req.url}")
     }
 
     private fun request(
-        url: String = URL,
+        url: String,
         queryParams: Map<String, String>? = null
     ): ANRequest<out ANRequest<*>> {
         val locale = Locale.getDefault().toLanguageTag()
@@ -59,19 +65,17 @@ class TheMovieDbRepository(private val context: Context) : JSONObjectRequestList
 
     override fun onResponse(response: JSONObject?) {
         response?.let {
-            val factory = TheMovieDbFactory()
-
             when {
-                it.has("results") -> {
+                response.has("results") -> {
                     val array = it.getJSONArray("results")
-                    val listData = factory.listData(array, mTag)
+                    val listData = MovieDbFactory.listData(array, mTag)
 
-                    mFactory.getData(listData)
+                    mFactory.get(listData)
                 }
 
-                it.has("genres") -> {
+                response.has("genres") -> {
                     val array = it.getJSONArray("genres")
-                    val listData = factory.genre(array)
+                    val listData = MovieDbFactory.genre(array)
 
                     mGenreCallback.save(listData)
                 }

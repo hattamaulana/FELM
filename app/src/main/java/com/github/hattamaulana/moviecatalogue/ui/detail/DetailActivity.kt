@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.github.hattamaulana.moviecatalogue.R
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.IMAGE_URI
 import com.github.hattamaulana.moviecatalogue.model.DataModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -40,7 +41,7 @@ class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
         supportActionBar?.title = data?.title
         txt_overview.text = data?.overview
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w780/${data?.img}")
+            .load("$IMAGE_URI/w780/${data?.img}")
             .addListener(this)
             .into(img_movie)
 

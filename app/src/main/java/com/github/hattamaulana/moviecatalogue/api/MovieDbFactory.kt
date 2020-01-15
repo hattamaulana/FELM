@@ -1,18 +1,12 @@
 package com.github.hattamaulana.moviecatalogue.api
 
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.TYPE_MOVIE
 import com.github.hattamaulana.moviecatalogue.model.DataModel
 import com.github.hattamaulana.moviecatalogue.model.GenreModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class TheMovieDbFactory {
-
-    companion object {
-        const val TAG_MOVIE = "movie"
-        const val TAG_TV = "tv"
-    }
-
-    private val TAG = this.javaClass.simpleName
+object MovieDbFactory {
 
     fun listData(array: JSONArray, tag: String): ArrayList<DataModel> {
         val list = ArrayList<DataModel>()
@@ -26,12 +20,6 @@ class TheMovieDbFactory {
         }
 
         return list
-    }
-
-    fun getDataModel(json: JSONObject, tag: String): DataModel {
-        val data = refactor(tag, json)
-
-        return data
     }
 
     fun genre(json: JSONArray): List<GenreModel> {
@@ -59,7 +47,7 @@ class TheMovieDbFactory {
     }
 
     private fun refactor(tag: String, json: JSONObject): DataModel {
-        val title = json.getString(if (tag == TAG_MOVIE) "title" else "name")
+        val title = json.getString(if (tag == TYPE_MOVIE) "title" else "name")
         val id = json.getInt("id")
         val image = json.getString("poster_path")
         val overview = json.getString("overview")
@@ -67,9 +55,5 @@ class TheMovieDbFactory {
         val rating = json.getDouble("vote_average")
 
         return DataModel(id, image, title, overview, posterPath, null, rating, null)
-    }
-
-    interface Callback {
-        fun getData(p0: ArrayList<DataModel>)
     }
 }

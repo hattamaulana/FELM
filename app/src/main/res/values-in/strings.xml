@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Database Film</string>
+
+    <!-- Label   -->
     <string name="tab_movie">Film</string>
     <string name="tab_tv_series">Serial TV</string>
-
-    <string name="warning_error_load">Data Tidak dapat diload</string>
-
     <string name="lbl_genre">Aliran</string>
     <string name="lbl_storyline">Alur Cerita</string>
     <string name="lbl_overview">Gambaran</string>
+
+    <!-- Warning   -->
+    <string name="warning_error_load">Data Tidak dapat diload</string>
 
     <!-- Sample Data Movie -->
     <string name="sample_title_movie">The Shawsank Redemtion</string>
@@ -17,131 +19,4 @@
     <string name="sample_storyline_movie">Dummy Data Please Go On the English Language</string>
     <string name="sample_release_movie">Dummy Data Please Go On the English Language</string>
     <string name="sample_language_movie">Dummy Data Please Go On the English Language</string>
-    <string name="data_movie_overview01">
-        Dua pria yang dipenjarakan terikat selama beberapa tahun, menemukan penghiburan dan akhirnya penebusan melalui tindakan kesopanan bersama.
-    </string>
-
-    <!-- The God Father -->
-    <string name="data_movie_overview02">
-        Patriark tua dari dinasti kejahatan terorganisir mentransfer kendali kerajaan klandestinnya kepada putranya yang enggan
-    </string>
-
-    <!-- The God Father: Part 2 -->
-    <string name="data_movie_overview03">
-        Kehidupan awal dan karier Vito Corleone pada 1920-an di New York City digambarkan, sementara putranya, Michael, memperluas dan mempererat cengkeramannya pada sindikat kejahatan keluarga.
-    </string>
-
-    <!-- The Dark Knight -->
-    <string name="data_movie_overview04">
-        Ketika ancaman yang dikenal sebagai Joker mendatangkan malapetaka dan kekacauan pada orang-orang Gotham, Batman harus menerima salah satu tes psikologis dan fisik terbesar dari kemampuannya untuk melawan ketidakadilan.
-    </string>
-
-    <!-- The Irishmen -->
-    <string name="data_movie_overview05">
-        Seorang pembunuh bayaran mengenang kemungkinan keterlibatannya dengan pembunuhan Jimmy Hoffa.
-    </string>
-
-    <!-- Joker -->
-    <string name="data_movie_overview06">
-        Di Gotham City, komedian yang bermasalah secara mental, Arthur Fleck, diabaikan dan dianiaya oleh masyarakat. Dia kemudian memulai revolusi spiral yang menurun dan kejahatan berdarah. Jalan ini membawanya berhadapan muka dengan alter-egonya: Joker.
-    </string>
-
-    <!-- Avengers: Infinity War -->
-    <string name="data_movie_overview07">
-        The Avengers dan sekutu mereka harus rela mengorbankan semua dalam upaya untuk mengalahkan Thanos yang kuat sebelum kehancuran dan kehancurannya mengakhiri alam semesta.
-    </string>
-
-    <!-- Avengers: Endgame -->
-    <string name="data_movie_overview08">
-        Setelah peristiwa yang menghancurkan dari Avengers: Perang Infinity (2018), alam semesta hancur. Dengan bantuan sekutu yang tersisa, Avengers berkumpul sekali lagi untuk membalikkan tindakan Thanos dan mengembalikan keseimbangan ke alam semesta.
-    </string>
-
-    <!-- Spider-Man: Into the Spider-Ver -->
-    <string name="data_movie_overview09">
-        Teen Miles Morales menjadi Spider-Man dari realitasnya, melintasi jalannya dengan lima rekan dari dimensi lain untuk menghentikan ancaman bagi semua realitas.
-    </string>
-    <!-- Klaus -->
-    <string name="data_movie_overview10">
-        Tindakan kebaikan yang sederhana selalu memicu orang lain, bahkan di tempat yang beku dan jauh. Ketika tukang pos baru Smeerensburg, Jesper, berteman dengan pembuat mainan Klaus, hadiah mereka mencairkan perselisihan kuno dan memberikan giring penuh tradisi liburan.
-    </string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movies_storyline01">
-        Menceritakan pengalaman seorang bankir yang sebelumnya sukses sebagai tahanan di penjara Shawshank yang suram setelah dinyatakan bersalah atas kejahatan yang tidak dilakukannya. Film ini menggambarkan cara unik pria dalam menghadapi kehidupan barunya yang menyiksa. Sepanjang jalan ia berteman dengan sejumlah rekan tahanan, terutama narapidana jangka panjang yang bijak bernama Red.
-    </string>
-    <!-- The God Father -->
-    <string name="data_movies_storyline02">
-        The Godfather "Don" Vito Corleone adalah kepala keluarga mafia Corleone di New York. Dia ada di acara pernikahan putrinya. Michael, putra bungsu Vitos dan seorang marinir Perang Dunia II yang berhias juga hadir di pesta pernikahan itu. Michael tampaknya tidak tertarik untuk menjadi bagian dari bisnis keluarga. Vito adalah orang yang kuat, dan baik kepada semua orang yang memberinya rasa hormat tetapi kejam terhadap mereka yang tidak. Tetapi ketika saingan yang kuat dan berbahaya ingin menjual narkoba dan membutuhkan pengaruh don untuk hal yang sama, Vito menolak untuk melakukannya. Yang terjadi selanjutnya adalah perselisihan antara Vitos yang memudar nilai-nilai lama dan cara-cara baru yang dapat menyebabkan Michael melakukan hal yang paling enggan dia lakukan dan mengobarkan perang gerombolan melawan semua keluarga mafia lain yang dapat memisahkan keluarga Corleone.
-    </string>
-    <!-- The God Father: Part 2 -->
-    <string name="data_movies_storyline03">
-        Kisah berlanjut keluarga kriminal Corleone menceritakan tentang Vito Corleone muda yang tumbuh di Sisilia dan pada 1910-an di New York. dan mengikuti Michael Corleone pada 1950-an ketika ia berupaya memperluas bisnis keluarga ke Las Vegas, Hollywood, dan Kuba.
-    </string>
-    <!-- The Dark Knight -->
-    <string name="data_movies_storyline04">
-        Ditetapkan dalam waktu satu tahun setelah peristiwa Batman Begins (2005), Batman, Letnan James Gordon, dan Jaksa Distrik baru Harvey Dent berhasil mulai mengumpulkan penjahat yang mengganggu Kota Gotham, sampai dalang penjahat misterius dan sadis yang hanya dikenal sebagai "The Joker "muncul di Gotham, menciptakan gelombang kekacauan baru. Perjuangan Batman melawan The Joker menjadi sangat pribadi, memaksanya untuk "menghadapi semua yang ia yakini" dan meningkatkan teknologinya untuk menghentikannya. Segitiga cinta berkembang antara Bruce Wayne, Dent, dan Rachel Dawes.
-    </string>
-    <!-- The Irishmen -->
-    <string name="data_movies_storyline05">
-        Frank "Orang Irlandia" Sheeran adalah pria dengan banyak pikiran. Mantan pejabat tinggi dan pembunuh bayaran serikat pekerja, belajar untuk membunuh melayani di Italia selama Perang Dunia Kedua. Dia sekarang melihat kembali kehidupannya dan hit yang menentukan karir mafia, mempertahankan koneksi dengan keluarga kejahatan Bufalino. Secara khusus, bagian yang ia klaim telah mainkan dalam menghilangnya sahabat seumur hidupnya, Jimmy Hoffa, mantan presiden International Brotherhood of Teamsters, yang secara misterius menghilang pada akhir Juli 1975 pada usia 62 tahun.
-    </string>
-    <!-- Joker -->
-    <string name="data_movies_storyline06">
-        Joker berpusat di sekitar asal usul lengkungan musuh ikonik dan merupakan kisah asli dan mandiri yang tidak pernah terlihat sebelumnya di layar lebar. Penjelajahan Todd Phillips dari Arthur Fleck (Joaquin Phoenix), seorang pria yang diabaikan oleh masyarakat bukan hanya studi karakter yang berpasir, tetapi juga kisah peringatan yang lebih luas.
-    </string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movies_storyline07">
-        Ketika Avengers dan sekutu mereka terus melindungi dunia dari ancaman yang terlalu besar untuk ditangani oleh satu pahlawan, bahaya baru telah muncul dari bayang-bayang kosmik: Thanos. Seorang lalim penghinaan intergalaksi, tujuannya adalah untuk mengumpulkan semua enam Batu Infinity, artefak kekuatan yang tak terbayangkan, dan menggunakannya untuk menimbulkan keinginannya yang terpelintir pada semua kenyataan. Segala sesuatu yang Avengers telah perjuangkan telah mengarah ke saat ini, nasib Bumi dan keberadaan tidak pernah lebih pasti.
-    </string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movies_storyline08">
-        Setelah peristiwa yang menghancurkan dari Avengers: Perang Infinity (2018), alam semesta hancur karena upaya Titan Gila, Thanos. Dengan bantuan sekutu yang tersisa, Avengers harus berkumpul sekali lagi untuk membatalkan tindakan Thanoss dan membatalkan kekacauan ke alam semesta, tidak peduli apa konsekuensi yang mungkin ada di toko, dan tidak peduli siapa yang mereka hadapi.
-    </string>
-    <!-- Spider-Man: Into the Spider-Vers -->
-    <string name="data_movies_storyline09">
-        Miles Morales adalah seorang remaja New York yang berjuang dengan sekolah, teman-teman dan, di atas semua itu, menjadi Spider-Man baru. Ketika dia bertemu Peter Parker, penyelamat New York, di multiverse, Miles harus berlatih untuk menjadi pelindung baru kotanya.
-    </string>
-    <!-- Klaus -->
-    <string name="data_movies_storyline10">
-        Ketika Jesper (Jason Schwartzman) membedakan dirinya sebagai siswa terburuk akademi pos, ia dstringpatkan di sebuah pulau beku di atas Lingkaran Arktik, di mana penduduk setempat yang berselisih sulit bertukar kata apalagi huruf. Jesper akan menyerah ketika dia menemukan sekutu dalam guru lokal Alva (Rashida Jones), dan menemukan Klaus (pemenang Oscar J.K Simmons), seorang tukang kayu misterius yang tinggal sendirian di kabin yang penuh dengan mainan buatan tangan. Pertemanan yang tidak biasa ini mengembalikan tawa ke Smeerensburg, menempa warisan baru para tetangga yang murah hati, pengetahuan magis dan kaus kaki yang digantung oleh cerobong asap dengan hati-hati. Sebuah komedi Natal animasi yang disutradarai oleh co-pencipta Despicable Me Sergio Pablos, co-bintang KLAUS Rashida Jones, Jason Schwartzman dan JK Simmons
-    </string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movies_genres01">Drama</string>
-    <!-- The God Father -->
-    <string name="data_movies_genres02">Crime Drama</string>
-    <!-- The God Father: Part II -->
-    <string name="data_movies_genres03">Crime Drama</string>
-    <!-- The Dark Knight -->
-    <string name="data_movies_genres04">Action Crime Drama Thriller</string>
-    <!-- The Irishmen -->
-    <string name="data_movies_genres05">Biography Crime Drama</string>
-    <!-- Joker -->
-    <string name="data_movies_genres06">Crime Drama Thriller</string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movies_genres07"> Action Adventure Sci-Fi</string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movies_genres08">Action Adventure Drama Sci-Fi</string>
-    <!-- Spider-Man: Into the Spider-Vers -->
-    <string name="data_movies_genres09"> Animation Action Adventure Family Sci-Fi </string>
-    <!-- Klaus -->
-    <string name="data_movies_genres10"> Animation Adventure Comedy Family </string>
-    <!-- The Shawsank Redemtion -->
-    <string name="data_movies_language01">Bahasa Inggris</string>
-    <!-- The God Father -->
-    <string name="data_movies_language02">Bahasa Inggris Italia Latin</string>
-    <!-- The God Father: Part II -->
-    <string name="data_movies_language03">Bahasa Inggris Italia Spanish Latin Sicilian</string>
-    <!-- The Dark Knight -->
-    <string name="data_movies_language04">Bahasa Inggris Mandarin</string>
-    <!-- The Irishmen -->
-    <string name="data_movies_language05">Bahasa Inggris Italia Spanish</string>
-    <!-- Joker -->
-    <string name="data_movies_language06">Bahasa Inggris</string>
-    <!-- Avengers: Infinity War -->
-    <string name="data_movies_language07">Bahasa Inggris</string>
-    <!-- Avengers: Endgame -->
-    <string name="data_movies_language08">Bahasa Inggris Japanese Xhosa German</string>
-    <!-- Spider-Man: Into the Spider-Vers -->
-    <string name="data_movies_language09">Bahasa Inggris Spanish</string>
-    <!-- Klaus -->
-    <string name="data_movies_language10">Bahasa Inggris Saami</string>
 </resources>

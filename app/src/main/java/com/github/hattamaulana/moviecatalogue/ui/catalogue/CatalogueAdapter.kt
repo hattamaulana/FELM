@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.moviecatalogue.R
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.IMAGE_URI
 import com.github.hattamaulana.moviecatalogue.model.DataModel
 import kotlinx.android.synthetic.main.adapter_catalogue.view.*
 
@@ -41,7 +42,7 @@ class CatalogueAdapter(private val mContext: Context) :
     inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
         fun bind(movie: DataModel) = with(v) {
             Glide.with(mContext)
-                .load("https://image.tmdb.org/t/p/w185/${movie.img}")
+                .load("$IMAGE_URI/w185/${movie.img}")
                 .fitCenter()
                 .into(img_movie)
 

@@ -13,4 +13,9 @@ data class DataModel(
     var genre: List<Int>?,
     var rating: Double?,
     var release: String?
-) : Parcelable
+) : Parcelable {
+
+    interface Callback {
+        fun get(p0: ArrayList<DataModel>)
+    }
+}

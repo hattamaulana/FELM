@@ -10,7 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.TheMovieDbFactory
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.TYPE_MOVIE
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.TYPE_TV
+import com.github.hattamaulana.moviecatalogue.api.MovieDbFactory
 import com.github.hattamaulana.moviecatalogue.model.DataModel
 import com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.fragment_catalogue.*
@@ -18,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_catalogue.*
 class CatalogueFragment : Fragment() {
 
     companion object {
-        const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
+        private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
         fun instance(index: Int): CatalogueFragment {
             val bundle = Bundle()
@@ -43,10 +45,11 @@ class CatalogueFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val arg = arguments?.getInt(ARG_SECTION_NUMBER, 1) ?: 1
-        val tag = if (arg == 0) TheMovieDbFactory.TAG_MOVIE else TheMovieDbFactory.TAG_TV
+        val tag = if (arg == 0) TYPE_MOVIE else TYPE_TV
         val adapter = CatalogueAdapter(view.context)
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-            .get(CatalogueViewModel::class.java)
+        val viewModel = ViewModelProvider(
+            this, ViewModelProvider.NewInstanceFactory()
+        ).get(CatalogueViewModel::class.java)
 
         viewModel.context = context
         adapter.setOnItemClckCallback(object : CatalogueAdapter.OnItemClickCallback {
