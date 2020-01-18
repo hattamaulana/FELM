@@ -12,7 +12,7 @@ class CatalogueViewModel : ViewModel() {
 
     var context: Context? = null
 
-    private val TAG = this.javaClass.simpleName
+    private val _TAG = this.javaClass.name
 
     private var listData = MutableLiveData<ArrayList<DataModel>>()
 
@@ -23,7 +23,7 @@ class CatalogueViewModel : ViewModel() {
             override fun get(p0: ArrayList<DataModel>) {
                 listData.postValue(p0)
 
-                Log.d(TAG, "getData: ...")
+                Log.d(_TAG, "getData: size data = ${p0.size}")
             }
         })
 

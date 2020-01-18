@@ -5,11 +5,12 @@
     <string name="tab_movie">Movie</string>
     <string name="tab_tv_series">TV Series</string>
     <string name="lbl_genre">Genre</string>
-    <string name="lbl_storyline">Storyline</string>
     <string name="lbl_overview">Overview</string>
+    <string name="change_language">Change Language</string>
+    <string name="favorite">Favorite</string>
+    <string name="movies_amp_tv"><![CDATA[Movies & Tv]]></string>
 
     <!-- Warning   -->
-    <string name="warning_error_load">Can not Load Data</string>
 
     <!-- Sample Data Movie -->
     <string name="sample_title_movie">The Shawsank Redemtion</string>
@@ -17,10 +18,7 @@
     <string name="sample_overview_movie">
         Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
     </string>
-    <string name="sample_storyline_movie">
-        Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit. The film portrays the mans unique way of dealing with his new, torturous life. along the way he befriends a number of fellow prisoners, most notably a wise long-term inmate named Red.
-    </string>
     <string name="sample_release_movie">Drama</string>
-    <string name="sample_language_movie">English</string>
-    <string name="change_language">Change Language</string>
+    <string name="save_favorite">Success Added Movie to Favorite</string>
+    <string name="failed_save_favorite">Success Deleted Movie to Favorite</string>
 </resources>

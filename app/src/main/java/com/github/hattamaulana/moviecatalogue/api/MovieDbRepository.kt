@@ -8,21 +8,25 @@ import com.androidnetworking.common.ANRequest
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
-import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.Data.API_KEY
 import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.API_URI
+import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.Data.API_KEY
 import com.github.hattamaulana.moviecatalogue.model.DataModel
 import com.github.hattamaulana.moviecatalogue.model.GenreModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
 
 class MovieDbRepository(private val context: Context) : JSONObjectRequestListener {
 
-    private val TAG = this.javaClass.simpleName
-
     private lateinit var mFactory: DataModel.Callback
     private lateinit var mGenreCallback: GenreModel.Callback
     private lateinit var mTag: String
+
+    private var message: String = "Please Connect Internet"
+
+    private val TAG = this.javaClass.simpleName
 
     fun getDiscover(tag: String, callback: DataModel.Callback) {
         mTag = tag
@@ -35,7 +39,12 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         req.getAsJSONObject(this)
     }
 
-    fun getGenre(tag: String, callback: GenreModel.Callback) {
+    fun getGenre(
+        tag: String,
+        callback: GenreModel.Callback,
+        msg: String = "Please Connect Internet"
+    ) {
+        message = msg
         mTag = tag
         mGenreCallback = callback
 
@@ -68,7 +77,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
             when {
                 response.has("results") -> {
                     val array = it.getJSONArray("results")
-                    val listData = MovieDbFactory.listData(array, mTag)
+                    val listData = MovieDbFactory.listData(array, mTag, context)
 
                     mFactory.get(listData)
                 }
@@ -84,16 +93,18 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
     }
 
     override fun onError(anError: ANError?) {
-        val message = anError?.message
+        val errorMessage = anError?.message
         val errorBody = anError?.errorBody
         val errorDetail = anError?.errorDetail
 
         anError?.printStackTrace()
-        Log.d(TAG, "onError: $message")
+        Log.d(TAG, "onError: $errorMessage")
         Log.d(TAG, "onError: $errorBody")
         Log.d(TAG, "onError: $errorDetail")
 
-        Toast.makeText(context, R.string.warning_error_load, Toast.LENGTH_SHORT)
-            .show()
+        CoroutineScope(Dispatchers.Main).launch {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }

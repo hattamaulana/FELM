@@ -6,17 +6,19 @@
     <string name="tab_movie">Film</string>
     <string name="tab_tv_series">Serial TV</string>
     <string name="lbl_genre">Aliran</string>
-    <string name="lbl_storyline">Alur Cerita</string>
     <string name="lbl_overview">Gambaran</string>
+    <string name="change_language">Ganti Bahasa</string>
+    <string name="favorite">Favorit</string>
+    <string name="movies_amp_tv"><![CDATA[Film & Tv]]></string>
 
     <!-- Warning   -->
-    <string name="warning_error_load">Data Tidak dapat diload</string>
 
     <!-- Sample Data Movie -->
     <string name="sample_title_movie">The Shawsank Redemtion</string>
     <string name="sample_rating_movie">9.2n</string>
     <string name="sample_overview_movie">Dummy Data Please Go On the English Language</string>
-    <string name="sample_storyline_movie">Dummy Data Please Go On the English Language</string>
     <string name="sample_release_movie">Dummy Data Please Go On the English Language</string>
-    <string name="sample_language_movie">Dummy Data Please Go On the English Language</string>
+
+    <string name="save_favorite">Berhasil Menambahkan Ke Favorit</string>
+    <string name="failed_save_favorite">Berhasil Menghapus dari Favorit</string>
 </resources>
