@@ -29,20 +29,23 @@ class DetailViewModel : ViewModel() {
         value.put(CATEGORY, data.category)
         value.put(GENRE, data.genres)
 
-        dbHelper.open()
-
-        val check = dbHelper.getAll().filter { item ->
-            item.id == data.id
-        }
-
-        return if (check.isEmpty()){
+        return if (isExist(data.id as Int)) {
+            dbHelper.open()
             dbHelper.insert(value)
             dbHelper.close()
             true
         } else {
-            dbHelper.close()
             false
         }
+    }
+
+    fun isExist(id: Int) : Boolean {
+        val dbHelper = FavoriteHelper.getInstance(context as Context)
+        dbHelper.open()
+        val list = dbHelper.getAll().filter { item -> item.id == id }
+        dbHelper.close()
+
+        return list.isEmpty()
     }
 
     fun delete(id: Int) {

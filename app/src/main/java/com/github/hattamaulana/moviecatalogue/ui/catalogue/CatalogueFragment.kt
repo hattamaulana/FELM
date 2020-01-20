@@ -22,9 +22,9 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     private val TAG = this.javaClass.name
 
-    private lateinit var mTag: String
-    private lateinit var mAdapter: CatalogueAdapter
-    private lateinit var mViewModel: CatalogueViewModel
+    private lateinit var page: String
+    private lateinit var adapter: CatalogueAdapter
+    private lateinit var viewModel: CatalogueViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,21 +39,21 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
         Log.d(TAG, "onViewCreated: ;")
 
         val arg = arguments?.getInt(ARG_SECTION_NUMBER, 1) ?: 1
+        page = if (arg == 0) TYPE_MOVIE else TYPE_TV
 
-        mTag = if (arg == 0) TYPE_MOVIE else TYPE_TV
-        mAdapter = CatalogueAdapter(view.context as Context)
-        mAdapter.setOnItemClckCallback(this)
-
+        adapter = CatalogueAdapter(view.context as Context)
+        adapter.setOnItemClckCallback(this)
         recycler_movies.layoutManager = LinearLayoutManager(view.context)
-        recycler_movies.adapter = mAdapter
+        recycler_movies.adapter = adapter
 
-        mViewModel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
         ).get(CatalogueViewModel::class.java)
-        mViewModel.context = context
-        mViewModel.getData(mTag).observe(viewLifecycleOwner, Observer { listData ->
+
+        viewModel.context = context
+        viewModel.getData(page).observe(viewLifecycleOwner, Observer { listData ->
             if (listData != null) {
-                mAdapter.setData(listData)
+                adapter.setData(listData)
 
                 progressBar.visibility = View.GONE
             } else {
@@ -62,14 +62,9 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: mTag=$mTag")
-    }
-
     override fun onItemClicked(movie: DataModel) {
         val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.EXTRA_TAG, mTag)
+        intent.putExtra(DetailActivity.EXTRA_TAG, page)
         intent.putExtra(DetailActivity.EXTRA_MOVIE_DETAIL, movie)
 
         startActivity(intent)

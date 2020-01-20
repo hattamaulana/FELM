@@ -14,23 +14,55 @@ import com.github.hattamaulana.moviecatalogue.helper.GenreHelper
 import com.github.hattamaulana.moviecatalogue.model.GenreModel
 import com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueWrapperFragment
 import com.github.hattamaulana.moviecatalogue.ui.favorite.FavoriteFragment
+import com.github.hattamaulana.moviecatalogue.ui.favorite.FavoriteWrapperFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = this.javaClass.name
 
-    private suspend fun getData(tag: String) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val appPreferences = App.SharedPref(applicationContext)
+        if (appPreferences.firstRun) {
+            CoroutineScope(Dispatchers.Default).launch {
+                val list = listOf(MovieDbContract.TYPE_TV, MovieDbContract.TYPE_MOVIE)
+                list.forEach { item -> getData(item) }
+            }
+        }
+
+        supportActionBar?.elevation = 0f
+
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            showFragment(when (item.itemId) {
+                R.id.list_movies -> CatalogueWrapperFragment()
+                R.id.fav_movies -> FavoriteWrapperFragment()
+                else -> Fragment()
+            })
+
+            true
+        }
+
+        /** Menampilkan Fragment Default*/
+        showFragment(CatalogueWrapperFragment())
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_fragment, fragment)
+            .commit()
+    }
+
+    private fun getData(tag: String) = runBlocking {
         val genreHelper = GenreHelper(applicationContext)
         val appPreferences = App.SharedPref(applicationContext)
         val repo = MovieDbRepository(this@MainActivity)
 
-        withContext(CoroutineScope(IO).coroutineContext) {
+        launch(Dispatchers.IO) {
             repo.getGenre(tag, object : GenreModel.Callback {
                 override fun save(p0: List<GenreModel>) {
                     p0.forEach { item ->
@@ -47,40 +79,5 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val appPreferences = App.SharedPref(applicationContext)
-        if (appPreferences.firstRun) {
-            CoroutineScope(Dispatchers.Default).launch {
-                val list = listOf(MovieDbContract.TYPE_TV, MovieDbContract.TYPE_MOVIE)
-                list.forEach { item -> getData(item) }
-            }
-        }
-
-        Log.d(TAG, "onCreate=${appPreferences.firstRun}")
-        supportActionBar?.elevation = 0f
-
-        bottom_navigation.setOnNavigationItemSelectedListener { item ->
-            showFragment(when (item.itemId) {
-                R.id.list_movies -> CatalogueWrapperFragment()
-                R.id.fav_movies -> FavoriteFragment()
-                else -> Fragment()
-            })
-
-            true
-        }
-
-        /** Menampilkan Fragment Default*/
-        showFragment(CatalogueWrapperFragment())
-    }
-
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_fragment, fragment)
-            .commit()
     }
 }

@@ -1,4 +1,4 @@
-package com.github.hattamaulana.moviecatalogue.ui.catalogue
+package com.github.hattamaulana.moviecatalogue.ui.favorite
 
 import android.content.Context
 import android.content.Intent
@@ -10,20 +10,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.ui.TabLayoutAdapter
-import kotlinx.android.synthetic.main.fragment_catalogue_wrapper.*
+import kotlinx.android.synthetic.main.fragment_favorite_wrapper.*
 
-class CatalogueWrapperFragment : Fragment() {
+class FavoriteWrapperFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_catalogue_wrapper, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_favorite_wrapper, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar.title = "LIST DB"
+        /** Setup Toolbar title */
+        toolbar.title = "FAVORITES"
         toolbar.inflateMenu(R.menu.main_menu)
         toolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.menu_language) {
@@ -36,15 +37,15 @@ class CatalogueWrapperFragment : Fragment() {
             true
         }
 
-        view_pager.adapter = TabLayoutAdapter (
+        view_pager_favorite.adapter = TabLayoutAdapter(
             context as Context, parentFragmentManager
-        ) { position -> CatalogueFragment.instance(position) }
-        tabs.setupWithViewPager(view_pager)
+        ) { position -> FavoriteFragment.instance(position)}
+        tabs_favorite.setupWithViewPager(view_pager_favorite)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
-        view_pager.adapter = null
+        view_pager_favorite.adapter = null
     }
 }

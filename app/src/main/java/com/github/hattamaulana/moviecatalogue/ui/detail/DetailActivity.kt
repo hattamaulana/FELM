@@ -17,7 +17,6 @@ import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.IMAGE_URI
 import com.github.hattamaulana.moviecatalogue.model.DataModel
 import com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueFragment
-import com.github.hattamaulana.moviecatalogue.ui.favorite.FavoriteFragment
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
@@ -58,7 +57,9 @@ class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.add_favorite_menu, menu)
 
-        if(fromActivity == FavoriteFragment::class.java.name) {
+        val exist = ! viewModel.isExist(dataIntent?.id as Int)
+
+        if(exist) {
             val icon = menu?.findItem(R.id.fav_movie)
             icon?.setIcon(R.drawable.ic_favorite)
         }
