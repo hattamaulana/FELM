@@ -15,6 +15,7 @@ import com.github.hattamaulana.moviecatalogue.model.GenreModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.util.*
 
@@ -102,9 +103,11 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         Log.d(TAG, "onError: $errorBody")
         Log.d(TAG, "onError: $errorDetail")
 
-        CoroutineScope(Dispatchers.Main).launch {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT)
-                .show()
+        runBlocking {
+            launch(Dispatchers.Main) {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 }

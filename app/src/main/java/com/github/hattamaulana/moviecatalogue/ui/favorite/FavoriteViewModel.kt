@@ -9,22 +9,24 @@ import com.github.hattamaulana.moviecatalogue.model.DataModel
 
 class FavoriteViewModel : ViewModel() {
 
-    private val listData = MutableLiveData<ArrayList<DataModel>>()
+    private val listData = MutableLiveData<List<DataModel>>()
 
-    fun loadData(context: Context): LiveData<ArrayList<DataModel>> {
-        val dbHelper = FavoriteHelper.getInstance(context)
+    var context: Context? = null
+
+    fun loadData(tag: String): LiveData<List<DataModel>> {
+        val dbHelper = FavoriteHelper.getInstance(context as Context)
+
         dbHelper.open()
-
-        val result = dbHelper.getAll()
-
+        val result = dbHelper.getAll().filter { data -> data.category == tag }
         dbHelper.close()
+
         listData.postValue(result)
 
         return listData
     }
 
-    fun remove(id: Int, context: Context) {
-        val dbHelper = FavoriteHelper.getInstance(context)
+    fun remove(id: Int) {
+        val dbHelper = FavoriteHelper.getInstance(context as Context)
 
         dbHelper.open()
         dbHelper.delete(id.toString())

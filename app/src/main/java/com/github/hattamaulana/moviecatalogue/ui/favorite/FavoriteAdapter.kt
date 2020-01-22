@@ -1,6 +1,5 @@
 package com.github.hattamaulana.moviecatalogue.ui.favorite
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,6 @@ import kotlinx.android.synthetic.main.item_favorite.view.*
 class FavoriteAdapter :
     RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
-    private val TAG = this.javaClass.name
-
     private var dataModel = ArrayList<DataModel>()
 
     private lateinit var callback: OnClickCallback
@@ -25,9 +22,7 @@ class FavoriteAdapter :
         fun onRemoveClicked(p0: DataModel)
     }
 
-    inner class ViewHolder(private val view: View) :
-        RecyclerView.ViewHolder(view) {
-
+    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(data: DataModel): Unit = with(view) {
             Glide.with(context)
                 .load("${MovieDbContract.IMAGE_URI}/w185/${data.img}")
@@ -68,8 +63,6 @@ class FavoriteAdapter :
     fun setData(list: List<DataModel>) {
         dataModel.clear()
         dataModel.addAll(list)
-
-        Log.d(TAG, "setData: ${dataModel.size}")
 
         notifyDataSetChanged()
     }

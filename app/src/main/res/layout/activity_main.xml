@@ -19,11 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:elevation="-4dp"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:elevation="-4dp"
         app:menu="@menu/bottom_navigation"
+        app:labelVisibilityMode="unlabeled"
         style="@style/Widget.Design.BottomNavigationView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

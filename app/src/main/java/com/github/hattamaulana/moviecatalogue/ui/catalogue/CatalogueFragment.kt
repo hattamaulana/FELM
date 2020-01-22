@@ -3,7 +3,6 @@ package com.github.hattamaulana.moviecatalogue.ui.catalogue
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +19,12 @@ import kotlinx.android.synthetic.main.fragment_catalogue.*
 
 class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
-    private val TAG = this.javaClass.name
-
     private lateinit var mTag: String
     private lateinit var mAdapter: CatalogueAdapter
     private lateinit var mViewModel: CatalogueViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_catalogue, container, false)
@@ -36,7 +32,6 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ;")
 
         val arg = arguments?.getInt(ARG_SECTION_NUMBER, 1) ?: 1
 
@@ -47,9 +42,8 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
         recycler_movies.layoutManager = LinearLayoutManager(view.context)
         recycler_movies.adapter = mAdapter
 
-        mViewModel = ViewModelProvider(
-            this, ViewModelProvider.NewInstanceFactory()
-        ).get(CatalogueViewModel::class.java)
+        mViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            .get(CatalogueViewModel::class.java)
         mViewModel.context = context
         mViewModel.getData(mTag).observe(viewLifecycleOwner, Observer { listData ->
             if (listData != null) {
@@ -60,11 +54,6 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
                 progressBar.visibility = View.VISIBLE
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: mTag=$mTag")
     }
 
     override fun onItemClicked(movie: DataModel) {
