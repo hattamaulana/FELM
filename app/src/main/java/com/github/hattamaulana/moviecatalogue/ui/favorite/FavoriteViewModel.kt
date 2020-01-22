@@ -9,13 +9,13 @@ import com.github.hattamaulana.moviecatalogue.model.DataModel
 
 class FavoriteViewModel : ViewModel() {
 
-    private val listData = MutableLiveData<List<DataModel>>()
+    private val listData = MutableLiveData<ArrayList<DataModel>>()
 
-    fun loadData(page: String, context: Context): LiveData<List<DataModel>> {
+    fun loadData(context: Context): LiveData<ArrayList<DataModel>> {
         val dbHelper = FavoriteHelper.getInstance(context)
         dbHelper.open()
 
-        val result = dbHelper.getAll().filter { data -> data.category == page }
+        val result = dbHelper.getAll()
 
         dbHelper.close()
         listData.postValue(result)

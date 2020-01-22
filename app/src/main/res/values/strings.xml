@@ -7,8 +7,8 @@
     <string name="lbl_genre">Genre</string>
     <string name="lbl_overview">Overview</string>
     <string name="change_language">Change Language</string>
-    <string name="favorite">FAVORITES</string>
-    <string name="movies_amp_tv">LIST DB</string>
+    <string name="favorite">Favorite</string>
+    <string name="movies_amp_tv"><![CDATA[Movies & Tv]]></string>
 
     <!-- Warning   -->
 

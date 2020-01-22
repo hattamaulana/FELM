@@ -8,8 +8,8 @@
     <string name="lbl_genre">Aliran</string>
     <string name="lbl_overview">Gambaran</string>
     <string name="change_language">Ganti Bahasa</string>
-    <string name="favorite">FAVORIT</string>
-    <string name="movies_amp_tv">LIST DB</string>
+    <string name="favorite">Favorit</string>
+    <string name="movies_amp_tv"><![CDATA[Film & Tv]]></string>
 
     <!-- Warning   -->
 
