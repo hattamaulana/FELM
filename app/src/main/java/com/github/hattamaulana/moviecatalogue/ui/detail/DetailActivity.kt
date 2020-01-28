@@ -14,9 +14,10 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.IMAGE_URI
-import com.github.hattamaulana.moviecatalogue.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.IMAGE_URI
+import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import kotlinx.android.synthetic.main.activity_detail.*
+import java.util.ArrayList
 
 class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
 
@@ -29,32 +30,48 @@ class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val tag = intent.getStringExtra(EXTRA_TAG) as String
+        val genreIds = intent.getIntArrayExtra(EXTRA_GENRE_IDS)
 
         dataIntent = intent.getParcelableExtra(EXTRA_MOVIE_DETAIL) as DataModel
         dataIntent.category = tag
+        dataIntent.genres = genreIds?.toCollection(ArrayList())
 
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(DetailViewModel::class.java)
         viewModel.context = this
 
+        /** Set support action bar with the title */
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = dataIntent.title
 
         /** Set Content View */
         txt_overview.text = dataIntent.overview
-        txt_genre.text = dataIntent.genres
         Glide.with(this)
-            .load("$IMAGE_URI/w780/${dataIntent.img}")
+            .load("$IMAGE_URI/w780/${dataIntent.posterPath}")
             .addListener(this)
             .into(img_movie)
+
+        /** Set Genre */
+        setGenre(genreIds)
+    }
+
+    private fun setGenre(ids: IntArray?) {
+        ids?.forEach { id ->
+            viewModel.findGenreByIdAsync(id) {
+                // TODO : update view at here
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.add_favorite_menu, menu)
 
-        if(! viewModel.checkData(dataIntent.id as Int)) {
-            val icon = menu?.findItem(R.id.fav_movie)
-            icon?.setIcon(R.drawable.ic_favorite)
+        /** Check have added favorite and change icon */
+        viewModel.checkData(dataIntent.id as Int) {
+            if (!it) {
+                val icon = menu?.findItem(R.id.fav_movie)
+                icon?.setIcon(R.drawable.ic_favorite)
+            }
         }
 
         return true
@@ -64,13 +81,13 @@ class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
         when (item.itemId) {
             android.R.id.home -> finish()
 
-            R.id.fav_movie -> {
-                val isExist = viewModel.save(dataIntent)
-                val message = if (isExist) {
+            R.id.fav_movie -> viewModel.checkData(dataIntent.id as Int) {
+                val message = if (it) {
+                    viewModel.save(dataIntent)
                     item.setIcon(R.drawable.ic_favorite)
                     applicationContext.getString(R.string.save_favorite)
                 } else {
-                    viewModel.delete(dataIntent.id as Int)
+                    viewModel.delete(dataIntent)
                     item.setIcon(R.drawable.ic_favorite_border)
                     applicationContext.getString(R.string.failed_save_favorite)
                 }
@@ -101,5 +118,6 @@ class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
     companion object {
         const val EXTRA_TAG = "EXTRA_TAG"
         const val EXTRA_MOVIE_DETAIL = "EXTRA_MOVIE_DETAIL"
+        const val EXTRA_GENRE_IDS = "EXTRA_GENRE_IDS"
     }
 }

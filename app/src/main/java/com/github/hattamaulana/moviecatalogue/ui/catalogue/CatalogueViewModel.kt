@@ -1,31 +1,26 @@
 package com.github.hattamaulana.moviecatalogue.ui.catalogue
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.moviecatalogue.api.MovieDbRepository
-import com.github.hattamaulana.moviecatalogue.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
+import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 
 class CatalogueViewModel : ViewModel() {
 
+    private lateinit var repo: MovieDbRepository
+
+    private var listData = MutableLiveData<List<DataModel>>()
+
     var context: Context? = null
+        set(value) {
+            repo = MovieDbRepository(value as Context)
+            field = value
+        }
 
-    private val _TAG = this.javaClass.name
-
-    private var listData = MutableLiveData<ArrayList<DataModel>>()
-
-    fun getData(tag: String): LiveData<ArrayList<DataModel>> {
-        val repo = MovieDbRepository(context!!)
-
-        repo.getDiscover(tag, object : DataModel.Callback {
-            override fun get(p0: ArrayList<DataModel>) {
-                listData.postValue(p0)
-
-                Log.d(_TAG, "getData: size data = ${p0.size}")
-            }
-        })
+    fun getData(tag: String): LiveData<List<DataModel>> {
+        repo.getDiscover(tag) { list -> listData.postValue(list) }
 
         return listData
     }

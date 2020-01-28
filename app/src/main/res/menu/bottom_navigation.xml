@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/list_movies"
-        android:icon="@drawable/ic_tv_show"
-        android:title="@string/movies_amp_tv"
-        />
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/fav_movies"
+        android:id="@+id/fragment_catalogue"
+        android:icon="@drawable/ic_movie_filled"
+        android:title="@string/movies_amp_tv" />
+
+    <item
+        android:id="@+id/fragment_favorite"
         android:icon="@drawable/ic_favorite"
-        android:title="@string/favorite"
-        />
+        android:title="@string/favorite" />
+
+    <item
+        android:id="@+id/fragment_settings"
+        android:icon="@drawable/ic_settings_filled"
+        android:title="@string/setting" />
+
 </menu>

@@ -1,61 +1,98 @@
 package com.github.hattamaulana.moviecatalogue.ui.detail
 
-import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.CATEGORY
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.GENRE
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.MOVIE_ID
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.OVERVIEW
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.POSTER_PATH
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.RATING
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract.Favorites.TITLE
-import com.github.hattamaulana.moviecatalogue.helper.FavoriteHelper
-import com.github.hattamaulana.moviecatalogue.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.database.*
+import com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
+import com.github.hattamaulana.moviecatalogue.data.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel : ViewModel(), CoroutineScope {
 
-    private lateinit var dbHelper: FavoriteHelper
+    private lateinit var appDb: AppDatabase
+    private lateinit var relationDao: DataGenreDao
+    private lateinit var favoriteDao: FavoriteDao
+    private lateinit var genreDao: GenreDao
+
+    private val TAG = this.javaClass.simpleName
 
     var context: Context? = null
         set(value) {
-            dbHelper = FavoriteHelper.getInstance(value as Context)
+            appDb = AppDbProvider.getDb(value as Context)
             field = value
+            relationDao = appDb.relationDataAndGenreDao()
+            favoriteDao = appDb.favoriteDao()
+            genreDao = appDb.genreDao()
         }
 
-    fun checkData(id: Int) : Boolean {
-        dbHelper.open()
+    override val coroutineContext: CoroutineContext
+        get() = IO
 
-        val result = dbHelper.getAll().filter { item -> item.id == id }
+    /**
+     * Digunakan untuk menambahkan data
+     * movie atau tv show ke database favorite.
+     *
+     * @param arg : Data Movie atau Tv Show
+     */
+    fun save(arg: DataModel) {
+        launch { favoriteDao.add(arg) }
+        launch {
+            val id = arg.id as Int
+            val genreIds = arg.genres
 
-        dbHelper.close()
-
-        return result.isEmpty()
-    }
-
-    fun save(data: DataModel): Boolean {
-        return if (checkData(data.id as Int)) {
-            val value = ContentValues()
-            value.put(MOVIE_ID, data.id)
-            value.put(TITLE, data.title)
-            value.put(POSTER_PATH, data.img)
-            value.put(OVERVIEW, data.overview)
-            value.put(RATING, data.rating)
-            value.put(CATEGORY, data.category)
-            value.put(GENRE, data.genres)
-
-            dbHelper.open()
-            dbHelper.insert(value)
-            dbHelper.close()
-            true
-        } else {
-            false
+            genreIds?.forEach { gId -> relationDao.add(DataGenreRelation(id, gId)) }
         }
     }
 
-    fun delete(id: Int) {
-        dbHelper.open()
-        dbHelper.delete(id.toString())
-        dbHelper.close()
+    /**
+     * Digunakan untuk menghapus data
+     * movie atau tv yang telah terdaftar di database favorite.
+     *
+     * @param arg : Data Movie atau Tv Show
+     */
+    fun delete(arg: DataModel) {
+        launch { favoriteDao.remove(arg) }
+        launch {
+            val id = arg.id as Int
+            val genreIds = arg.genres
+
+            genreIds?.forEach { gId -> relationDao.remove(DataGenreRelation(id, gId)) }
+        }
     }
+
+    /**
+     * Function ini untuk melakukan
+     * checking data genre berdasarkan id.
+     *
+     * @param id id dari Data Favorite
+     */
+    fun checkData(id: Int, callback: (arg: Boolean) -> Unit) = launch {
+        val task = favoriteDao.findById(id).isEmpty()
+        Log.d(TAG, "checkData: task result=$task")
+
+        launch(Main) { callback(task) }
+    }
+
+    /**
+     * function ini digunakan untuk menambil data genre
+     * base on id.
+     *
+     * @param id
+     * @param callback
+     */
+    fun findGenreByIdAsync(id: Int, callback: (arg: GenreModel) -> Unit) = launch {
+        val genre = genreDao.findById(id)
+        Log.d(TAG, "findGenreByIdAsync: id=$id; genre=$genre")
+
+        if (genre.isNotEmpty()) {
+            launch(Main) { callback(genre[0]) }
+        }
+    }
+
 }

@@ -1,27 +1,24 @@
 package com.github.hattamaulana.moviecatalogue.ui
 
-import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.github.hattamaulana.moviecatalogue.App
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract
-import com.github.hattamaulana.moviecatalogue.api.MovieDbRepository
-import com.github.hattamaulana.moviecatalogue.database.DatabaseContract
-import com.github.hattamaulana.moviecatalogue.helper.GenreHelper
-import com.github.hattamaulana.moviecatalogue.model.GenreModel
-import com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueWrapperFragment
-import com.github.hattamaulana.moviecatalogue.ui.favorite.FavoriteWrapperFragment
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
+import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider
+import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
-    private val EXTRA_STATE_FRAGMENT = "EXTRA_STATE_FRAGMENT"
-
-    private lateinit var stateView: String
+    private lateinit var appPreferences: App.SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,81 +27,41 @@ class MainActivity : AppCompatActivity() {
         /** Set Toolbar without shadow */
         supportActionBar?.elevation = 0f
 
-        val appPreferences = App.SharedPref(applicationContext)
-        if (appPreferences.firstRun) {
-            CoroutineScope(Dispatchers.Default).launch {
-                val list = listOf(MovieDbContract.TYPE_TV, MovieDbContract.TYPE_MOVIE)
-                list.forEach { item -> getData(item) }
-            }
-        }
-
-        if (savedInstanceState != null ) {
-            stateView = savedInstanceState.getString(EXTRA_STATE_FRAGMENT) ?:
-                CatalogueWrapperFragment::class.java.simpleName
-
-            if (stateView == FavoriteWrapperFragment::class.java.simpleName) {
-                showFragment(FavoriteWrapperFragment())
-            } else {
-                showFragment(CatalogueWrapperFragment())
-            }
-        } else {
-            stateView = CatalogueWrapperFragment::class.java.simpleName
-
-            showFragment(CatalogueWrapperFragment())
+        /** Set First Launch Apps Configuration */
+        appPreferences = App.SharedPref(applicationContext)
+        if (appPreferences.firstRun)  {
+            listOf(TYPE_TV, TYPE_MOVIE).forEach { type -> storeGenre(type) }
         }
 
         /** Set Bottom Navigation On Navigation Item Selected */
-        bottom_navigation.setOnNavigationItemSelectedListener { item ->
-            showFragment(when (item.itemId) {
-                R.id.list_movies -> {
-                    stateView = CatalogueWrapperFragment::class.java.simpleName
-                    CatalogueWrapperFragment()
-                }
-
-                R.id.fav_movies -> {
-                    stateView = FavoriteWrapperFragment::class.java.simpleName
-                    FavoriteWrapperFragment()
-                }
-
-                else -> Fragment()
-            })
-
-            true
-        }
+        val navController = findNavController(R.id.home_fragment)
+        bottom_navigation.setupWithNavController(navController)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(EXTRA_STATE_FRAGMENT, stateView)
-    }
-
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_fragment, fragment)
-            .commit()
-    }
-
-    private fun getData(tag: String) = runBlocking {
-        val genreHelper = GenreHelper(applicationContext)
-        val appPreferences = App.SharedPref(applicationContext)
+    /**
+     * Digunakan untuk melakukan penyimpanan data genre movie dan tv show.
+     * Dimana akan diload saat aplikasi pertama kali dijalankan.
+     *
+     * @param tag: String TV_SHOW OR MOVIE
+     */
+    private fun storeGenre(tag: String) {
+        val TAG = this.javaClass.simpleName
         val repo = MovieDbRepository(this@MainActivity)
+        val dbProvider = AppDbProvider.getDb(this@MainActivity)
+        val dao = dbProvider.genreDao()
 
-        launch(IO) {
-            repo.getGenre(tag, object : GenreModel.Callback {
-                override fun save(p0: List<GenreModel>) {
-                    p0.forEach { item ->
-                        val value = ContentValues()
-                        value.put(DatabaseContract.Genre.GENRE_ID, item.id)
-                        value.put(DatabaseContract.Genre.NAME, item.name)
-                        value.put(DatabaseContract.Genre.CATEGORY, tag)
-
-                        genreHelper.open()
-                        genreHelper.insert(value)
-                        genreHelper.close()
-                        appPreferences.firstRun = false
-                    }
+        repo.getGenre(tag) { list ->
+            list.forEach { genre ->
+                try {
+                    dao.add(genre)
+                } catch (e: Exception) {
+                    Log.d(TAG, "storeGenre: $genre ")
+                    Log.d(TAG, "storeGenre: Was Add ")
                 }
-            })
+            }
+
+            appPreferences.firstRun = false
         }
     }
+
 }

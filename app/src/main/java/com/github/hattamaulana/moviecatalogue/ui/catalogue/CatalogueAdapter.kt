@@ -7,21 +7,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.IMAGE_URI
-import com.github.hattamaulana.moviecatalogue.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.IMAGE_URI
+import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 
 class CatalogueAdapter(private val mContext: Context) :
     RecyclerView.Adapter<CatalogueAdapter.ViewHolder>() {
 
     private var movies: ArrayList<DataModel> = ArrayList()
-
     private var mOnItemCallback: OnItemClickCallback? = null
 
+    /**
+     *
+     */
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: DataModel) = with(view) {
             Glide.with(mContext)
-                .load("$IMAGE_URI/w185/${movie.img}")
+                .load("$IMAGE_URI/w185/${movie.posterPath}")
                 .fitCenter()
                 .into(img_movie)
 
@@ -30,11 +32,11 @@ class CatalogueAdapter(private val mContext: Context) :
             txt_title.text = movie.title
             txt_rating.text = movie.rating.toString()
             txt_overview.text = if (overview.length >= 200) {
-                val strCut = overview.substring(0 until 200)
-                val split = strCut.split(" ".toRegex())
-                val res = split.dropLast(1)
+                val string = overview.substring(0 until 200)
+                    .split(" ".toRegex())
+                    .dropLast(1)
 
-                "${res.joinToString(" ")} ..."
+                "${string.joinToString(" ")} ..."
             } else {
                 overview
             }
@@ -43,6 +45,9 @@ class CatalogueAdapter(private val mContext: Context) :
         }
     }
 
+    /**
+     *
+     */
     interface OnItemClickCallback {
         fun onItemClicked(movie: DataModel)
     }
@@ -57,13 +62,19 @@ class CatalogueAdapter(private val mContext: Context) :
         holder.bind(movies[position])
     }
 
-    fun setData(arg: ArrayList<DataModel>) {
+    /**
+     *
+     */
+    fun setData(arg: List<DataModel>) {
         movies.clear()
         movies.addAll(arg)
 
         notifyDataSetChanged()
     }
 
+    /**
+     *
+     */
     fun setOnItemClckCallback(onItemClickCallback: OnItemClickCallback) {
         mOnItemCallback = onItemClickCallback
     }

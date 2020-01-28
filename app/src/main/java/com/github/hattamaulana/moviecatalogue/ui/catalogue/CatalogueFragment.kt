@@ -1,7 +1,6 @@
 package com.github.hattamaulana.moviecatalogue.ui.catalogue
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,24 +8,27 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.TYPE_MOVIE
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract.TYPE_TV
-import com.github.hattamaulana.moviecatalogue.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
+import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.fragment_catalogue.*
+
+private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
 class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     private lateinit var mTag: String
-    private lateinit var mAdapter: CatalogueAdapter
-    private lateinit var mViewModel: CatalogueViewModel
+    private lateinit var adapter: CatalogueAdapter
+    private lateinit var viewModel: CatalogueViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        /** Inflate the layout for this fragment */
         return inflater.inflate(R.layout.fragment_catalogue, container, false)
     }
 
@@ -36,19 +38,18 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
         val arg = arguments?.getInt(ARG_SECTION_NUMBER, 1) ?: 1
 
         mTag = if (arg == 0) TYPE_MOVIE else TYPE_TV
-        mAdapter = CatalogueAdapter(view.context as Context)
-        mAdapter.setOnItemClckCallback(this)
+        adapter = CatalogueAdapter(view.context as Context)
+        adapter.setOnItemClckCallback(this)
 
         recycler_movies.layoutManager = LinearLayoutManager(view.context)
-        recycler_movies.adapter = mAdapter
+        recycler_movies.adapter = adapter
 
-        mViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(CatalogueViewModel::class.java)
-        mViewModel.context = context
-        mViewModel.getData(mTag).observe(viewLifecycleOwner, Observer { listData ->
+        viewModel.context = context
+        viewModel.getData(mTag).observe(viewLifecycleOwner, Observer { listData ->
             if (listData != null) {
-                mAdapter.setData(listData)
-
+                adapter.setData(listData)
                 progressBar.visibility = View.GONE
             } else {
                 progressBar.visibility = View.VISIBLE
@@ -57,24 +58,19 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
     }
 
     override fun onItemClicked(movie: DataModel) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.EXTRA_TAG, mTag)
-        intent.putExtra(DetailActivity.EXTRA_MOVIE_DETAIL, movie)
-
-        startActivity(intent)
+        findNavController().navigate(R.id.catalogue_to_detail, Bundle().apply {
+            putString(DetailActivity.EXTRA_TAG, mTag)
+            putParcelable(DetailActivity.EXTRA_MOVIE_DETAIL, movie)
+            putIntArray(DetailActivity.EXTRA_GENRE_IDS, movie.genres?.toIntArray())
+        })
     }
 
     companion object {
-        private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
-
-        fun instance(index: Int): CatalogueFragment {
-            val bundle = Bundle()
-            bundle.putInt(ARG_SECTION_NUMBER, index)
-
-            val fragment = CatalogueFragment()
-            fragment.arguments = bundle
-
-            return fragment
-        }
+        fun instance(index: Int): CatalogueFragment =
+            CatalogueFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_SECTION_NUMBER, index)
+                }
+            }
     }
 }

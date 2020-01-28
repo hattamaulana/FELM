@@ -51,7 +51,7 @@ class FavoriteWrapperFragment : Fragment() {
         toolbar.inflateMenu(R.menu.main_menu)
         toolbar.title = "FAVORITES"
         toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.menu_language) {
+            if (item.itemId == R.id.fragment_settings) {
                 val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(mIntent)
 

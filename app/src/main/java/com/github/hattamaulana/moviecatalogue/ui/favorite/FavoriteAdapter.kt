@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.api.MovieDbContract
-import com.github.hattamaulana.moviecatalogue.model.DataModel
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.IMAGE_URI
+import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import kotlinx.android.synthetic.main.item_favorite.view.*
 
 class FavoriteAdapter :
@@ -25,7 +25,7 @@ class FavoriteAdapter :
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(data: DataModel): Unit = with(view) {
             Glide.with(context)
-                .load("${MovieDbContract.IMAGE_URI}/w185/${data.img}")
+                .load("${IMAGE_URI}/w185/${data.posterPath}")
                 .fitCenter()
                 .into(img_movie)
 

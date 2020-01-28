@@ -1,24 +1,22 @@
 package com.github.hattamaulana.moviecatalogue.ui.catalogue
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.ui.TabLayoutAdapter
 import kotlinx.android.synthetic.main.fragment_catalogue_wrapper.*
 
 private var viewStatePosition: Int? = null
+private const val EXTRA_VIEW_POSITION = "EXTRA_VIEW_POSITION"
 
 class CatalogueWrapperFragment : Fragment() {
 
-    private val EXTRA_VIEW_POSITION = "EXTRA_VIEW_POSITION"
     private val pageChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(state: Int) {}
 
@@ -26,8 +24,7 @@ class CatalogueWrapperFragment : Fragment() {
             position: Int,
             positionOffset: Float,
             positionOffsetPixels: Int
-        ) {
-        }
+        ) {}
 
         override fun onPageSelected(position: Int) {
             viewStatePosition = position
@@ -51,11 +48,8 @@ class CatalogueWrapperFragment : Fragment() {
         toolbar.inflateMenu(R.menu.main_menu)
         toolbar.title = "LIST DB"
         toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.menu_language) {
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-                startActivity(mIntent)
-
-                return@setOnMenuItemClickListener true
+            if (item.itemId == R.id.fragment_settings) {
+                findNavController().navigate(R.id.catalogue_to_search)
             }
 
             true
