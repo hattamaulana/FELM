@@ -17,9 +17,6 @@ class CatalogueAdapter(private val mContext: Context) :
     private var movies: ArrayList<DataModel> = ArrayList()
     private var mOnItemCallback: OnItemClickCallback? = null
 
-    /**
-     *
-     */
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: DataModel) = with(view) {
             Glide.with(mContext)
@@ -27,7 +24,7 @@ class CatalogueAdapter(private val mContext: Context) :
                 .fitCenter()
                 .into(img_movie)
 
-            val overview = movie.overview!!
+            val overview = movie.overview as String
 
             txt_title.text = movie.title
             txt_rating.text = movie.rating.toString()
@@ -35,8 +32,9 @@ class CatalogueAdapter(private val mContext: Context) :
                 val string = overview.substring(0 until 200)
                     .split(" ".toRegex())
                     .dropLast(1)
+                    .joinToString(" ")
 
-                "${string.joinToString(" ")} ..."
+                "$string ..."
             } else {
                 overview
             }
@@ -62,9 +60,6 @@ class CatalogueAdapter(private val mContext: Context) :
         holder.bind(movies[position])
     }
 
-    /**
-     *
-     */
     fun setData(arg: List<DataModel>) {
         movies.clear()
         movies.addAll(arg)
@@ -72,9 +67,6 @@ class CatalogueAdapter(private val mContext: Context) :
         notifyDataSetChanged()
     }
 
-    /**
-     *
-     */
     fun setOnItemClckCallback(onItemClickCallback: OnItemClickCallback) {
         mOnItemCallback = onItemClickCallback
     }

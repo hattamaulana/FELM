@@ -11,23 +11,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "favorites")
 data class DataModel(
-    @PrimaryKey(autoGenerate = false)
-    var id: Int?,
-
-    @ColumnInfo(name = "poster_path")
-    var posterPath: String?,
-
-    @ColumnInfo(name = "title")
-    var title: String?,
-
-    @ColumnInfo(name = "overview")
-    var overview: String?,
-
-    @ColumnInfo(name = "rating")
-    var rating: Double?,
-
-    @ColumnInfo(name = "release")
-    var release: String?
+    @PrimaryKey(autoGenerate = false) var id: Int?,
+    @ColumnInfo(name = "backdrop_path") var backdropPath: String?,
+    @ColumnInfo(name = "poster_path") var posterPath: String?,
+    @ColumnInfo(name = "title") var title: String?,
+    @ColumnInfo(name = "overview") var overview: String?,
+    @ColumnInfo(name = "rating") var rating: Double?,
+    @ColumnInfo(name = "release") var release: String?
 ) : Parcelable {
 
     @IgnoredOnParcel

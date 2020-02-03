@@ -53,6 +53,7 @@ object MovieDbFactory {
     const val KEY_NAME = "name"
     const val KEY_ID = "id"
     const val KEY_OVERVIEW = "overview"
+    const val KEY_BACKDROP_PATH = "backdrop_path"
     const val KEY_POSTER_PATH = "poster_path"
     const val KEY_RATING = "vote_average"
 
@@ -136,10 +137,11 @@ object MovieDbFactory {
     private fun refactorData(tag: String, json: JSONObject): DataModel {
         val title = json.getString(if (tag == TYPE_MOVIE) KEY_TITLE else KEY_NAME)
         val id = json.getInt(KEY_ID)
-        val image = json.getString(KEY_POSTER_PATH)
+        val backdropPath = json.getString(KEY_BACKDROP_PATH)
+        val posterPath = json.getString(KEY_POSTER_PATH)
         val overview = json.getString(KEY_OVERVIEW)
         val rating = json.getDouble(KEY_RATING)
 
-        return DataModel(id, image, title, overview, rating, null)
+        return DataModel(id, backdropPath,  posterPath, title, overview, rating, null)
     }
 }

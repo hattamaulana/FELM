@@ -22,9 +22,15 @@ import java.util.*
 class MovieDbRepository(private val context: Context) : JSONObjectRequestListener {
 
     private lateinit var tag: String
-    private lateinit var callback: (list: List<*>)-> Unit
+    private lateinit var discoverCallback: (list: List<*>, totalPage: Int)-> Unit
+    private lateinit var genreCallback: (list: List<*>)-> Unit
 
     private val TAG = this.javaClass.simpleName
+
+    // TODO : PLAN TO IT
+    fun search(tag: String) {
+        val uri = "$API_URI/search/$tag/"
+    }
 
     /**
      * Untuk mengambil data movie dan tv show
@@ -32,13 +38,24 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      * @param tag
      * @param callback
      */
-    fun getDiscover(tag: String, callback: (list: List<DataModel>)-> Unit) {
+    fun getDiscover(
+        tag: String, page: Int, callback: (list: List<DataModel>, totalPage: Int)-> Unit
+    ) {
         this.tag = tag
         @Suppress("UNCHECKED_CAST")
-        this.callback = callback as (List<*>) -> Unit
+        discoverCallback = callback as (List<*>, Int) -> Unit
 
-        request("$API_URI/discover/$tag", mapOf("sort_by" to "popularity.desc"))
-            .getAsJSONObject(this)
+        val query = mapOf(
+            "sort_by" to "popularity.desc",
+            "page" to "$page"
+        )
+
+        val req = request("$API_URI/discover/$tag", query)
+            req.getAsJSONObject(this)
+
+        Log.d(TAG, "getDiscover: $req")
+        Log.d(TAG, "getDiscover: ${req.requestBody}")
+        Log.d(TAG, "getDiscover: ${req.url}")
     }
 
     /**
@@ -49,7 +66,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      */
     fun getGenre(tag: String, callback: (list: List<GenreModel>)-> Unit) {
         @Suppress("UNCHECKED_CAST")
-        this.callback = callback as (List<*>) -> Unit
+        genreCallback = callback as (List<*>) -> Unit
 
         request("$API_URI/genre/$tag/list")
             .getAsJSONObject(this)
@@ -78,18 +95,19 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         response?.let { res ->
             when {
                 res.has("results") -> CoroutineScope(Dispatchers.Default).launch {
+                    val totalPage = res.getInt("total_pages")
                     val array = res.getJSONArray("results")
                     val listData = MovieDbFactory.data(array, tag)
-                    callback(listData)
 
+                    discoverCallback(listData, totalPage)
                     Log.d(TAG, "onResponse: listData movie: ${listData.size}")
                 }
 
                 res.has("genres") -> CoroutineScope(Dispatchers.Default).launch {
                     val array = res.getJSONArray("genres")
                     val listData = MovieDbFactory.genre(array)
-                    callback(listData)
 
+                    genreCallback(listData)
                     Log.d(TAG, "onResponse: listData genre: ${listData.size}")
                 }
 

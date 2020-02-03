@@ -25,17 +25,19 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
+    <string name="messages_notification">Notifikasi</string>
     <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- Notification Preferences -->
+    <string name="title_early_morning">Notifikasi Setiap Pagi</string>
+    <string name="title_new_release">Film &amp; Tv Show yang baru rilis</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- Summary On -->
+    <string name="summary_on_early_morning">Tampilkan Notifikasi Setiap hari nya pada jam 07.00</string>
+    <string name="summary_on_new_release">Tampilkan Notifikasi Setiap harinya untuk informasi FIlm &amp; Tv Show yang baru rilis</string>
+
+    <!-- Summary Off-->
+    <string name="summary_off_early_morning">Sembunyikan Notifikasi Setiap Harinya pada jam 07.00</string>
+    <string name="summary_off_new_release">Sembunyikan Notifikasi Setiap harinya untuk informasi Film &amp; Tv Show yang baru rilis</string>
+
 </resources>
