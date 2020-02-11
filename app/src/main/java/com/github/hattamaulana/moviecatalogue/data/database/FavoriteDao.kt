@@ -14,10 +14,10 @@ interface FavoriteDao {
     suspend fun add(arg: DataModel)
 
     @Query("SELECT * FROM favorites")
-    fun all(): List<DataModel>
+    suspend fun all(): List<DataModel>
 
-    @Query("SELECT * FROM favorites WHERE :field LIKE :search")
-    fun find(field: String, search: String): List<DataModel>
+    @Query("SELECT * FROM favorites WHERE title LIKE :search AND category = :category")
+    suspend fun findByTitle(search: String, category: String): List<DataModel>
 
     @Query("SELECT * FROM favorites WHERE id = :id")
     suspend fun findById(id: Int): List<DataModel>

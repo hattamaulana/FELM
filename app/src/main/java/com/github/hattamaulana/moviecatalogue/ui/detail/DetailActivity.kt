@@ -47,9 +47,9 @@ class DetailActivity : AppCompatActivity(), RequestListener<Drawable> {
         /** Set Content View */
         txt_overview.text = dataIntent.overview
         Glide.with(this)
-            .load("$IMAGE_URI/w780/${dataIntent.posterPath}")
+            .load("$IMAGE_URI/w780/${dataIntent.backdropPath}")
             .addListener(this)
-            .into(img_movie)
+            .into(backdrop_movie)
 
         /** Set Genre */
         setGenre(genreIds)

@@ -23,7 +23,6 @@
     <string name="save_favorite">Berhasil Menambahkan Ke Favorit</string>
     <string name="failed_save_favorite">Berhasil Menghapus dari Favorit</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->
     <string name="messages_notification">Notifikasi</string>
     <string name="sync_header">Sync</string>

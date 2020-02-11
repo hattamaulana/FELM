@@ -11,9 +11,7 @@ import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
 import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider
-import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {

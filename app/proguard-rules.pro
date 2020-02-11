@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keeping Class Model which extends Parcelable
+-keepnames class com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
+-keepnames class com.github.hattamaulana.moviecatalogue.data.model.DataModel
+-keepnames class com.github.hattamaulana.moviecatalogue.data.model.GenreModel

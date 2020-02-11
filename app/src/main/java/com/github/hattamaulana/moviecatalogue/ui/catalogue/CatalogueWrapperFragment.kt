@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
@@ -17,6 +18,7 @@ private const val EXTRA_VIEW_POSITION = "EXTRA_VIEW_POSITION"
 
 class CatalogueWrapperFragment : Fragment() {
 
+    /* On Page ChangeListener*/
     private val pageChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(state: Int) {}
 
@@ -45,15 +47,10 @@ class CatalogueWrapperFragment : Fragment() {
             viewStatePosition = viewState
         }
 
-        toolbar.inflateMenu(R.menu.main_menu)
+        /* Set Toolbar */
         toolbar.title = "LIST DB"
-        toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.fragment_settings) {
-                findNavController().navigate(R.id.catalogue_to_search)
-            }
-
-            true
-        }
+        toolbar.inflateMenu(R.menu.main_menu)
+        toolbar.setOnMenuItemClickListener(onMenuItemSelected())
 
         view_pager.adapter = TabLayoutAdapter(context as Context, childFragmentManager) {
             CatalogueFragment.instance(it)
@@ -67,5 +64,23 @@ class CatalogueWrapperFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(EXTRA_VIEW_POSITION, viewStatePosition ?: 0)
+    }
+
+    /** Callback Menu Item Selected */
+    private fun onMenuItemSelected() = Toolbar.OnMenuItemClickListener { item ->
+        when(item.itemId) {
+            R.id.search -> CatalogueWrapperFragmentDirections
+                .catalogueToSearch(ARG_CATALOGUE, viewStatePosition ?: 0)
+            R.id.iv_search -> null
+            else -> null
+        }?.let {
+            findNavController().navigate(it)
+        }
+
+        return@OnMenuItemClickListener true
+    }
+
+    companion object {
+        const val ARG_CATALOGUE = "list"
     }
 }

@@ -10,36 +10,57 @@
         android:name="com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueWrapperFragment"
         android:label="fragment_catalogue_wrapper"
         tools:layout="@layout/fragment_catalogue_wrapper" >
+
         <action
             android:id="@+id/catalogue_to_detail"
             app:destination="@id/activity_detail" />
+
         <action
             android:id="@+id/catalogue_to_search"
-            app:destination="@id/fragment_search" />
+            app:destination="@id/searchFragment" >
+
+            <argument
+                android:name="ARG_SEARCH"
+                android:defaultValue="list" />
+        </action>
     </fragment>
+
     <fragment
         android:id="@+id/fragment_favorite"
         android:name="com.github.hattamaulana.moviecatalogue.ui.favorite.FavoriteWrapperFragment"
         android:label="fragment_favorite_wrapper"
         tools:layout="@layout/fragment_favorite_wrapper" >
+
         <action
             android:id="@+id/favorite_to_detail"
             app:destination="@id/activity_detail" />
+
         <action
-            android:id="@+id/action_favoriteWrapperFragment_to_searchFragment"
-            app:destination="@id/fragment_search" />
+            android:id="@+id/favorite_to_fragment"
+            app:destination="@id/searchFragment" />
     </fragment>
+
     <activity
         android:id="@+id/activity_detail"
         android:name="com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity"
         android:label="DetailActivity" />
+
     <fragment
-        android:id="@+id/fragment_search"
+        android:id="@+id/searchFragment"
         android:name="com.github.hattamaulana.moviecatalogue.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/fragment_settings"
-        android:name="com.github.hattamaulana.moviecatalogue.ui.setting.SettingsFragment"
-        android:label="SettingsFragment" />
+        tools:layout="@layout/fragment_search" >
+
+        <argument
+            android:name="ARG_SEARCH"
+            android:defaultValue="list"
+            app:argType="string" />
+        <argument
+            android:name="ARG_TYPE"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/search_to_detail"
+            app:destination="@id/activity_detail" />
+    </fragment>
 </navigation>

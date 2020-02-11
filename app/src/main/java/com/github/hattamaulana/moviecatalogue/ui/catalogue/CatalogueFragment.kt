@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_catalogue.*
 
 private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
-class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback{
+class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     private lateinit var mTag: String
     private lateinit var adapter: CatalogueAdapter
@@ -70,9 +70,7 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback{
         })
     }
 
-    /**
-     * Handle Scroll pada Recycler View
-     */
+    /** Handle Scroll pada Recycler View */
     private fun scrollListener(linearLayoutManager: LinearLayoutManager) =
         object : PaginationListener(linearLayoutManager) {
             override fun isLoading(): Boolean = isLoading
@@ -95,9 +93,7 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback{
 
         }
 
-    /**
-     * Handle ketika ada data ada yang berubah
-     */
+    /** Handle ketika ada data ada yang berubah */
     private fun observing() =
         Observer<List<DataModel>> { listData ->
             if ((listData != null) or isLoading) {

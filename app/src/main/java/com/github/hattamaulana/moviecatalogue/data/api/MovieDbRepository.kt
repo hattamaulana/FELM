@@ -27,9 +27,23 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
 
     private val TAG = this.javaClass.simpleName
 
-    // TODO : PLAN TO IT
-    fun search(tag: String) {
-        val uri = "$API_URI/search/$tag/"
+    /** Untuk melakukan filtering data yang ditampilkan */
+    fun filter(map: Map<String, String>) {
+        request("", map)
+    }
+
+    /**
+     * Untuk melakukan searching data ke web service, dengan parameter :
+     * @param tag : Menampung nilai movies atau tv show
+     */
+    fun search(
+        tag: String, query: String, callback: (list: List<DataModel>, totalPage: Int) -> Unit
+    ) {
+        this.tag = tag
+        @Suppress("UNCHECKED_CAST")
+        discoverCallback = callback as (List<*>, Int) -> Unit
+
+        request("$API_URI/search/$tag/", mapOf("query" to query))
     }
 
     /**
@@ -50,12 +64,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
             "page" to "$page"
         )
 
-        val req = request("$API_URI/discover/$tag", query)
-            req.getAsJSONObject(this)
-
-        Log.d(TAG, "getDiscover: $req")
-        Log.d(TAG, "getDiscover: ${req.requestBody}")
-        Log.d(TAG, "getDiscover: ${req.url}")
+        request("$API_URI/discover/$tag", query)
     }
 
     /**
@@ -64,12 +73,11 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      * @param tag
      * @param callback
      */
-    fun getGenre(tag: String, callback: (list: List<GenreModel>)-> Unit) {
+    fun getGenre(tag: String, callback: (list: List<GenreModel>) -> Unit) {
         @Suppress("UNCHECKED_CAST")
         genreCallback = callback as (List<*>) -> Unit
 
         request("$API_URI/genre/$tag/list")
-            .getAsJSONObject(this)
     }
 
     /**
@@ -88,7 +96,12 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         get.addQueryParameter("language", if (locale == "in-ID") "id-ID" else locale)
         queryParams?.forEach { get.addQueryParameter(it.key, it.value) }
 
-        return get.build()
+        return get.build().apply {
+            Log.d(TAG, "search: $requestBody")
+            Log.d(TAG, "search: $url")
+
+            getAsJSONObject(this@MovieDbRepository)
+        }
     }
 
     override fun onResponse(response: JSONObject?) {
@@ -99,8 +112,10 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
                     val array = res.getJSONArray("results")
                     val listData = MovieDbFactory.data(array, tag)
 
+                    Log.d(TAG, "onResponse: totalPage: $totalPage")
+                    Log.d(TAG, "onResponse: listData: ${listData.size}")
+
                     discoverCallback(listData, totalPage)
-                    Log.d(TAG, "onResponse: listData movie: ${listData.size}")
                 }
 
                 res.has("genres") -> CoroutineScope(Dispatchers.Default).launch {

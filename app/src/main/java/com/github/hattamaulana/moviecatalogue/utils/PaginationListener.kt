@@ -8,8 +8,13 @@ abstract class PaginationListener(linearLayoutManager: LinearLayoutManager) :
 
     private val layoutManager = linearLayoutManager
 
+    /** Check is Loading */
     abstract fun isLoading(): Boolean
+
+    /** Checking Las Page */
     abstract fun isLastPage(): Boolean
+
+    /** Do Load more */
     abstract fun loadMore()
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -21,14 +26,8 @@ abstract class PaginationListener(linearLayoutManager: LinearLayoutManager) :
 
         if (!isLoading() && !isLastPage()) {
             if (totalVisibleItem >= totalItemCount && firstVisibleItemPosition >= 0) {
-                loadMore();
+                loadMore()
             }
         }
-    }
-
-    companion object {
-        const val PAGE_START = 1
-
-        val TAG = PaginationListener::class.java.simpleName
     }
 }
