@@ -10,6 +10,11 @@
     <string name="favorite">Favorite</string>
     <string name="movies_amp_tv"><![CDATA[Movies & Tv]]></string>
     <string name="setting">Setting</string>
+
+    <string-array name="similar">
+        <item>Similar Movie</item>
+        <item>Similar Tv Show</item>
+    </string-array>
     <!-- Warning   -->
 
     <!-- Sample Data Movie -->

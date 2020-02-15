@@ -15,7 +15,6 @@ import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.util.*
 
@@ -28,8 +27,14 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
     private val TAG = this.javaClass.simpleName
 
     /** Untuk melakukan filtering data yang ditampilkan */
-    fun filter(map: Map<String, String>) {
-        request("", map)
+    fun similarContent(
+        tag: String?, id: Int?, callback: (list: List<DataModel>, totalPage: Int) -> Unit
+    ) {
+        this.tag = tag ?: ""
+        @Suppress("UNCHECKED_CAST")
+        discoverCallback = callback as (List<*>, Int) -> Unit
+
+        request("$API_URI/$tag/$id/similar")
     }
 
     /**
