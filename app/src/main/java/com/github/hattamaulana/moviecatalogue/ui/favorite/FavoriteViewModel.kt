@@ -1,13 +1,18 @@
 package com.github.hattamaulana.moviecatalogue.ui.favorite
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.database.*
 import com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
+import com.github.hattamaulana.moviecatalogue.ui.widget.FavoriteWidgetProvider
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -45,8 +50,6 @@ class FavoriteViewModel : ViewModel(), CoroutineScope {
                         data.genres = mutableListOf<Int>().apply {
                             relationDao.find(data.id as Int).forEach { add(it.genreId) }
                         }
-
-                        Log.d(TAG, "loadData: id=${data.id} genres=${data.genres}")
                     }
                 }
 
@@ -61,7 +64,7 @@ class FavoriteViewModel : ViewModel(), CoroutineScope {
         launch {
             val id = arg.id as Int
             val genreIds = arg.genres
-
+            // TODO : Update Widget when removed
             genreIds?.forEach { gId -> relationDao.remove(DataGenreRelation(id, gId)) }
         }
     }

@@ -41,44 +41,29 @@ class DetailViewModel : ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = IO
 
-    /**
-     * Digunakan untuk menambahkan data
-     * movie atau tv show ke database favorite.
-     *
-     * @param arg : Data Movie atau Tv Show
-     */
+    /** Digunakan untuk menambahkan data movie atau tv show ke database favorite. */
     fun save(arg: DataModel) {
         launch { favoriteDao.add(arg) }
         launch {
             val id = arg.id as Int
             val genreIds = arg.genres
-
+            // TODO : Update Widget when
             genreIds?.forEach { gId -> relationDao.add(DataGenreRelation(id, gId)) }
         }
     }
 
-    /**
-     * Digunakan untuk menghapus data
-     * movie atau tv yang telah terdaftar di database favorite.
-     *
-     * @param arg : Data Movie atau Tv Show
-     */
+    /** Digunakan untuk menghapus data movie atau tv yang telah terdaftar di database favorite. */
     fun delete(arg: DataModel) {
         launch { favoriteDao.remove(arg) }
         launch {
             val id = arg.id as Int
             val genreIds = arg.genres
-
+            // TODO : Update Widget when
             genreIds?.forEach { gId -> relationDao.remove(DataGenreRelation(id, gId)) }
         }
     }
 
-    /**
-     * Function ini untuk melakukan
-     * checking data genre berdasarkan id.
-     *
-     * @param id id dari Data Favorite
-     */
+    /** Function ini untuk melakukan checking data genre berdasarkan id. */
     fun checkData(id: Int, callback: (arg: Boolean) -> Unit) = launch {
         val task = favoriteDao.findById(id).isEmpty()
         Log.d(TAG, "checkData: task result=$task")
@@ -86,13 +71,7 @@ class DetailViewModel : ViewModel(), CoroutineScope {
         launch(Main) { callback(task) }
     }
 
-    /**
-     * function ini digunakan untuk menambil data genre
-     * base on id.
-     *
-     * @param id
-     * @param callback
-     */
+    /** function ini digunakan untuk menambil data genre base on id. */
     fun findGenreByIdAsync(id: Int, callback: (arg: GenreModel) -> Unit) = launch {
         val genre = genreDao.findById(id)
         Log.d(TAG, "findGenreByIdAsync: id=$id; genre=$genre")
