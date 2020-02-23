@@ -3,6 +3,7 @@ package com.github.hattamaulana.moviecatalogue.service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
@@ -32,9 +33,15 @@ class StackRemoteViewFactory(private val context: Context) :
     override fun getItemId(position: Int): Long = 0
 
     override fun onDataSetChanged() = runBlocking {
+        Log.d(TAG, "onDataSetChanged: OK;")
+
         val identityToken = Binder.clearCallingIdentity()
         val list = favoriteDao.all()
+        widgetItems.clear()
         widgetItems.addAll(list)
+
+        Log.d(TAG, "onDataSetChanged: OK; ${widgetItems.size}")
+
         Binder.restoreCallingIdentity(identityToken)
     }
 
@@ -60,5 +67,6 @@ class StackRemoteViewFactory(private val context: Context) :
     override fun getViewTypeCount(): Int = 1
 
     override fun onDestroy() {
+        widgetItems.clear()
     }
 }

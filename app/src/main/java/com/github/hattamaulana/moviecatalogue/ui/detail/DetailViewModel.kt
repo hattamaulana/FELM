@@ -1,14 +1,19 @@
 package com.github.hattamaulana.moviecatalogue.ui.detail
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
 import com.github.hattamaulana.moviecatalogue.data.database.*
 import com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
+import com.github.hattamaulana.moviecatalogue.ui.widget.FavoriteWidgetProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -48,6 +53,7 @@ class DetailViewModel : ViewModel(), CoroutineScope {
             val id = arg.id as Int
             val genreIds = arg.genres
             // TODO : Update Widget when
+            updateWidget("Save")
             genreIds?.forEach { gId -> relationDao.add(DataGenreRelation(id, gId)) }
         }
     }
@@ -59,6 +65,7 @@ class DetailViewModel : ViewModel(), CoroutineScope {
             val id = arg.id as Int
             val genreIds = arg.genres
             // TODO : Update Widget when
+            updateWidget("Remove")
             genreIds?.forEach { gId -> relationDao.remove(DataGenreRelation(id, gId)) }
         }
     }
@@ -86,4 +93,12 @@ class DetailViewModel : ViewModel(), CoroutineScope {
         repo.similarContent(tag, id) { listData, _ -> listSimilarContent.postValue(listData) }
     }
 
+    /** Update Widget when adding or removing data */
+    private fun updateWidget(string: String? = "") {
+        Log.d(TAG, "remove: OK; Success $string Favorites")
+
+        val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+            .apply { action = AppWidgetManager.ACTION_APPWIDGET_UPDATE }
+        context?.sendBroadcast(intent)
+    }
 }

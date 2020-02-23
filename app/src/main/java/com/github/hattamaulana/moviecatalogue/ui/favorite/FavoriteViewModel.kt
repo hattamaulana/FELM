@@ -62,9 +62,13 @@ class FavoriteViewModel : ViewModel(), CoroutineScope {
     fun remove(arg: DataModel) {
         launch { favoriteDao.remove(arg) }
         launch {
+            Log.d(TAG, "remove: OK; Success Delete Favorites")
+
             val id = arg.id as Int
             val genreIds = arg.genres
-            // TODO : Update Widget when removed
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+                .apply { action = AppWidgetManager.ACTION_APPWIDGET_UPDATE }
+            context?.sendBroadcast(intent)
             genreIds?.forEach { gId -> relationDao.remove(DataGenreRelation(id, gId)) }
         }
     }

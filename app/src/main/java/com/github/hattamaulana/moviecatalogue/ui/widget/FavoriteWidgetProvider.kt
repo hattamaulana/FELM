@@ -3,8 +3,10 @@ package com.github.hattamaulana.moviecatalogue.ui.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.net.toUri
 import com.github.hattamaulana.moviecatalogue.R
@@ -12,12 +14,15 @@ import com.github.hattamaulana.moviecatalogue.service.StackWidgetService
 
 class FavoriteWidgetProvider : AppWidgetProvider() {
 
+    private val TAG = this.javaClass.simpleName
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
         // There may be multiple widgets active, so update all of them
+        Log.d(TAG, "onUpdate: OK;")
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
@@ -25,9 +30,17 @@ class FavoriteWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        intent?.takeIf { intent.action == TOAST_ACTION  }?.let {
-            val viewIndex = intent.getIntExtra(EXTRA_ITEM, 0)
-            // TODO Do Something
+        when (intent?.action) {
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
+                val widget = ComponentName(context?.packageName as String,
+                    FavoriteWidgetProvider::class.java.name)
+                val widgetManager = AppWidgetManager.getInstance(context).apply {
+                    val widgetIds = getAppWidgetIds(widget)
+                    notifyAppWidgetViewDataChanged(widgetIds, R.id.stack_view)
+                }
+
+                Log.d(TAG, "onReceive: OK; Triggered Successfull")
+            }
         }
     }
 
