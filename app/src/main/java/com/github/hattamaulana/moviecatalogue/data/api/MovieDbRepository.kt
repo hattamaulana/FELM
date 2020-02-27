@@ -26,6 +26,24 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
 
     private val TAG = this.javaClass.simpleName
 
+    fun newRelease(
+        tag: String?,
+        date: String,
+        callback: (list: List<DataModel>, totalPage: Int) -> Unit
+    ) {
+        this.tag = tag ?: ""
+        @Suppress("UNCHECKED_CAST")
+        discoverCallback = callback as (List<*>, Int) -> Unit
+
+        val query = mapOf(
+            "sort_by" to "popularity.desc",
+            "primary_release_date.gte" to date,
+            "release_date.lte" to date
+        )
+
+        request("$API_URI/discover/$tag", query)
+    }
+
     /** Untuk melakukan filtering data yang ditampilkan */
     fun similarContent(
         tag: String?, id: Int?, callback: (list: List<DataModel>, totalPage: Int) -> Unit

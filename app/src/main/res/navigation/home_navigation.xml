@@ -63,4 +63,8 @@
             android:id="@+id/search_to_detail"
             app:destination="@id/activity_detail" />
     </fragment>
+    <fragment
+        android:id="@+id/fragment_setting"
+        android:name="com.github.hattamaulana.moviecatalogue.ui.setting.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

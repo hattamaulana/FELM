@@ -30,6 +30,8 @@ class CatalogueWrapperFragment : Fragment() {
 
         override fun onPageSelected(position: Int) {
             viewStatePosition = position
+            val title = if (position == 0) R.string.list_movie else R.string.list_tv
+            toolbar.title = resources.getString(title)
         }
     }
 
@@ -48,7 +50,8 @@ class CatalogueWrapperFragment : Fragment() {
         }
 
         /* Set Toolbar */
-        toolbar.title = "LIST DB"
+        val title = if (viewStatePosition ?: 0 == 0) R.string.list_movie else R.string.list_tv
+        toolbar.title = resources.getString(title)
         toolbar.inflateMenu(R.menu.main_menu)
         toolbar.setOnMenuItemClickListener(onMenuItemSelected())
 

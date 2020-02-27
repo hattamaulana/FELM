@@ -28,11 +28,11 @@ class ReminderReceiver : BroadcastReceiver() {
     }
 
     fun setDailyMorning(context: Context) {
-        setOn(context, "17:25", TYPE_DAILY_REMAINDER)
+        setOn(context, "07:00", TYPE_DAILY_REMAINDER)
     }
 
     fun setNewRelease(context: Context) {
-        setOn(context, "17:25", TYPE_NEW_RELEASE)
+        setOn(context, "08:00", TYPE_NEW_RELEASE)
     }
 
     /** Set Off Remainder */

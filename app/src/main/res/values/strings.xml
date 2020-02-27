@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">MOVIE DB</string>
 
+    <!-- Toolbar Title -->
+    <string name="list_movie">List Movie</string>
+    <string name="list_tv">List Tv Show</string>
+    <string name="favorite_movie">Favorite Movie</string>
+    <string name="favorite_tv">Favorite Tv Show</string>
+    <string name="notification">Notification</string>
+
     <!-- Label   -->
     <string name="tab_movie">Movie</string>
     <string name="tab_tv_series">TV Series</string>
@@ -43,16 +50,18 @@
     <string name="summary_off_early_morning">Hidden Notification every jam 07.00</string>
     <string name="summary_off_new_release">Hidden Notification every there new release Film &amp; Tv Show</string>
 
-
     <!-- Title Notification -->
     <string-array name="title_notification">
         <item>Good Morning</item>
         <item>New Release</item>
     </string-array>
 
+    <!-- Message Notification -->
     <string-array name="message_notification">
-        <item>Review lagi yuk beberapa film atau tv series favorite kamu.</item>
-        <item>Ada yang baru rilis Nih jangan sampai kelupaan ya film dan tv series apa aja yang baru rilis</item>
+        <item>Let\'s review some of your favorite movies or TV series.</item>
+        <item>
+            There is a new release. Do not forget what films and TV series have just been released
+        </item>
     </string-array>
 
 </resources>

@@ -52,7 +52,6 @@ class DetailViewModel : ViewModel(), CoroutineScope {
         launch {
             val id = arg.id as Int
             val genreIds = arg.genres
-            // TODO : Update Widget when
             updateWidget("Save")
             genreIds?.forEach { gId -> relationDao.add(DataGenreRelation(id, gId)) }
         }
@@ -64,7 +63,6 @@ class DetailViewModel : ViewModel(), CoroutineScope {
         launch {
             val id = arg.id as Int
             val genreIds = arg.genres
-            // TODO : Update Widget when
             updateWidget("Remove")
             genreIds?.forEach { gId -> relationDao.remove(DataGenreRelation(id, gId)) }
         }

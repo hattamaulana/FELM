@@ -143,9 +143,9 @@ class SearchFragment :
 
     private fun search() {
         if (paramSearch == ARG_CATALOGUE) {
-            viewModel.searchApi(viewTypes[paramType], searchQuery)
+            if (searchQuery.isNotEmpty()) viewModel.searchApi(viewTypes[paramType], searchQuery)
         } else {
-            viewModel.searchLocal(viewTypes[paramType], searchQuery)
+            if (searchQuery.isNotEmpty()) viewModel.searchLocal(viewTypes[paramType], searchQuery)
         }
     }
 

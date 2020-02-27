@@ -19,8 +19,26 @@ class App : Application() {
                 editor.apply()
             }
 
+        var notificationEarlyMorning: Boolean
+            get() = sharedPref.getBoolean(NOTIFICATION_EARLY_MORNING, true)
+            set(value) {
+                val editor = sharedPref.edit()
+                editor.putBoolean(NOTIFICATION_EARLY_MORNING, value)
+                editor.apply()
+            }
+
+        var notificationNewRelease: Boolean
+            get() = sharedPref.getBoolean(NOTIFICATION_NEW_RELEASE, true)
+            set(value) {
+                val editor = sharedPref.edit()
+                editor.putBoolean(NOTIFICATION_NEW_RELEASE, value)
+                editor.apply()
+            }
+
         companion object {
             const val FIRST_RUN = "FIRST_RUN"
+            const val NOTIFICATION_EARLY_MORNING = "NOTIFICATION_EARLY_MORNING"
+            const val NOTIFICATION_NEW_RELEASE = "NOTIFICATION_NEW_RELEASE"
         }
     }
 

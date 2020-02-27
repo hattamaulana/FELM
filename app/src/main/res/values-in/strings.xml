@@ -2,6 +2,13 @@
 <resources>
     <string name="app_name">Database Film</string>
 
+    <!-- Toolbar Title -->
+    <string name="list_movie">Daftar Film</string>
+    <string name="list_tv">Daftar Tv Series</string>
+    <string name="favorite_movie">Favorit Film</string>
+    <string name="favorite_tv">Favorit Tv Series</string>
+    <string name="notification">Notifikasi</string>
+
     <!-- Label   -->
     <string name="tab_movie">Film</string>
     <string name="tab_tv_series">Serial TV</string>
@@ -11,6 +18,7 @@
     <string name="favorite">Favorit</string>
     <string name="movies_amp_tv"><![CDATA[Film & Tv]]></string>
     <string name="setting">Pengaturan</string>
+
     <string-array name="similar">
         <item>Film Serupa</item>
         <item>Tv Show Serupa</item>
@@ -48,6 +56,7 @@
         <item>Baru Release !</item>
     </string-array>
 
+    <!-- Message Notification -->
     <string-array name="message_notification">
         <item>Review lagi yuk beberapa film atau tv series favorite kamu.</item>
         <item>Ada yang baru rilis Nih jangan sampai kelupaan ya film dan tv series apa aja yang baru rilis</item>

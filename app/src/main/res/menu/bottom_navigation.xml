@@ -14,7 +14,7 @@
         android:title="@string/favorite" />
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/fragment_setting"
         android:icon="@drawable/ic_settings_filled"
         android:title="@string/setting" />
 

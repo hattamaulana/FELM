@@ -11,7 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.ui.TabLayoutAdapter
+import kotlinx.android.synthetic.main.fragment_catalogue_wrapper.*
 import kotlinx.android.synthetic.main.fragment_favorite_wrapper.*
+import kotlinx.android.synthetic.main.fragment_favorite_wrapper.tabs
+import kotlinx.android.synthetic.main.fragment_favorite_wrapper.toolbar
 
 private var viewStatePosition: Int? = null
 
@@ -29,6 +32,8 @@ class FavoriteWrapperFragment : Fragment() {
 
         override fun onPageSelected(position: Int) {
             viewStatePosition = position
+            val title = if (position == 0) R.string.favorite_movie else R.string.favorite_tv
+            toolbar.title = resources.getString(title)
         }
     }
 
@@ -47,7 +52,8 @@ class FavoriteWrapperFragment : Fragment() {
         }
 
         /** Setup Toolbar */
-        toolbar.title = "FAVORITES"
+        val title = if (viewStatePosition ?: 0 == 0) R.string.favorite_movie else R.string.favorite_tv
+        toolbar.title = resources.getString(title)
         toolbar.inflateMenu(R.menu.main_menu)
         toolbar.setOnMenuItemClickListener(onMenuItemSelected())
 
