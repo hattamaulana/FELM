@@ -42,8 +42,17 @@
     <!-- Summary Off-->
     <string name="summary_off_early_morning">Hidden Notification every jam 07.00</string>
     <string name="summary_off_new_release">Hidden Notification every there new release Film &amp; Tv Show</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="configure">Configure</string>
-    <string name="add_widget">Add widget</string>
+
+
+    <!-- Title Notification -->
+    <string-array name="title_notification">
+        <item>Good Morning</item>
+        <item>New Release</item>
+    </string-array>
+
+    <string-array name="message_notification">
+        <item>Review lagi yuk beberapa film atau tv series favorite kamu.</item>
+        <item>Ada yang baru rilis Nih jangan sampai kelupaan ya film dan tv series apa aja yang baru rilis</item>
+    </string-array>
 
 </resources>

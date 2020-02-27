@@ -42,4 +42,15 @@
     <string name="summary_off_early_morning">Sembunyikan Notifikasi Setiap Harinya pada jam 07.00</string>
     <string name="summary_off_new_release">Sembunyikan Notifikasi Setiap harinya untuk informasi Film &amp; Tv Show yang baru rilis</string>
 
+    <!-- Title Notification -->
+    <string-array name="title_notification">
+        <item>Selamat Pagi</item>
+        <item>Baru Release !</item>
+    </string-array>
+
+    <string-array name="message_notification">
+        <item>Review lagi yuk beberapa film atau tv series favorite kamu.</item>
+        <item>Ada yang baru rilis Nih jangan sampai kelupaan ya film dan tv series apa aja yang baru rilis</item>
+    </string-array>
+
 </resources>
