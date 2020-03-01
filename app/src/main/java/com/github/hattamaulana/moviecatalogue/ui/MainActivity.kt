@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
             listOf(TYPE_TV, TYPE_MOVIE).forEach { type -> storeGenre(type) }
         }
 
+        /** Reguster Content Provider */
+
+
         /** Set Bottom Navigation On Navigation Item Selected */
         val navController = findNavController(R.id.home_fragment)
         bottom_navigation.setupWithNavController(navController)

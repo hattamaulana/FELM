@@ -1,6 +1,7 @@
 package com.github.hattamaulana.moviecatalogue.data.database
 
 import android.content.Context
+import android.net.Uri
 import androidx.room.Room
 
 /**
@@ -9,6 +10,10 @@ import androidx.room.Room
  */
 
 object AppDbProvider {
+
+    const val TABLE_NAME = "favorites"
+    const val AUTHORITY = "com.github.hattamaulana.moviecatalogue"
+    const val SCHEME = "content"
 
     private var database: AppDatabase? = null
 

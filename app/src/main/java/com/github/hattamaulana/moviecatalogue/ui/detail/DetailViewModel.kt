@@ -1,19 +1,16 @@
 package com.github.hattamaulana.moviecatalogue.ui.detail
 
 import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
 import com.github.hattamaulana.moviecatalogue.data.database.*
 import com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
-import com.github.hattamaulana.moviecatalogue.ui.widget.FavoriteWidgetProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -70,7 +67,7 @@ class DetailViewModel : ViewModel(), CoroutineScope {
 
     /** Function ini untuk melakukan checking data genre berdasarkan id. */
     fun checkData(id: Int, callback: (arg: Boolean) -> Unit) = launch {
-        val task = favoriteDao.findById(id).isEmpty()
+        val task = favoriteDao.findByIdAsync(id).isEmpty()
         Log.d(TAG, "checkData: task result=$task")
 
         launch(Main) { callback(task) }

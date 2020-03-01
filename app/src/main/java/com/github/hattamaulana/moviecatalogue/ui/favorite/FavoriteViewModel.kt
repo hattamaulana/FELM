@@ -1,18 +1,15 @@
 package com.github.hattamaulana.moviecatalogue.ui.favorite
 
 import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.database.*
 import com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
-import com.github.hattamaulana.moviecatalogue.ui.widget.FavoriteWidgetProvider
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -43,7 +40,7 @@ class FavoriteViewModel : ViewModel(), CoroutineScope {
      */
     fun loadData(tag: String): LiveData<List<DataModel>> {
         launch {
-            val favorites = favoriteDao.all()
+            val favorites = favoriteDao.getAllAsync()
                 .filter { data -> data.category == tag }
                 .apply {
                     forEach { data ->

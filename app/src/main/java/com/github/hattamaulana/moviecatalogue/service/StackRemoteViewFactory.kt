@@ -36,7 +36,7 @@ class StackRemoteViewFactory(private val context: Context) :
         Log.d(TAG, "onDataSetChanged: OK;")
 
         val identityToken = Binder.clearCallingIdentity()
-        val list = favoriteDao.all()
+        val list = favoriteDao.getAllAsync()
         widgetItems.clear()
         widgetItems.addAll(list)
 
