@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.hattamaulana.favorites">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.github.hattamaulana.moviecatalogue.READ_DATABASE" />
+    <uses-permission android:name="com.github.hattamaulana.moviecatalogue.WRITE_DATABASE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

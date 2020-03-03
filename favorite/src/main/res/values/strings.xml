@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Favorite</string>
+
+    <!-- View Pager and Tab Layouts -->
+    <string name="tab_movie">Movie</string>
+    <string name="tab_tv_series">TV Series</string>
 </resources>
