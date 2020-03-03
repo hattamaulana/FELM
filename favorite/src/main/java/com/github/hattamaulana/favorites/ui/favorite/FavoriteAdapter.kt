@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_favorite.view.*
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
-    var handleClickAction: ((id: String) -> Unit)? = null
+    var handleClickAction: ((data: DataModel) -> Unit)? = null
 
     private var favorites =  ArrayList<DataModel>()
 
@@ -46,7 +46,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
         holder.bind(data)
         holder.itemView.setOnClickListener {
-            handleClickAction?.invoke(data.id.toString())
+            handleClickAction?.invoke(data)
         }
     }
 

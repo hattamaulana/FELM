@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">Favorite</string>
+    <string name="app_name">Favorite Apps</string>
 
     <!-- View Pager and Tab Layouts -->
     <string name="tab_movie">Movie</string>
     <string name="tab_tv_series">TV Series</string>
+
+    <string name="lbl_genre">Genre</string>
+    <string name="lbl_overview">Overview</string>
 </resources>

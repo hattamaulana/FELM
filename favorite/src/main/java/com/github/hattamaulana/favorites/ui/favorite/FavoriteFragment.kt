@@ -21,6 +21,7 @@ import com.github.hattamaulana.favorites.R
 import com.github.hattamaulana.favorites.data.Provider
 import com.github.hattamaulana.favorites.data.Provider.TYPE_MOVIE
 import com.github.hattamaulana.favorites.data.Provider.TYPE_TV
+import com.github.hattamaulana.favorites.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 class FavoriteFragment : Fragment() {
@@ -59,8 +60,10 @@ class FavoriteFragment : Fragment() {
 
         rv_favorite.layoutManager = LinearLayoutManager(context)
         rv_favorite.adapter = adapter.apply {
-            handleClickAction = { id ->
-                // TODO : Starting Activity to Detail Activity
+            handleClickAction = { data ->
+                val intent = Intent(context, DetailActivity::class.java)
+                    .apply { putExtra(DetailActivity.EXTRA_MOVIE_DETAIL, data) }
+                startActivity(intent)
             }
         }
 

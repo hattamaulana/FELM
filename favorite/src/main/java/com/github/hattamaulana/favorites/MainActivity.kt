@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.elevation = 0F
 
         view_pager.adapter = FavoriteFragment.PagerAdapter(this, supportFragmentManager)
