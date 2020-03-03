@@ -2,6 +2,7 @@ package com.github.hattamaulana.moviecatalogue.ui.setting
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        /** Instance ReminderReceiver */
+        reminderReceiver = ReminderReceiver()
+
         sharedPref = App.SharedPref(context as Context)
         sharedPref.notificationEarlyMorning.apply { setDataNotificationEarlyMorning(this) }
         sharedPref.notificationNewRelease.apply { setDataNotificationNewRelease(this) }
@@ -37,9 +41,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         /** Set OnClick Listener for switch */
         switch_early_morning.setOnClickListener(this)
         switch_new_release.setOnClickListener(this)
-
-        /** Instance ReminderReceiver */
-        reminderReceiver = ReminderReceiver()
     }
 
     private fun setDataNotificationEarlyMorning(boolean: Boolean) {
@@ -57,9 +58,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) = when(v?.id) {
         R.id.switch_early_morning -> {
             val checked = !sharedPref.notificationEarlyMorning
-            setDataNotificationEarlyMorning(checked)
-
             sharedPref.notificationEarlyMorning = checked
+            Log.i("MovieDB", "onClick: $checked")
+            setDataNotificationEarlyMorning(checked)
             if (checked) {
                 reminderReceiver.setDailyMorning(context as Context)
             } else {
@@ -69,13 +70,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         R.id.switch_new_release -> {
             val checked = !sharedPref.notificationNewRelease
-            setDataNotificationNewRelease(checked)
-
             sharedPref.notificationNewRelease = checked
+            Log.i("MovieDB", "onClick: $checked")
+            setDataNotificationNewRelease(checked)
             if (checked) {
                 reminderReceiver.setNewRelease(context as Context)
             } else {
-                reminderReceiver.setOff(context as Context, ReminderReceiver.TYPE_NEW_RELEASE)
+                reminderReceiver.setOff(context as Context, ReminderReceiver.TYPE_DAILY_REMAINDER)
             }
         }
 

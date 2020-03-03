@@ -1,11 +1,10 @@
 package com.github.hattamaulana.moviecatalogue.ui.search
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
-import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider
+import com.github.hattamaulana.moviecatalogue.data.database.DatabaseHelper
 import com.github.hattamaulana.moviecatalogue.data.database.FavoriteDao
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +25,7 @@ class SearchViewModel : ViewModel() {
         set(value) {
             field = value
             repo  = MovieDbRepository(value as Context)
-            database = AppDbProvider.getDb(value).favoriteDao()
+            database = DatabaseHelper.openDb(value).favoriteDao()
         }
 
     fun searchLocal(tag: String, text: String) =

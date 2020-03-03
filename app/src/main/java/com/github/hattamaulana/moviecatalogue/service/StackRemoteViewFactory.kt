@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory
-import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider
+import com.github.hattamaulana.moviecatalogue.data.database.DatabaseHelper
 import com.github.hattamaulana.moviecatalogue.data.database.FavoriteDao
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.ui.widget.FavoriteWidgetProvider
@@ -25,7 +25,7 @@ class StackRemoteViewFactory(private val context: Context) :
     private lateinit var favoriteDao: FavoriteDao
 
     override fun onCreate() {
-        favoriteDao = AppDbProvider.getDb(context).favoriteDao()
+        favoriteDao = DatabaseHelper.openDb(context).favoriteDao()
     }
 
     override fun getLoadingView(): RemoteViews? = null

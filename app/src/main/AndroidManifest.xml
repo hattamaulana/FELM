@@ -9,6 +9,9 @@
     <permission
         android:name="com.github.hattamaulana.moviecatalogue.READ_DATABASE"
         android:protectionLevel="normal" />
+    <permission
+        android:name="com.github.hattamaulana.moviecatalogue.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".App"
@@ -25,7 +28,8 @@
             android:authorities="com.github.hattamaulana.moviecatalogue"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="com.github.hattamaulana.moviecatalogue.READ_DATABASE"/>
+            android:readPermission="com.github.hattamaulana.moviecatalogue.READ_DATABASE"
+            android:writePermission="com.github.hattamaulana.moviecatalogue.WRITE_DATABASE" />
 
         <!-- Reminder Broadcast Receiver -->
         <receiver

@@ -6,23 +6,16 @@ import android.content.Context
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider
-import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider.AUTHORITY
-import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider.TABLE_NAME
-import com.github.hattamaulana.moviecatalogue.data.database.FavoriteDao
+import com.github.hattamaulana.moviecatalogue.data.database.DatabaseHelper
+import com.github.hattamaulana.moviecatalogue.data.model.DATA_TABLE_NAME
+import com.github.hattamaulana.moviecatalogue.data.model.GENRE_TABLE_NAME
 
 class FavoriteContentProvider : ContentProvider() {
 
-    private lateinit var favoriteDao: FavoriteDao
-
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
-
-    override fun getType(uri: Uri): String? = null
-
-    override fun insert(uri: Uri, values: ContentValues?): Uri? = null
+    private var helper = DatabaseHelper
 
     override fun onCreate(): Boolean {
-        favoriteDao = AppDbProvider.getDb(context as Context).favoriteDao()
+        helper.openHelper(context as Context)
         return true
     }
 
@@ -31,26 +24,41 @@ class FavoriteContentProvider : ContentProvider() {
         selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor? {
         return when (uriMatcher.match(uri)) {
-            FAVORITE -> favoriteDao.getAll()
-            FAVORITE_ID -> favoriteDao.findById(uri.lastPathSegment?.toInt() as Int)
+            FAVORITE -> helper.getAll()
+            FAVORITE_ID -> helper.getDataById(uri.lastPathSegment.toString())
+            GENRE_ID -> helper.getGenreById(uri.lastPathSegment.toString())
             else -> null
         }
     }
+
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int =
+        helper.remove(selection as String, selectionArgs as Array<String>)
+
+
+    override fun insert(uri: Uri, values: ContentValues?): Uri? = null
 
     override fun update(
         uri: Uri, values: ContentValues?, selection: String?,
         selectionArgs: Array<String>?
     ): Int = 0
 
+    override fun getType(uri: Uri): String? = null
+
     companion object {
+        private const val AUTHORITY = "com.github.hattamaulana.moviecatalogue"
         private const val FAVORITE = 1
         private const val FAVORITE_ID = 2
-        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-            // content://com.github.hattamaulana.moviecatalogue/note
-            addURI(AUTHORITY, TABLE_NAME, FAVORITE)
+        private const val GENRE_ID = 3
 
-            // content://com.github.hattamaulana.moviecatalogue/note/note_id
-            addURI(AUTHORITY, "$TABLE_NAME/#", FAVORITE_ID)
+        private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
+            // content://com.github.hattamaulana.moviecatalogue/favorites
+            addURI(AUTHORITY, DATA_TABLE_NAME, FAVORITE)
+
+            // content://com.github.hattamaulana.moviecatalogue/favorites/favorite_id
+            addURI(AUTHORITY, "$DATA_TABLE_NAME/#", FAVORITE_ID)
+
+            // content://com.github.hattamaulana.moviecatalogue/genres/favorite_id
+            addURI(AUTHORITY, "$GENRE_TABLE_NAME/#", GENRE_ID)
         }
     }
 }

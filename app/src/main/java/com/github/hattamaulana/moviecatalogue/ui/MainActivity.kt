@@ -10,7 +10,7 @@ import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
-import com.github.hattamaulana.moviecatalogue.data.database.AppDbProvider
+import com.github.hattamaulana.moviecatalogue.data.database.DatabaseHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
@@ -31,9 +31,6 @@ class MainActivity : AppCompatActivity() {
             listOf(TYPE_TV, TYPE_MOVIE).forEach { type -> storeGenre(type) }
         }
 
-        /** Reguster Content Provider */
-
-
         /** Set Bottom Navigation On Navigation Item Selected */
         val navController = findNavController(R.id.home_fragment)
         bottom_navigation.setupWithNavController(navController)
@@ -48,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private fun storeGenre(tag: String) {
         val TAG = this.javaClass.simpleName
         val repo = MovieDbRepository(this@MainActivity)
-        val dbProvider = AppDbProvider.getDb(this@MainActivity)
+        val dbProvider = DatabaseHelper.openDb(this@MainActivity)
         val dao = dbProvider.genreDao()
 
         repo.getGenre(tag) { list ->

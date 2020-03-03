@@ -34,7 +34,7 @@ class FavoriteWidgetProvider : AppWidgetProvider() {
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 val widget = ComponentName(context?.packageName as String,
                     FavoriteWidgetProvider::class.java.name)
-                val widgetManager = AppWidgetManager.getInstance(context).apply {
+                AppWidgetManager.getInstance(context).apply {
                     val widgetIds = getAppWidgetIds(widget)
                     notifyAppWidgetViewDataChanged(widgetIds, R.id.stack_view)
                 }

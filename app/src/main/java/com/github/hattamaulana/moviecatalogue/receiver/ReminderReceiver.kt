@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Parcelable
+import android.util.Log
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.ui.MainActivity
 import com.github.hattamaulana.moviecatalogue.utils.sendNotification
@@ -49,7 +49,7 @@ class ReminderReceiver : BroadcastReceiver() {
     }
 
     /** Set On Reminder daily and new release info */
-    private fun setOn(context: Context, time: String, type: String, data: Parcelable? = null) {
+    private fun setOn(context: Context, time: String, type: String) {
         val id = if (type == TYPE_DAILY_REMAINDER) ID_DAILY_REMAINDER else ID_NEW_RELEASE
         val timeArray = time.split(":".toRegex())
             .dropLastWhile { it.isEmpty() }

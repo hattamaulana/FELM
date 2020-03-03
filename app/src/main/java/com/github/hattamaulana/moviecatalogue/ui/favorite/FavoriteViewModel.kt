@@ -25,7 +25,7 @@ class FavoriteViewModel : ViewModel(), CoroutineScope {
 
     var context: Context? = null
         set(value) {
-            appDb = AppDbProvider.getDb(value as Context)
+            appDb = DatabaseHelper.openDb(value as Context)
             field = value
             genreDao = appDb.genreDao()
             favoriteDao = appDb.favoriteDao()
