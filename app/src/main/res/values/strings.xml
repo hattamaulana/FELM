@@ -49,6 +49,7 @@
     <!-- Summary Off-->
     <string name="summary_off_early_morning">Hidden Notification every jam 07.00</string>
     <string name="summary_off_new_release">Hidden Notification every there new release Film &amp; Tv Show</string>
+    <string name="lbl_new_release_movie">New Release Movie</string>
 
     <!-- Title Notification -->
     <string-array name="title_notification">

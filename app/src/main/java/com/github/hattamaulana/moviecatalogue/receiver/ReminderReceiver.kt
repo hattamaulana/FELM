@@ -5,9 +5,9 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.ui.MainActivity
+import com.github.hattamaulana.moviecatalogue.ui.newrelease.NewReleaseActivity
 import com.github.hattamaulana.moviecatalogue.utils.sendNotification
 import java.util.*
 
@@ -20,7 +20,7 @@ class ReminderReceiver : BroadcastReceiver() {
         val message = R.array.message_notification
         val intentAction = when (type) {
             TYPE_DAILY_REMAINDER -> Intent(context, MainActivity::class.java)
-            TYPE_NEW_RELEASE -> Intent(context, MainActivity::class.java)
+            TYPE_NEW_RELEASE -> Intent(context, NewReleaseActivity::class.java)
             else -> null
         }
 

@@ -27,8 +27,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
     private val TAG = this.javaClass.simpleName
 
     fun newRelease(
-        tag: String?,
-        date: String,
+        tag: String?, date: String, page: String = "1",
         callback: (list: List<DataModel>, totalPage: Int) -> Unit
     ) {
         this.tag = tag ?: ""
@@ -36,9 +35,10 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         discoverCallback = callback as (List<*>, Int) -> Unit
 
         val query = mapOf(
-            "sort_by" to "popularity.desc",
+            "sort_by" to "primary_release_date.asc",
             "primary_release_date.gte" to date,
-            "release_date.lte" to date
+            "release_date.lte" to date,
+            "page" to page
         )
 
         request("$API_URI/discover/$tag", query)
@@ -46,7 +46,8 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
 
     /** Untuk melakukan filtering data yang ditampilkan */
     fun similarContent(
-        tag: String?, id: Int?, callback: (list: List<DataModel>, totalPage: Int) -> Unit
+        tag: String?, id: Int?,
+        callback: (list: List<DataModel>, totalPage: Int) -> Unit
     ) {
         this.tag = tag ?: ""
         @Suppress("UNCHECKED_CAST")
@@ -60,7 +61,8 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      * @param tag : Menampung nilai movies atau tv show
      */
     fun search(
-        tag: String, query: String, callback: (list: List<DataModel>, totalPage: Int) -> Unit
+        tag: String, query: String,
+        callback: (list: List<DataModel>, totalPage: Int) -> Unit
     ) {
         this.tag = tag
         @Suppress("UNCHECKED_CAST")
@@ -76,7 +78,8 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      * @param callback
      */
     fun getDiscover(
-        tag: String, page: Int, callback: (list: List<DataModel>, totalPage: Int)-> Unit
+        tag: String, page: Int,
+        callback: (list: List<DataModel>, totalPage: Int)-> Unit
     ) {
         this.tag = tag
         @Suppress("UNCHECKED_CAST")

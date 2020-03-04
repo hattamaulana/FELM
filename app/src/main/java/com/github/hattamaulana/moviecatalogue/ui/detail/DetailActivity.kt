@@ -17,7 +17,7 @@ import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.IMAGE_URI
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import kotlinx.android.synthetic.main.activity_detail.*
-import java.util.ArrayList
+import java.util.*
 
 class DetailActivity : AppCompatActivity() {
 
