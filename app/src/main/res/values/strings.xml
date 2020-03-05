@@ -17,6 +17,9 @@
     <string name="favorite">Favorite</string>
     <string name="movies_amp_tv"><![CDATA[Movies & Tv]]></string>
     <string name="setting">Setting</string>
+    <string name="lbl_new_release_movie">New Release Movie</string>
+    <string name="language">Language</string>
+    <string name="widget_empty">You Haven\'t Favorite Movie or Tv Show</string>
 
     <string-array name="similar">
         <item>Similar Movie</item>
@@ -49,7 +52,6 @@
     <!-- Summary Off-->
     <string name="summary_off_early_morning">Hidden Notification every jam 07.00</string>
     <string name="summary_off_new_release">Hidden Notification every there new release Film &amp; Tv Show</string>
-    <string name="lbl_new_release_movie">New Release Movie</string>
 
     <!-- Title Notification -->
     <string-array name="title_notification">

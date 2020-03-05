@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/colorBackgroundWhite">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -24,8 +25,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:text="@string/notification"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textColor="@color/colorAccent"
+        android:fontFamily="@font/roboto_bold"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -40,6 +42,7 @@
         android:text="@string/title_early_morning"
         android:textColor="@android:color/primary_text_light"
         android:textSize="18sp"
+        android:fontFamily="@font/roboto_regular"
         app:layout_constraintEnd_toStartOf="@+id/switch_early_morning"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notification" />
@@ -52,7 +55,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/summary_off_early_morning"
         android:textColor="@android:color/darker_gray"
-        android:textSize="18sp"
+        android:fontFamily="@font/roboto_regular"
         app:layout_constraintEnd_toStartOf="@+id/switch_early_morning"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_early_morning" />
@@ -86,6 +89,7 @@
         android:text="@string/title_early_morning"
         android:textColor="@android:color/primary_text_light"
         android:textSize="18sp"
+        android:fontFamily="@font/roboto_regular"
         app:layout_constraintEnd_toStartOf="@+id/switch_new_release"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view" />
@@ -98,7 +102,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/summary_off_new_release"
         android:textColor="@android:color/darker_gray"
-        android:textSize="18sp"
+        android:fontFamily="@font/roboto_regular"
         app:layout_constraintEnd_toStartOf="@+id/switch_new_release"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_new_release" />
@@ -121,5 +125,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/desc_new_release" />
+
+    <TextView
+        android:id="@+id/languange"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/language"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintTop_toBottomOf="@id/view_second"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/title_language"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/change_language"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintEnd_toStartOf="@+id/switch_new_release"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/languange" />
+
+    <TextView
+        android:id="@+id/txt_language"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="English"
+        android:textColor="@android:color/darker_gray"
+        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintEnd_toStartOf="@+id/switch_new_release"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_language" />
+
+    <ImageView
+        android:id="@+id/btn_change_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_language_24dp"
+        app:layout_constraintTop_toTopOf="@id/title_language"
+        app:layout_constraintBottom_toBottomOf="@id/txt_language"
+        app:layout_constraintStart_toStartOf="@id/switch_new_release"
+        app:layout_constraintEnd_toEndOf="@id/switch_new_release" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

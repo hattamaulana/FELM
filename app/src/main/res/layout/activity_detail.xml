@@ -59,8 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="24dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/primary_text_light"
+                style="@style/TextTitle"
+                android:text="@string/sample_title_movie"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster"
                 app:layout_constraintTop_toTopOf="@+id/iv_poster" />
@@ -84,8 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/lbl_overview"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/primary_text_light"
+                style="@style/TextTitle"
                 app:layout_constraintEnd_toEndOf="@+id/tv_title"
                 app:layout_constraintStart_toStartOf="@+id/iv_poster"
                 app:layout_constraintTop_toBottomOf="@+id/iv_poster" />
@@ -96,8 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/sample_overview_movie"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@android:color/darker_gray"
+                style="@style/TextContent"
                 app:layout_constraintEnd_toEndOf="@+id/tv_title"
                 app:layout_constraintStart_toStartOf="@+id/iv_poster"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_overview" />
@@ -108,8 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/lbl_genre"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/primary_text_light"
+                style="@style/TextTitle"
                 app:layout_constraintEnd_toEndOf="@+id/tv_title"
                 app:layout_constraintStart_toStartOf="@+id/iv_poster"
                 app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
@@ -139,8 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/primary_text_light"
+                style="@style/TextTitle"
                 app:layout_constraintEnd_toEndOf="@+id/tv_title"
                 app:layout_constraintStart_toStartOf="@+id/iv_poster"
                 app:layout_constraintTop_toBottomOf="@id/divider_view_2" />

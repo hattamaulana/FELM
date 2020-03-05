@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_rounded">
+    android:background="@drawable/background_rounded"
+    android:elevation="2dp">
 
     <TextView
         android:id="@+id/tv_genre"
@@ -14,6 +15,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:text="@string/sample_release_movie"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@android:color/secondary_text_light" />
-</androidx.cardview.widget.CardView>
+        android:textColor="@android:color/darker_gray"
+        style="@style/TextContent"/>
+</LinearLayout>

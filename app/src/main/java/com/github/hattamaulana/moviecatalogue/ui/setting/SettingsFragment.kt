@@ -1,7 +1,9 @@
 package com.github.hattamaulana.moviecatalogue.ui.setting
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import com.github.hattamaulana.moviecatalogue.App
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.receiver.ReminderReceiver
 import kotlinx.android.synthetic.main.fragment_setting.*
+import java.util.*
 
 class SettingsFragment : Fragment(), View.OnClickListener {
 
@@ -41,6 +44,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         /** Set OnClick Listener for switch */
         switch_early_morning.setOnClickListener(this)
         switch_new_release.setOnClickListener(this)
+
+        /** Show Language */
+        txt_language.text = Locale.getDefault().displayLanguage.toString()
     }
 
     private fun setDataNotificationEarlyMorning(boolean: Boolean) {
@@ -79,6 +85,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 reminderReceiver.setOff(context as Context, ReminderReceiver.TYPE_DAILY_REMAINDER)
             }
         }
+
+        R.id.btn_change_language -> startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
 
         else -> {}
     }

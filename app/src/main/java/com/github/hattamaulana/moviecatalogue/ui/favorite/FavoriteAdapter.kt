@@ -31,7 +31,6 @@ class FavoriteAdapter :
 
             val overview = data.overview ?: ""
 
-            txt_category.text = data.category
             txt_title.text = data.title
             txt_rating.text = data.rating.toString()
             txt_overview.text = if (overview.length >= 100 && overview.isNotEmpty()) {

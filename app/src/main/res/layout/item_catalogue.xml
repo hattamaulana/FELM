@@ -26,25 +26,26 @@
                 android:id="@+id/img_movie"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
+                android:layout_marginStart="8dp"
                 android:contentDescription="Movie Poster"
                 android:elevation="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/txt_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/sample_title_movie"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/colorTextDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/img_movie"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TextTitle.List" />
 
             <TextView
                 android:id="@+id/txt_rating"
@@ -75,14 +76,12 @@
 
             <TextView
                 android:id="@+id/txt_overview"
+                style="@style/TextContentPreview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/sample_overview_movie"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorTextMedium"
-                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/txt_title"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title" />

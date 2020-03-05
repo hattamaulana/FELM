@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundWhite">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,13 +20,15 @@
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_gravity="center"
-        android:background="@color/colorAccent"
-        android:text="Kosong"
+        android:text="@string/widget_empty"
         android:textAlignment="center"
-        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </FrameLayout>

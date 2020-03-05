@@ -18,6 +18,9 @@
     <string name="favorite">Favorit</string>
     <string name="movies_amp_tv"><![CDATA[Film & Tv]]></string>
     <string name="setting">Pengaturan</string>
+    <string name="lbl_new_release_movie">Baru Rilis</string>
+    <string name="language">Bahasa</string>
+    <string name="widget_empty">Anda Tidak Memiliki Film atau TV Show Favorite</string>
 
     <string-array name="similar">
         <item>Film Serupa</item>
