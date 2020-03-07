@@ -1,16 +1,14 @@
 package com.github.hattamaulana.moviecatalogue.data.database
 
 import android.database.Cursor
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import android.database.sqlite.SQLiteDatabase
+import androidx.room.*
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 
 @Dao
 interface FavoriteDao {
 
-    @Insert
+    @Insert(onConflict = SQLiteDatabase.CONFLICT_REPLACE)
     suspend fun add(arg: DataModel)
 
     @Query("SELECT * FROM favorites")

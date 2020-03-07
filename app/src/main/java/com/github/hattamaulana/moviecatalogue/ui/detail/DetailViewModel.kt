@@ -12,6 +12,7 @@ import com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -95,5 +96,20 @@ class DetailViewModel : ViewModel(), CoroutineScope {
         val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
             .apply { action = AppWidgetManager.ACTION_APPWIDGET_UPDATE }
         context?.sendBroadcast(intent)
+    }
+
+    fun getDataFavorite(id: Int, callback: (data: DataModel) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val genreIds = arrayListOf<Int>()
+
+            relationDao.find(id).forEach { id ->
+                genreIds.add(id.genreId)
+            }
+
+            val data = favoriteDao.findByIdAsync(id)[0]
+                .apply { genres = genreIds }
+
+            launch(Dispatchers.Main) { callback(data) }
+        }
     }
 }

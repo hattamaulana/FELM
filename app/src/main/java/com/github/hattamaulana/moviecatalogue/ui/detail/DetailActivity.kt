@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,7 @@ import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.IMAGE_URI
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
+import com.github.hattamaulana.moviecatalogue.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
@@ -23,6 +26,9 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DetailViewModel
     private lateinit var dataIntent: DataModel
+    private lateinit var similarAdapter: SimilarContentAdapter
+
+    private var id: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,17 +39,28 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
-        val category = intent.getStringExtra(EXTRA_TAG) as String
-        val genreIds = intent.getIntArrayExtra(EXTRA_GENRE_IDS)
-
-        dataIntent = intent.getParcelableExtra(EXTRA_MOVIE_DETAIL) as DataModel
-        dataIntent.category = category
-        dataIntent.genres = genreIds?.toCollection(ArrayList())
-
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(DetailViewModel::class.java)
-        viewModel.context = this
+            .apply { context = this@DetailActivity }
 
+        id = intent.getIntExtra(EXTRA_ID, -1)
+        if (id == -1) {
+            val category = intent.getStringExtra(EXTRA_TAG) as String
+            val genreIds = intent.getIntArrayExtra(EXTRA_GENRE_IDS)
+
+            dataIntent = intent.getParcelableExtra(EXTRA_MOVIE_DETAIL) as DataModel
+            dataIntent.category = category
+            dataIntent.genres = genreIds?.toCollection(ArrayList())
+            setData()
+        } else {
+            viewModel.getDataFavorite(id) { data ->
+                dataIntent = data
+                setData()
+            }
+        }
+    }
+
+    private fun setData() {
         /** Set TextView for Title, Year of Release, and overview */
         tv_title.text = dataIntent.title
         tv_release.text = dataIntent.release
@@ -51,29 +68,37 @@ class DetailActivity : AppCompatActivity() {
 
         /** Set Label Similar Movie or Tv Show from resource */
         val similar = applicationContext.resources.getStringArray(R.array.similar)
-        val _category = if (category == MovieDbFactory.TYPE_MOVIE) 0 else 1
-        lbl_relates.text = similar[_category]
+        lbl_relates.text = similar[if (dataIntent.category == MovieDbFactory.TYPE_MOVIE) 0 else 1]
 
         /** Set Image Backdrop and Poster */
         setImage(dataIntent.backdropPath, iv_backdrop)
         setImage(dataIntent.posterPath, iv_poster)
 
-        setGenre(genreIds)
-        setSimilarContent(category)
+        setGenre(dataIntent.genres?.toIntArray())
+        setSimilarContent(dataIntent.category as String)
+
+        viewModel.apply {
+            getSimilarContent(dataIntent.category, dataIntent.id)
+            listSimilarContent.observe(this@DetailActivity, Observer { content ->
+                val visibility = if (content.isEmpty()) GONE else VISIBLE
+                divider_view_2.visibility = visibility
+                lbl_relates.visibility = visibility
+                rv_relate.visibility = visibility
+                similarAdapter.update(content)
+            })
+        }
     }
 
     /** Set Image with Glide */
     private fun setImage(string: String?, image: ImageView) {
-        Glide.with(this)
-            .load("$IMAGE_URI/w780/$string")
-            .into(image)
+        Glide.with(this).load("$IMAGE_URI/w780/$string").into(image)
     }
 
     /** Set Relate Content Movie or Tv Show */
     private fun setSimilarContent(category: String) {
         val layout = LinearLayoutManager(applicationContext)
             .apply { orientation = LinearLayoutManager.HORIZONTAL }
-        val adapter = SimilarContentAdapter().apply {
+        similarAdapter = SimilarContentAdapter().apply {
             setOnCLickListener { data ->
                 val intent = Intent(this@DetailActivity,
                     DetailActivity::class.java).apply {
@@ -86,13 +111,8 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getSimilarContent(dataIntent.category, dataIntent.id)
-        viewModel.listSimilarContent.observe(this, Observer { content ->
-            adapter.update(content)
-        })
-
         rv_relate.layoutManager = layout
-        rv_relate.adapter = adapter
+        rv_relate.adapter = similarAdapter
     }
 
     /** Set Genre */
@@ -113,7 +133,6 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail_menu, menu)
-
         /** Check have added favorite and change icon */
         viewModel.checkData(dataIntent.id as Int) { isFavorite ->
             if (! isFavorite) {
@@ -125,10 +144,19 @@ class DetailActivity : AppCompatActivity() {
         return true
     }
 
+    private fun back() {
+        if (id != -1) startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        back()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> finish()
-
+            android.R.id.home -> back()
             R.id.language ->  startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             R.id.fav_movie -> viewModel.checkData(dataIntent.id as Int) { isFavorite ->
                 val message = if (! isFavorite) {
@@ -150,6 +178,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val EXTRA_ID = "EXTRA_ID"
         const val EXTRA_TAG = "EXTRA_TAG"
         const val EXTRA_MOVIE_DETAIL = "EXTRA_MOVIE_DETAIL"
         const val EXTRA_GENRE_IDS = "EXTRA_GENRE_IDS"

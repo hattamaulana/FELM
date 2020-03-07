@@ -44,6 +44,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         /** Set OnClick Listener for switch */
         switch_early_morning.setOnClickListener(this)
         switch_new_release.setOnClickListener(this)
+        btn_change_language.setOnClickListener(this)
 
         /** Show Language */
         txt_language.text = Locale.getDefault().displayLanguage.toString()

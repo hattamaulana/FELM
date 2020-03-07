@@ -1,5 +1,6 @@
 package com.github.hattamaulana.moviecatalogue.data.database
 
+import android.database.sqlite.SQLiteDatabase
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 @Dao
 interface GenreDao {
 
-    @Insert
+    @Insert(onConflict = SQLiteDatabase.CONFLICT_REPLACE)
     fun add(arg: GenreModel)
 
     @Query("SELECT * FROM genres")

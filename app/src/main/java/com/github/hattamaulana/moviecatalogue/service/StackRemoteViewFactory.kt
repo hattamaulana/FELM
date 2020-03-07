@@ -49,7 +49,10 @@ class StackRemoteViewFactory(private val context: Context) :
 
     override fun getViewAt(position: Int): RemoteViews {
         val intent = Intent()
-            .apply { putExtras(bundleOf(FavoriteWidgetProvider.EXTRA_ITEM to position)) }
+            .apply {
+                val id = widgetItems[position].id
+                putExtras(bundleOf(FavoriteWidgetProvider.EXTRA_ITEM to id))
+            }
         val posterPath = widgetItems[position].posterPath
         val bitmap = Glide.with(context).asBitmap()
             .load("${MovieDbFactory.IMAGE_URI}/w780/$posterPath")

@@ -8,9 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
+import android.widget.Toast
 import androidx.core.net.toUri
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.service.StackWidgetService
+import com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity
 
 class FavoriteWidgetProvider : AppWidgetProvider() {
 
@@ -31,6 +33,13 @@ class FavoriteWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         when (intent?.action) {
+            EXTRA_ACTION -> {
+                context?.startActivity(Intent(context, DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.EXTRA_ID, intent.getIntExtra(EXTRA_ITEM, 0))
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                })
+            }
+
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 val widget = ComponentName(context?.packageName as String,
                     FavoriteWidgetProvider::class.java.name)
@@ -38,8 +47,6 @@ class FavoriteWidgetProvider : AppWidgetProvider() {
                     val widgetIds = getAppWidgetIds(widget)
                     notifyAppWidgetViewDataChanged(widgetIds, R.id.stack_view)
                 }
-
-                Log.d(TAG, "onReceive: OK; Triggered Successfull")
             }
         }
     }
@@ -56,7 +63,7 @@ class FavoriteWidgetProvider : AppWidgetProvider() {
 
         val actionIntent = Intent(context, FavoriteWidgetProvider::class.java).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            action = TOAST_ACTION
+            action = EXTRA_ACTION
             data = this.toUri(Intent.URI_INTENT_SCHEME).toUri()
         }
 
@@ -74,7 +81,7 @@ class FavoriteWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        private const val TOAST_ACTION = "com.github.hattamaulana.moviecatalogue.TOAST_ACTION"
+        private const val EXTRA_ACTION = "com.github.hattamaulana.moviecatalogue.TOAST_ACTION"
         const val EXTRA_ITEM = "com.github.hattamaulana.moviecatalogue.EXTRA_ITEM"
     }
 }

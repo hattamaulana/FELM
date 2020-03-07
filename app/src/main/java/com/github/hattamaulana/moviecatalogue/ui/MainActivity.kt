@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity() {
             listOf(TYPE_TV, TYPE_MOVIE).forEach { type -> storeGenre(type) }
         }
 
-        val title = R.array.title_notification
-        val message = R.array.message_notification
-        sendNotification(0, title, message, Intent(this, NewReleaseActivity::class.java))
-
         /** Set Bottom Navigation On Navigation Item Selected */
         val navController = findNavController(R.id.home_fragment)
         bottom_navigation.setupWithNavController(navController)
