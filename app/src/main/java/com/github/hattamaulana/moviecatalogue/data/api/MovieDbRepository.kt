@@ -8,8 +8,8 @@ import com.androidnetworking.common.ANRequest
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
-import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.API_URI
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.API_KEY
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.API_URI
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 import kotlinx.coroutines.CoroutineScope
@@ -18,10 +18,11 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
 
+@Suppress("UNCHECKED_CAST")
 class MovieDbRepository(private val context: Context) : JSONObjectRequestListener {
 
     private lateinit var tag: String
-    private lateinit var discoverCallback: (list: List<*>, totalPage: Int)-> Unit
+    private lateinit var discoverCallback: (list: List<DataModel>, totalPage: Int)-> Unit
     private lateinit var genreCallback: (list: List<*>)-> Unit
 
     private val TAG = this.javaClass.simpleName
@@ -30,9 +31,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         tag: String?, date: String, page: String = "1",
         callback: (list: List<DataModel>, totalPage: Int) -> Unit
     ) {
-        this.tag = tag ?: ""
-        @Suppress("UNCHECKED_CAST")
-        discoverCallback = callback as (List<*>, Int) -> Unit
+        discoverCallback = callback
 
         val query = mapOf(
             "sort_by" to "primary_release_date.asc",
@@ -50,8 +49,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         callback: (list: List<DataModel>, totalPage: Int) -> Unit
     ) {
         this.tag = tag ?: ""
-        @Suppress("UNCHECKED_CAST")
-        discoverCallback = callback as (List<*>, Int) -> Unit
+        discoverCallback = callback
 
         request("$API_URI/$tag/$id/similar")
     }
@@ -62,12 +60,10 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      */
     fun search(
         tag: String, query: String,
-        callback: (list: List<DataModel>, totalPage: Int) -> Unit
+        callback: (list: List<DataModel>, Int) -> Unit
     ) {
         this.tag = tag
-        @Suppress("UNCHECKED_CAST")
-        discoverCallback = callback as (List<*>, Int) -> Unit
-
+        discoverCallback = callback
         request("$API_URI/search/$tag/", mapOf("query" to query))
     }
 
@@ -78,19 +74,19 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      * @param callback
      */
     fun getDiscover(
-        tag: String, page: Int,
-        callback: (list: List<DataModel>, totalPage: Int)-> Unit
+        tag: String, sort: Int, page: Int,
+        callback: (list: List<DataModel>, Int)-> Unit
     ) {
         this.tag = tag
-        @Suppress("UNCHECKED_CAST")
-        discoverCallback = callback as (List<*>, Int) -> Unit
+        discoverCallback = callback
 
+        val url = "$API_URI/discover/$tag"
         val query = mapOf(
-            "sort_by" to "popularity.desc",
+            "sort_by" to MovieDbFactory.TYPE_FILTERS[sort],
             "page" to "$page"
         )
 
-        request("$API_URI/discover/$tag", query)
+        request(url, query)
     }
 
     /**
@@ -100,9 +96,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
      * @param callback
      */
     fun getGenre(tag: String, callback: (list: List<GenreModel>) -> Unit) {
-        @Suppress("UNCHECKED_CAST")
         genreCallback = callback as (List<*>) -> Unit
-
         request("$API_URI/genre/$tag/list")
     }
 
@@ -124,8 +118,6 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
 
         return get.build().apply {
             Log.d(TAG, "search: $requestBody")
-            Log.d(TAG, "search: $url")
-
             getAsJSONObject(this@MovieDbRepository)
         }
     }
@@ -149,7 +141,6 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
                     val listData = MovieDbFactory.genre(array)
 
                     genreCallback(listData)
-                    Log.d(TAG, "onResponse: listData genre: ${listData.size}")
                 }
 
                 else -> {
@@ -164,9 +155,9 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         val errorDetail = anError?.errorDetail
 
         anError?.printStackTrace()
-        Log.d(TAG, "onError: $errorMessage")
-        Log.d(TAG, "onError: $errorBody")
-        Log.d(TAG, "onError: $errorDetail")
+        Log.e(TAG, "onError: $errorMessage")
+        Log.e(TAG, "onError: $errorBody")
+        Log.e(TAG, "onError: $errorDetail")
 
         CoroutineScope(Dispatchers.Main).launch {
             val message = "Please Connect Internet"

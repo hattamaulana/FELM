@@ -5,7 +5,9 @@ import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
 import kotlinx.coroutines.*
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
+import java.lang.Exception
 
 object MovieDbFactory {
 
@@ -38,6 +40,10 @@ object MovieDbFactory {
     const val TYPE_MOVIE = "movie"
     const val TYPE_TV = "tv"
 
+    val TYPE_FILTERS = arrayOf(
+        "popularity.desc", "revenue.desc", "title.desc", "vote_average.desc"
+    )
+
     /**
      * Variabel constant dibawah merupakan [API_KEY]
      * yang wajib ditambahkan pada Query Parameter
@@ -56,6 +62,7 @@ object MovieDbFactory {
     const val KEY_BACKDROP_PATH = "backdrop_path"
     const val KEY_POSTER_PATH = "poster_path"
     const val KEY_RATING = "vote_average"
+    const val KEY_RELEASE = "release_date"
 
     private val TAG = this.javaClass.simpleName
 
@@ -70,21 +77,24 @@ object MovieDbFactory {
     suspend fun data(array: JSONArray, tag: String): List<DataModel> {
         val list = ArrayList<DataModel>()
 
-        CoroutineScope(Dispatchers.Default).launch {
-            for (i in 0 until array.length()) {
-                val obj = array.getJSONObject(i)
-                val data = withContext(coroutineContext) { refactorData(tag, obj) }
-                val genreIds = withContext(coroutineContext) {
-                    arrayListOf<Int>().apply {
-                        val ids = obj.getJSONArray(KEY_GENRE_ID)
-                        for (id in 0 until ids.length()) add(ids.getInt(id))
+        withContext(Dispatchers.IO) {
+            try {
+                for (i in 0 until array.length()) {
+                    val obj = array.getJSONObject(i)
+                    val data =  refactorData(tag, obj)
+                    val genreIds = withContext(coroutineContext) {
+                        arrayListOf<Int>().apply {
+                            val ids = obj.getJSONArray(KEY_GENRE_ID)
+                            for (id in 0 until ids.length()) add(ids.getInt(id))
+                        }
                     }
-                }
 
-                list.add(data.apply { genres = genreIds })
-                Log.d(TAG, "data: category: $tag; key=$i; value=${data.title}")
+                    list.add(data.apply { genres = genreIds })
+                }
+            } catch (e: JSONException) {
+            } catch (e: Exception){
             }
-        }.join()
+        }
 
         return list
     }
@@ -103,9 +113,7 @@ object MovieDbFactory {
             for (i in 0 until json.length()) {
                 val `object` = json.getJSONObject(i)
                 val data = refactorGenre(`object`)
-
                 listData.add(data)
-                Log.d(TAG, "data: key=$i; value=${data.name}")
             }
         }.join()
 
@@ -134,14 +142,24 @@ object MovieDbFactory {
      * @param json :
      * @return DataModel
      */
+    @Throws(JSONException::class, Exception::class)
     private fun refactorData(tag: String, json: JSONObject): DataModel {
-        val title = json.getString(if (tag == TYPE_MOVIE) KEY_TITLE else KEY_NAME)
+        val title: String
+        val release: String?
+        if (tag == TYPE_MOVIE) {
+            title = json.getString(KEY_TITLE)
+            release = json.getString(KEY_RELEASE)
+        } else {
+            title = json.getString(KEY_NAME)
+            release = null
+        }
+
         val id = json.getInt(KEY_ID)
         val backdropPath = json.getString(KEY_BACKDROP_PATH)
         val posterPath = json.getString(KEY_POSTER_PATH)
         val overview = json.getString(KEY_OVERVIEW)
         val rating = json.getDouble(KEY_RATING)
 
-        return DataModel(id, backdropPath,  posterPath, title, overview, rating, null)
+        return DataModel(id, backdropPath,  posterPath, title, overview, rating, release)
     }
 }

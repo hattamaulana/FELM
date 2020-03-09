@@ -20,6 +20,10 @@
     <string name="lbl_new_release_movie">New Release Movie</string>
     <string name="language">Language</string>
     <string name="widget_empty">You Haven\'t Favorite Movie or Tv Show</string>
+    <string name="filter_popularity">Popularity</string>
+    <string name="filter_revenue">Revenue</string>
+    <string name="filter_title">Title</string>
+    <string name="filter_rating">Rating</string>
 
     <string-array name="similar">
         <item>Similar Movie</item>

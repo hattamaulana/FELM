@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
+import com.github.hattamaulana.moviecatalogue.ui.MainViewModel
 import com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity
 import com.github.hattamaulana.moviecatalogue.utils.PaginationListener
 import kotlinx.android.synthetic.main.fragment_catalogue.*
@@ -26,11 +25,11 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     private lateinit var mTag: String
     private lateinit var adapter: CatalogueAdapter
-    private lateinit var viewModel: CatalogueViewModel
 
     private var page = 1
-    private var isLastPage = false
     private var isLoading = false
+
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,9 +41,7 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val arg = arguments?.getInt(ARG_SECTION_NUMBER, 1) ?: 1
-
-        mTag = if (arg == 0) TYPE_MOVIE else TYPE_TV
+        mTag = if (viewModel.viewStateCatalogue == 0) TYPE_MOVIE else TYPE_TV
         adapter = CatalogueAdapter(view.context as Context)
         adapter.setOnItemClckCallback(this)
 
@@ -55,11 +52,16 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
         recycler_movies.adapter = adapter
         recycler_movies.addOnScrollListener(scrollListener(linearLayoutManager))
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-            .get(CatalogueViewModel::class.java)
-        viewModel.context = context
-        viewModel.loadData(mTag)
-        viewModel.listData.observe(viewLifecycleOwner, observing())
+        viewModel.apply {
+            catalogues.observe(viewLifecycleOwner, Observer { listData ->
+                if ((listData != null) or isLoading) {
+                    adapter.setData(listData)
+                    progressBar.visibility = View.GONE
+                } else {
+                    progressBar.visibility = View.VISIBLE
+                }
+            })
+        }
     }
 
     override fun onItemClicked(movie: DataModel) {
@@ -73,35 +75,22 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
     /** Handle Scroll pada Recycler View */
     private fun scrollListener(linearLayoutManager: LinearLayoutManager) =
         object : PaginationListener(linearLayoutManager) {
-            override fun isLoading(): Boolean = isLoading
+            override fun isLoading(): Boolean =
+                isLoading
 
-            override fun isLastPage(): Boolean {
-                if (viewModel.totalPage == null) return false
-
-                return page == viewModel.totalPage
-            }
+            override fun isLastPage(): Boolean =
+                page == viewModel.catalogueTotalPage
 
             override fun loadMore() {
                 isLoading = true
                 page += 1
 
                 progressBar.visibility = View.VISIBLE
-                viewModel.loadMore(mTag, page) {
+                viewModel.loadCatalogue(mTag, viewModel.getSortBy(mTag) ?: 0, page) {
                     isLoading = false
                 }
             }
 
-        }
-
-    /** Handle ketika ada data ada yang berubah */
-    private fun observing() =
-        Observer<List<DataModel>> { listData ->
-            if ((listData != null) or isLoading) {
-                adapter.setData(listData)
-                progressBar.visibility = View.GONE
-            } else {
-                progressBar.visibility = View.VISIBLE
-            }
         }
 
     companion object {

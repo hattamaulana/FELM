@@ -84,7 +84,7 @@ class SearchFragment :
         /** setup icon beside search view */
         val choices = arrayOf("Movie", "Tv Show")
         setIconTypeSearch()
-        iv_search.setOnClickListener {
+        filter.setOnClickListener {
             AlertDialog.Builder(context as Context)
                 .setTitle("Lakukan Pencarian di :")
                 .setSingleChoiceItems(choices, paramType) { _, which -> paramType = which }
@@ -105,7 +105,7 @@ class SearchFragment :
             else -> resources.getDrawable(R.drawable.ic_search)
         }
 
-        iv_search.setImageDrawable(drawable)
+        filter.setImageDrawable(drawable)
     }
 
     /** Initialize and setup Adapter */

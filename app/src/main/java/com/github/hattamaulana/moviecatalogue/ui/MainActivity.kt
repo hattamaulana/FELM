@@ -1,8 +1,8 @@
 package com.github.hattamaulana.moviecatalogue.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -12,8 +12,6 @@ import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
 import com.github.hattamaulana.moviecatalogue.data.database.DatabaseHelper
-import com.github.hattamaulana.moviecatalogue.ui.newrelease.NewReleaseActivity
-import com.github.hattamaulana.moviecatalogue.utils.sendNotification
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         /** Set Bottom Navigation On Navigation Item Selected */
         val navController = findNavController(R.id.home_fragment)
         bottom_navigation.setupWithNavController(navController)
+
+        /** Registering Activity ViewModel */
+        val viewModel: MainViewModel by viewModels()
+        viewModel.context = applicationContext
     }
 
     /**

@@ -30,10 +30,10 @@
                 android:layout_marginEnd="8dp"
                 app:queryHint="Search Here"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_search" />
+                app:layout_constraintEnd_toStartOf="@id/filter" />
 
             <ImageButton
-                android:id="@+id/iv_search"
+                android:id="@+id/filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

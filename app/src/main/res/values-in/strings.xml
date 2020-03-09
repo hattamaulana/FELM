@@ -21,6 +21,10 @@
     <string name="lbl_new_release_movie">Baru Rilis</string>
     <string name="language">Bahasa</string>
     <string name="widget_empty">Anda Tidak Memiliki Film atau TV Show Favorite</string>
+    <string name="filter_popularity">Popularitas</string>
+    <string name="filter_revenue">Pendapatan</string>
+    <string name="filter_title">Judul</string>
+    <string name="filter_rating">Rating</string>
 
     <string-array name="similar">
         <item>Film Serupa</item>
