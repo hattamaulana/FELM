@@ -1,13 +1,14 @@
 package com.github.hattamaulana.moviecatalogue.data.api
 
-import android.util.Log
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 import com.github.hattamaulana.moviecatalogue.data.model.GenreModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.lang.Exception
 
 object MovieDbFactory {
 
@@ -41,7 +42,7 @@ object MovieDbFactory {
     const val TYPE_TV = "tv"
 
     val TYPE_FILTERS = arrayOf(
-        "popularity.desc", "revenue.desc", "title.desc", "vote_average.desc"
+        "popularity.desc", "revenue.desc", "title.asc", "vote_average.desc"
     )
 
     /**

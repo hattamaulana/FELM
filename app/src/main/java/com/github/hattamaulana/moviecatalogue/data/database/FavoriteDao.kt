@@ -2,7 +2,10 @@ package com.github.hattamaulana.moviecatalogue.data.database
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 import com.github.hattamaulana.moviecatalogue.data.model.DataModel
 
 @Dao

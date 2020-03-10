@@ -76,6 +76,6 @@ class ReminderReceiver : BroadcastReceiver() {
         const val EXTRA_TYPE = "EXTRA_TYPE"
 
         private const val ID_DAILY_REMAINDER = 0
-        private const val ID_NEW_RELEASE = 1
+        const val ID_NEW_RELEASE = 1
     }
 }

@@ -40,7 +40,6 @@ class CatalogueWrapperFragment : Fragment() {
                 viewStatePosition = position
                 val title = if (position == 0) R.string.list_movie else R.string.list_tv
                 toolbar.title = resources.getString(title)
-
                 loadData()
             }
         }
@@ -93,9 +92,11 @@ class CatalogueWrapperFragment : Fragment() {
 
             R.id.filter -> context?.singleChoiceDialog(sortBy) { checked ->
                 val tag = if (viewStatePosition == 0) TYPE_MOVIE else TYPE_TV
-                viewModel.apply {
-                    setSortBy(tag, checked)
-                    loadCatalogue(tag, checked)
+                if (checked != -1) {
+                    viewModel.apply {
+                        setSortBy(tag, checked)
+                        loadCatalogue(tag, checked)
+                    }
                 }
             }?.apply {
                 show()
@@ -105,11 +106,11 @@ class CatalogueWrapperFragment : Fragment() {
         return true
     }
 
-    private fun loadData(sort: Int = -1) {
+    private fun loadData() {
         val tag = if (viewStatePosition == 0) TYPE_MOVIE else TYPE_TV
 
         viewModel.apply {
-            setViewStateCatalogue(viewStatePosition)
+            catalogeStatePosition = viewStatePosition
             loadCatalogue(tag, getSortBy(tag) ?: 0)
         }
     }

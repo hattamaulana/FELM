@@ -31,6 +31,7 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         tag: String?, date: String, page: String = "1",
         callback: (list: List<DataModel>, totalPage: Int) -> Unit
     ) {
+        this.tag = tag as String
         discoverCallback = callback
 
         val query = mapOf(

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MOVIE DB</string>
+    <string name="app_name">FELM</string>
 
     <!-- Toolbar Title -->
     <string name="list_movie">List Movie</string>

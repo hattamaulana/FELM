@@ -22,28 +22,23 @@ class MainViewModel : ViewModel() {
     private lateinit var favoriteDao: FavoriteDao
     private lateinit var genreDao: GenreDao
 
-    private val _viewStateCatalogue = MutableLiveData<Int>()
     private val _catalogueTotalPage = MutableLiveData<Int>()
     private val sortBy = MutableLiveData<Map<String, Int>>()
 
     val catalogues = MutableLiveData<List<DataModel>>()
     val favorites = MutableLiveData<List<DataModel>>()
     val catalogueTotalPage = _catalogueTotalPage.value
-    val viewStateCatalogue = _viewStateCatalogue.value
+    var catalogeStatePosition: Int = 0
 
     var context: Context? = null
         set(value) {
             repo = MovieDbRepository(value as Context)
-            appDb = DatabaseHelper.openDb(value as Context)
+            appDb = DatabaseHelper.openDb(value)
             genreDao = appDb.genreDao()
             favoriteDao = appDb.favoriteDao()
             relationDao = appDb.relationDataAndGenreDao()
             field = value
         }
-
-    fun setViewStateCatalogue(position: Int) {
-        _viewStateCatalogue.postValue(position)
-    }
 
     fun loadCatalogue(tag: String, sort: Int, page: Int = 1, callback: (() -> Unit)? = null) {
         repo.getDiscover(tag, sort, page) { list, totalPage ->
@@ -78,6 +73,8 @@ class MainViewModel : ViewModel() {
                         }
                     }
                 }
+
+            Log.d("TAG", "onCreate: tag=$list")
 
             favorites.postValue(list)
         }

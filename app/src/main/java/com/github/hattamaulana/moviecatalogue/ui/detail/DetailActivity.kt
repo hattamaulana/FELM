@@ -3,6 +3,7 @@ package com.github.hattamaulana.moviecatalogue.ui.detail
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
@@ -52,6 +53,8 @@ class DetailActivity : AppCompatActivity() {
             dataIntent.category = category
             dataIntent.genres = genreIds?.toCollection(ArrayList())
             setData()
+
+            Log.d("TAG", "onCreate: category=$category")
         } else {
             viewModel.getDataFavorite(id) { data ->
                 dataIntent = data

@@ -2,6 +2,7 @@ package com.github.hattamaulana.moviecatalogue.ui.catalogue
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,6 @@ private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
 class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
-    private lateinit var mTag: String
     private lateinit var adapter: CatalogueAdapter
 
     private var page = 1
@@ -41,7 +41,6 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mTag = if (viewModel.viewStateCatalogue == 0) TYPE_MOVIE else TYPE_TV
         adapter = CatalogueAdapter(view.context as Context)
         adapter.setOnItemClckCallback(this)
 
@@ -66,7 +65,8 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     override fun onItemClicked(movie: DataModel) {
         findNavController().navigate(R.id.catalogue_to_detail, Bundle().apply {
-            putString(DetailActivity.EXTRA_TAG, mTag)
+            val tag = if (viewModel.catalogeStatePosition == 0) TYPE_MOVIE else TYPE_TV
+            putString(DetailActivity.EXTRA_TAG, tag)
             putParcelable(DetailActivity.EXTRA_MOVIE_DETAIL, movie)
             putIntArray(DetailActivity.EXTRA_GENRE_IDS, movie.genres?.toIntArray())
         })
@@ -84,9 +84,9 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
             override fun loadMore() {
                 isLoading = true
                 page += 1
-
                 progressBar.visibility = View.VISIBLE
-                viewModel.loadCatalogue(mTag, viewModel.getSortBy(mTag) ?: 0, page) {
+                val tag = if (viewModel.catalogeStatePosition == 0) TYPE_MOVIE else TYPE_TV
+                viewModel.loadCatalogue(tag, viewModel.getSortBy(tag) ?: 0, page) {
                     isLoading = false
                 }
             }
