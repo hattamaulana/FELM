@@ -35,9 +35,8 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         discoverCallback = callback
 
         val query = mapOf(
-            "sort_by" to "primary_release_date.asc",
             "primary_release_date.gte" to date,
-            "release_date.lte" to date,
+            "primary_release_date.lte" to date,
             "page" to page
         )
 
@@ -118,7 +117,8 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
         queryParams?.forEach { get.addQueryParameter(it.key, it.value) }
 
         return get.build().apply {
-            Log.d(TAG, "search: $requestBody")
+            Log.d(TAG, "request: ${getUrl()}")
+            Log.d(TAG, "request: $requestBody")
             getAsJSONObject(this@MovieDbRepository)
         }
     }
@@ -130,9 +130,6 @@ class MovieDbRepository(private val context: Context) : JSONObjectRequestListene
                     val totalPage = res.getInt("total_pages")
                     val array = res.getJSONArray("results")
                     val listData = MovieDbFactory.data(array, tag)
-
-                    Log.d(TAG, "onResponse: totalPage: $totalPage")
-                    Log.d(TAG, "onResponse: listData: ${listData.size}")
 
                     discoverCallback(listData, totalPage)
                 }

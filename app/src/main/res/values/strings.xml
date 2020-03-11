@@ -47,15 +47,15 @@
 
     <!-- Notification Preferences -->
     <string name="title_early_morning">Early Morning Notification</string>
-    <string name="title_new_release">Film &amp; Tv Show New Release</string>
+    <string name="title_new_release">New Release Notification</string>
 
     <!-- Summary On -->
     <string name="summary_on_early_morning">Show Notification every jam 07.00</string>
-    <string name="summary_on_new_release">Show Notification every there new release Film &amp; Tv Show</string>
+    <string name="summary_on_new_release">Show Notification every there new release Movie</string>
 
     <!-- Summary Off-->
     <string name="summary_off_early_morning">Hidden Notification every jam 07.00</string>
-    <string name="summary_off_new_release">Hidden Notification every there new release Film &amp; Tv Show</string>
+    <string name="summary_off_new_release">Hidden Notification every there new release Movie</string>
 
     <!-- Title Notification -->
     <string-array name="title_notification">
@@ -67,7 +67,7 @@
     <string-array name="message_notification">
         <item>Let\'s review some of your favorite movies or TV series.</item>
         <item>
-            There is a new release. Do not forget what films and TV series have just been released
+            See Some Movies Released Today
         </item>
     </string-array>
 

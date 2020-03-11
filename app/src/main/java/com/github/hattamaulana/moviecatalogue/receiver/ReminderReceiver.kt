@@ -1,30 +1,43 @@
 package com.github.hattamaulana.moviecatalogue.receiver
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.github.hattamaulana.moviecatalogue.R
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
 import com.github.hattamaulana.moviecatalogue.ui.MainActivity
 import com.github.hattamaulana.moviecatalogue.ui.newrelease.NewReleaseActivity
 import com.github.hattamaulana.moviecatalogue.utils.sendNotification
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-class ReminderReceiver : BroadcastReceiver() {
+class ReminderReceiver : BroadcastReceiver(), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
 
     override fun onReceive(context: Context, intent: Intent) {
         val type = intent.getStringExtra(EXTRA_TYPE)
         val notifId = if (type == TYPE_DAILY_REMAINDER) ID_DAILY_REMAINDER else ID_NEW_RELEASE
         val title = R.array.title_notification
         val message = R.array.message_notification
-        val intentAction = when (type) {
-            TYPE_DAILY_REMAINDER -> Intent(context, MainActivity::class.java)
-            TYPE_NEW_RELEASE -> Intent(context, NewReleaseActivity::class.java)
-            else -> null
-        }
 
-        context.sendNotification(notifId, title, message, intentAction)
+        when (type) {
+            TYPE_DAILY_REMAINDER -> {
+                val pendingIntent = Intent(context, MainActivity::class.java)
+                context.sendNotification(notifId, title, message, pendingIntent)
+            }
+
+            TYPE_NEW_RELEASE -> getNewRelease(context, notifId, title, message)
+        }
     }
 
     fun setDailyMorning(context: Context) {
@@ -67,6 +80,22 @@ class ReminderReceiver : BroadcastReceiver() {
         (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager).apply {
             setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
                 AlarmManager.INTERVAL_DAY, pendingIntent)
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun getNewRelease(context: Context, notifId: Int, title: Int, message: Int) {
+        val repo = MovieDbRepository(context)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        launch {
+            repo.newRelease(TYPE_MOVIE, dateFormat.format(Date())) { list, _ ->
+                if (list.isNotEmpty()) {
+                    list.forEach { data -> }
+                    val pendingIntent = Intent(context, NewReleaseActivity::class.java)
+                    context.sendNotification(notifId, title, message, pendingIntent)
+                }
+            }
         }
     }
 

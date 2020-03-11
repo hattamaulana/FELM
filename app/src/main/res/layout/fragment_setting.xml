@@ -86,7 +86,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/title_early_morning"
+        android:text="@string/title_new_release"
         android:textColor="@android:color/primary_text_light"
         android:textSize="18sp"
         android:fontFamily="@font/roboto_regular"

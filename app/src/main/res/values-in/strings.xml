@@ -47,7 +47,7 @@
 
     <!-- Notification Preferences -->
     <string name="title_early_morning">Notifikasi Setiap Pagi</string>
-    <string name="title_new_release">Film &amp; Tv Show yang baru rilis</string>
+    <string name="title_new_release">Notifikasi Film yang Baru Release</string>
 
     <!-- Summary On -->
     <string name="summary_on_early_morning">Tampilkan Notifikasi Setiap hari nya pada jam 07.00</string>
@@ -66,7 +66,7 @@
     <!-- Message Notification -->
     <string-array name="message_notification">
         <item>Review lagi yuk beberapa film atau tv series favorite kamu.</item>
-        <item>Ada yang baru rilis Nih jangan sampai kelupaan ya film dan tv series apa aja yang baru rilis</item>
+        <item>Lihat Beberapa Film Rilis Hari ini</item>
     </string-array>
 
 </resources>
