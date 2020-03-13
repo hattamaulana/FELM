@@ -10,33 +10,33 @@ import com.github.hattamaulana.moviecatalogue.R
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.moviecatalogue.data.api.MovieDbRepository
 import com.github.hattamaulana.moviecatalogue.ui.MainActivity
+import com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity
 import com.github.hattamaulana.moviecatalogue.ui.newrelease.NewReleaseActivity
+import com.github.hattamaulana.moviecatalogue.ui.widget.FavoriteWidgetProvider
 import com.github.hattamaulana.moviecatalogue.utils.sendNotification
+import com.github.hattamaulana.moviecatalogue.utils.sendStackNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-class ReminderReceiver : BroadcastReceiver(), CoroutineScope {
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO
+class ReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val type = intent.getStringExtra(EXTRA_TYPE)
-        val notifId = if (type == TYPE_DAILY_REMAINDER) ID_DAILY_REMAINDER else ID_NEW_RELEASE
-        val title = R.array.title_notification
-        val message = R.array.message_notification
 
         when (type) {
             TYPE_DAILY_REMAINDER -> {
+                val title = context.resources.getString(R.string.notif_title_early_morning)
+                val message = context.resources.getString(R.string.notif_message_early_morning)
                 val pendingIntent = Intent(context, MainActivity::class.java)
-                context.sendNotification(notifId, title, message, pendingIntent)
+                context.sendNotification(ID_DAILY_REMAINDER, title, message, pendingIntent)
             }
 
-            TYPE_NEW_RELEASE -> getNewRelease(context, notifId, title, message)
+            TYPE_NEW_RELEASE -> getNewRelease(context)
         }
     }
 
@@ -84,16 +84,30 @@ class ReminderReceiver : BroadcastReceiver(), CoroutineScope {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun getNewRelease(context: Context, notifId: Int, title: Int, message: Int) {
+    private fun getNewRelease(context: Context) {
         val repo = MovieDbRepository(context)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-        launch {
-            repo.newRelease(TYPE_MOVIE, dateFormat.format(Date())) { list, _ ->
-                if (list.isNotEmpty()) {
-                    list.forEach { data -> }
+        repo.newRelease(TYPE_MOVIE, dateFormat.format(Date())) { list, _ ->
+            if (list.isNotEmpty()) {
+                val messages = ArrayList<String>()
+                list.forEach { data -> messages.add(data.title ?: "") }
+
+                if (messages.size > 3) {
                     val pendingIntent = Intent(context, NewReleaseActivity::class.java)
-                    context.sendNotification(notifId, title, message, pendingIntent)
+                    context.sendStackNotification(messages, pendingIntent)
+                } else {
+                    messages.forEachIndexed { i, msg ->
+                        val pendingIntent = Intent(context, DetailActivity::class.java)
+                            .apply {
+                                putExtra(DetailActivity.EXTRA_ID, list[i].id)
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+
+                        val title = "$msg ${context.resources.getString(R.string.notif_title_new_release)}"
+                        val message = context.resources.getString(R.string.notif_message_new_release)
+                        context.sendNotification(i, title, message, pendingIntent)
+                    }
                 }
             }
         }

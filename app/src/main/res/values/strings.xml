@@ -57,18 +57,9 @@
     <string name="summary_off_early_morning">Hidden Notification every jam 07.00</string>
     <string name="summary_off_new_release">Hidden Notification every there new release Movie</string>
 
-    <!-- Title Notification -->
-    <string-array name="title_notification">
-        <item>Good Morning</item>
-        <item>New Release</item>
-    </string-array>
-
-    <!-- Message Notification -->
-    <string-array name="message_notification">
-        <item>Let\'s review some of your favorite movies or TV series.</item>
-        <item>
-            See Some Movies Released Today
-        </item>
-    </string-array>
-
+    <!-- Notification -->
+    <string name="notif_title_early_morning">Good Morning</string>
+    <string name="notif_title_new_release">Release Today</string>
+    <string name="notif_message_early_morning">Let\'s review some of your favorite movies or TV series.</string>
+    <string name="notif_message_new_release">Click to Showing</string>
 </resources>
