@@ -7,42 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
 import com.github.hattamaulana.moviecatalogue.R
-import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_MOVIE
-import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.moviecatalogue.ui.MainViewModel
 import com.github.hattamaulana.moviecatalogue.ui.TabLayoutAdapter
+import com.github.hattamaulana.moviecatalogue.utils.TabChangeListener
 import com.github.hattamaulana.moviecatalogue.utils.singleChoiceDialog
 import kotlinx.android.synthetic.main.fragment_catalogue_wrapper.*
 
-private var viewStatePosition: Int = 0
-private const val EXTRA_VIEW_POSITION = "EXTRA_VIEW_POSITION"
+private var state: Int = 0
 
 class CatalogueWrapperFragment : Fragment() {
 
+    private lateinit var category: Array<String>
     private lateinit var sortBy: Array<String>
 
     private val viewModel: MainViewModel by activityViewModels()
-
-    /* On Page ChangeListener*/
-    private val pageChangeListener = object :
-        ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {}
-
-            override fun onPageSelected(position: Int) {
-                viewStatePosition = position
-                val title = if (position == 0) R.string.list_movie else R.string.list_tv
-                toolbar.title = resources.getString(title)
-                loadData()
-            }
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,29 +32,25 @@ class CatalogueWrapperFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        val title = if (viewStatePosition == 0) R.string.list_movie else R.string.list_tv
-        toolbar.title = resources.getString(title)
+        setTitle()
         (activity as AppCompatActivity).setSupportActionBar(view.findViewById(R.id.toolbar))
 
-        sortBy = arrayOf(
-            resources.getString(R.string.filter_popularity),
-            resources.getString(R.string.filter_revenue),
-            resources.getString(R.string.filter_title),
-            resources.getString(R.string.filter_rating)
-        )
+        category = resources.getStringArray(R.array.category)
+        sortBy = resources.getStringArray(R.array.filtering_data)
 
         loadData()
         view_pager.adapter = TabLayoutAdapter(context as Context, childFragmentManager) {
             CatalogueFragment.instance(it)
         }
-        view_pager.setCurrentItem(viewStatePosition, true)
-        view_pager.addOnPageChangeListener(pageChangeListener)
-        tabs.setupWithViewPager(view_pager)
-    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(EXTRA_VIEW_POSITION, viewStatePosition)
+        view_pager.setCurrentItem(state, true)
+        view_pager.addOnPageChangeListener(TabChangeListener { position ->
+            state = position
+            setTitle()
+            loadData()
+        })
+
+        tabs.setupWithViewPager(view_pager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -86,31 +61,32 @@ class CatalogueWrapperFragment : Fragment() {
         when(item.itemId) {
             R.id.search -> {
                 val direction = CatalogueWrapperFragmentDirections
-                    .catalogueToSearch(ARG_CATALOGUE, viewStatePosition)
+                    .catalogueToSearch(ARG_CATALOGUE, state)
                 findNavController().navigate(direction)
             }
 
-            R.id.filter -> context?.singleChoiceDialog(sortBy) { checked ->
-                val tag = if (viewStatePosition == 0) TYPE_MOVIE else TYPE_TV
+            R.id.filter -> context?.singleChoiceDialog("Filter Berdasarkan :", sortBy) { checked ->
                 if (checked != -1) {
                     viewModel.apply {
-                        setSortBy(tag, checked)
-                        loadCatalogue(tag, checked)
+                        setSortBy(category[state], checked)
+                        loadCatalogue(category[state], checked)
                     }
                 }
-            }?.apply {
-                show()
-            }
+            }?.apply { show() }
         }
 
         return true
     }
 
-    private fun loadData() {
-        val tag = if (viewStatePosition == 0) TYPE_MOVIE else TYPE_TV
+    private fun setTitle() {
+        val title = resources.getStringArray(R.array.title_toolbar)
+        toolbar.title = "List ${title[state]}"
+    }
 
+    private fun loadData() {
         viewModel.apply {
-            catalogeStatePosition = viewStatePosition
+            catalogeStatePosition = state
+            val tag = category[state]
             loadCatalogue(tag, getSortBy(tag) ?: 0)
         }
     }

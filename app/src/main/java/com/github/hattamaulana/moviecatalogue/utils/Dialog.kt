@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 
 fun Context.singleChoiceDialog(
-    string: Array<String>,
+    title: String, string: Array<String>,
     textPositiveButton: String = "OK",
     onPositiveClicked: (checked: Int)-> Unit
 ): AlertDialog {
     var checked = -1
     return AlertDialog.Builder(this)
-        .setTitle("Filter Berdasarkan :")
+        .setTitle(title)
         .setSingleChoiceItems(string, checked) { _, which ->
             checked = which
         }

@@ -1,11 +1,9 @@
 package com.github.hattamaulana.moviecatalogue.ui.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -19,6 +17,7 @@ import com.github.hattamaulana.moviecatalogue.data.api.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueWrapperFragment.Companion.ARG_CATALOGUE
 import com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity
 import com.github.hattamaulana.moviecatalogue.utils.PaginationListener
+import com.github.hattamaulana.moviecatalogue.utils.singleChoiceDialog
 import kotlinx.android.synthetic.main.fragment_search.*
 
 /**
@@ -30,7 +29,7 @@ class SearchFragment :
     Fragment(),
     SearchView.OnQueryTextListener {
 
-    private lateinit var adapter: SearchResultAdapter
+    private lateinit var searchAdapter: SearchResultAdapter
     private lateinit var viewModel: SearchViewModel
 
     private var paramSearch: String = ""
@@ -77,7 +76,7 @@ class SearchFragment :
         /** setup recycler view */
         val layoutManager = LinearLayoutManager(context)
         rv_search.layoutManager = layoutManager
-        rv_search.adapter = adapter
+        rv_search.adapter = searchAdapter
 
         if (paramSearch == ARG_CATALOGUE) {
             rv_search.addOnScrollListener(scrollListener(layoutManager))
@@ -87,15 +86,11 @@ class SearchFragment :
         val choices = arrayOf("Movie", "Tv Show")
         setIconTypeSearch()
         filter.setOnClickListener {
-            AlertDialog.Builder(context as Context)
-                .setTitle("Lakukan Pencarian di :")
-                .setSingleChoiceItems(choices, paramType) { _, which -> paramType = which }
-                .setPositiveButton("OK") { _, _ ->
-                    setIconTypeSearch()
-                    search()
-                }
-                .create()
-                .show()
+            context?.singleChoiceDialog("Lakukan Pencarian untuk :", choices) { which ->
+                paramType = if (which != -1) which else 0
+                setIconTypeSearch()
+                search()
+            }?.show()
         }
     }
 
@@ -112,13 +107,14 @@ class SearchFragment :
 
     /** Initialize and setup Adapter */
     private fun initAdapter() {
-        adapter = SearchResultAdapter()
-        adapter.setOnClickListener { data ->
-            findNavController().navigate(R.id.search_to_detail, Bundle().apply {
-                putString(DetailActivity.EXTRA_TAG, viewTypes[paramType])
-                putParcelable(DetailActivity.EXTRA_MOVIE_DETAIL, data)
-                putIntArray(DetailActivity.EXTRA_GENRE_IDS, data.genres?.toIntArray())
-            })
+        searchAdapter = SearchResultAdapter().apply {
+            setOnClickListener { data ->
+                findNavController().navigate(R.id.search_to_detail, Bundle().apply {
+                    putString(DetailActivity.EXTRA_TAG, viewTypes[paramType])
+                    putParcelable(DetailActivity.EXTRA_MOVIE_DETAIL, data)
+                    putIntArray(DetailActivity.EXTRA_GENRE_IDS, data.genres?.toIntArray())
+                })
+            }
         }
     }
 
@@ -126,10 +122,11 @@ class SearchFragment :
     private fun initViewModel() {
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(SearchViewModel::class.java)
-            .apply { context = this@SearchFragment.context }
-
-        viewModel.listResult.observe(viewLifecycleOwner, Observer { adapter.update(it) })
-        viewModel.totalPage.observe(viewLifecycleOwner, Observer { isLastPage = page == it })
+            .apply {
+                context = this@SearchFragment.context
+                listResult.observe(viewLifecycleOwner, Observer { searchAdapter.update(it) })
+                totalPage.observe(viewLifecycleOwner, Observer { isLastPage = page == it })
+            }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

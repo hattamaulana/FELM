@@ -1,16 +1,24 @@
 <resources>
     <string name="app_name">FELM</string>
 
+    <!-- Title Toolbar -->
+    <string-array name="title_toolbar">
+        <item>Movie</item>
+        <item>Tv Show</item>
+    </string-array>
+
+    <!-- Category -->
+    <string-array name="category">
+        <item>movie</item>
+        <item>tv</item>
+    </string-array>
+
     <!-- Toolbar Title -->
-    <string name="list_movie">List Movie</string>
-    <string name="list_tv">List Tv Show</string>
-    <string name="favorite_movie">Favorite Movie</string>
-    <string name="favorite_tv">Favorite Tv Show</string>
     <string name="notification">Notification</string>
 
-    <!-- Label   -->
+    <!-- Label -->
     <string name="tab_movie">Movie</string>
-    <string name="tab_tv_series">TV Series</string>
+    <string name="tab_tv_series">TV Show</string>
     <string name="lbl_genre">Genre</string>
     <string name="lbl_overview">Overview</string>
     <string name="change_language">Change Language</string>
@@ -20,16 +28,19 @@
     <string name="lbl_new_release_movie">New Release Movie</string>
     <string name="language">Language</string>
     <string name="widget_empty">You Haven\'t Favorite Movie or Tv Show</string>
-    <string name="filter_popularity">Popularity</string>
-    <string name="filter_revenue">Revenue</string>
-    <string name="filter_title">Title</string>
-    <string name="filter_rating">Rating</string>
+
+    <!-- Category to Filter Data -->
+    <string-array name="filtering_data">
+        <item>Popularity</item>
+        <item>Revenue</item>
+        <item>Title</item>
+        <item>Rating</item>
+    </string-array>
 
     <string-array name="similar">
         <item>Similar Movie</item>
         <item>Similar Tv Show</item>
     </string-array>
-    <!-- Warning   -->
 
     <!-- Sample Data Movie -->
     <string name="sample_title_movie">The Shawsank Redemtion</string>

@@ -2,7 +2,6 @@ package com.github.hattamaulana.moviecatalogue.ui.catalogue
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
 class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
+    private lateinit var category: Array<String>
     private lateinit var adapter: CatalogueAdapter
 
     private var page = 1
@@ -41,6 +41,7 @@ class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        category = resources.getStringArray(R.array.category)
         adapter = CatalogueAdapter(view.context as Context)
         adapter.setOnItemClckCallback(this)
 

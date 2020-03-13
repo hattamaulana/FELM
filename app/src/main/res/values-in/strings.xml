@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Database Film</string>
+    <string name="app_name">FELM</string>
+
+    <!-- Title Toolbar -->
+    <string-array name="title_toolbar">
+        <item>Film</item>
+        <item>Tv Show</item>
+    </string-array>
 
     <!-- Toolbar Title -->
-    <string name="list_movie">Daftar Film</string>
-    <string name="list_tv">Daftar Tv Series</string>
-    <string name="favorite_movie">Favorit Film</string>
-    <string name="favorite_tv">Favorit Tv Series</string>
     <string name="notification">Notifikasi</string>
 
     <!-- Label   -->
@@ -21,16 +23,19 @@
     <string name="lbl_new_release_movie">Baru Rilis</string>
     <string name="language">Bahasa</string>
     <string name="widget_empty">Anda Tidak Memiliki Film atau TV Show Favorite</string>
-    <string name="filter_popularity">Popularitas</string>
-    <string name="filter_revenue">Pendapatan</string>
-    <string name="filter_title">Judul</string>
-    <string name="filter_rating">Rating</string>
+
+    <!-- Category to Filter Data -->
+    <string-array name="filtering_data">
+        <item>Popularitas</item>
+        <item>Pendapatan</item>
+        <item>Judul</item>
+        <item>Rating</item>
+    </string-array>
 
     <string-array name="similar">
         <item>Film Serupa</item>
         <item>Tv Show Serupa</item>
     </string-array>
-    <!-- Warning   -->
 
     <!-- Sample Data Movie -->
     <string name="sample_title_movie">The Shawsank Redemtion</string>

@@ -2,7 +2,6 @@ package com.github.hattamaulana.moviecatalogue.ui.newrelease
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -63,24 +62,19 @@ class NewReleaseActivity : AppCompatActivity() {
             override fun isLoading(): Boolean = isLoading
 
             override fun isLastPage(): Boolean {
-                Log.d("TAG", "PAGE : ${page}")
-                Log.d("TAG", "TOTAL PAGE : ${viewModel.totalPage}")
                 if (viewModel.totalPage == null) return false
-
                 return page == viewModel.totalPage
             }
 
             override fun loadMore() {
                 isLoading = true
                 page += 1
-
                 viewModel.loadMore(page) { isLoading = false }
             }
         }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) handleBack()
-
         return true;
     }
 
