@@ -9,9 +9,9 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/favorite" />
+            <option value="/mnt/Disk2/android/projects/submission-dicoding" />
+            <option value="/mnt/Disk2/android/projects/submission-dicoding/app" />
+            <option value="/mnt/Disk2/android/projects/submission-dicoding/favorite" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_catalogue"
-        android:name="com.github.hattamaulana.moviecatalogue.ui.catalogue.CatalogueWrapperFragment"
+        android:name="com.github.hattamaulana.felm.ui.catalogue.CatalogueWrapperFragment"
         android:label="fragment_catalogue_wrapper"
         tools:layout="@layout/fragment_catalogue_wrapper" >
 
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/fragment_favorite"
-        android:name="com.github.hattamaulana.moviecatalogue.ui.favorite.FavoriteWrapperFragment"
+        android:name="com.github.hattamaulana.felm.ui.favorite.FavoriteWrapperFragment"
         android:label="fragment_favorite_wrapper"
         tools:layout="@layout/fragment_favorite_wrapper" >
 
@@ -42,12 +42,12 @@
 
     <activity
         android:id="@+id/activity_detail"
-        android:name="com.github.hattamaulana.moviecatalogue.ui.detail.DetailActivity"
+        android:name="com.github.hattamaulana.felm.ui.detail.DetailActivity"
         android:label="DetailActivity" />
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.github.hattamaulana.moviecatalogue.ui.search.SearchFragment"
+        android:name="com.github.hattamaulana.felm.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
 
@@ -65,6 +65,6 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_setting"
-        android:name="com.github.hattamaulana.moviecatalogue.ui.setting.SettingsFragment"
+        android:name="com.github.hattamaulana.felm.ui.setting.SettingsFragment"
         android:label="SettingsFragment" />
 </navigation>

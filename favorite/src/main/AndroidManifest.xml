@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.hattamaulana.favorites">
+    package="com.github.hattamaulana.felm_favorites">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.github.hattamaulana.moviecatalogue.READ_DATABASE" />
@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.detail.DetailActivity"
+        <activity android:name="com.github.hattamaulana.felm.favorites.ui.detail.DetailActivity"
             android:theme="@style/AppTheme.DetailActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.github.hattamaulana.felm.favorites.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -21,6 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 # Keeping Class Model which extends Parcelable
--keepnames class com.github.hattamaulana.moviecatalogue.data.model.DataGenreRelation
--keepnames class com.github.hattamaulana.moviecatalogue.data.model.DataModel
--keepnames class com.github.hattamaulana.moviecatalogue.data.model.GenreModel
+-keepnames class felm.app.data.model.DataGenreRelation
+-keepnames class felm.app.data.model.DataModel
+-keepnames class felm.app.data.model.GenreModel
