@@ -9,12 +9,13 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="/mnt/Disk2/android/projects/submission-dicoding" />
-            <option value="/mnt/Disk2/android/projects/submission-dicoding/app" />
-            <option value="/mnt/Disk2/android/projects/submission-dicoding/favorite" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/favorite" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

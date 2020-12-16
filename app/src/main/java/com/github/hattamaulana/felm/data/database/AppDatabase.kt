@@ -9,7 +9,8 @@ import com.github.hattamaulana.felm.data.model.GenreModel
 @Database(
     entities = [DataModel::class, GenreModel::class, DataGenreRelation::class],
     version = 1,
-    exportSchema = false)
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     /**

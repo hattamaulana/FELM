@@ -15,14 +15,17 @@ const val RELATION_GENRE_ID = "genreId"
             entity = DataModel::class,
             parentColumns = [DATA_ID],
             childColumns = [RELATION_DATA_ID],
-            onDelete = ForeignKey.CASCADE),
+            onDelete = ForeignKey.CASCADE
+        ),
         ForeignKey(
             entity = GenreModel::class,
             parentColumns = [GENRE_ID],
             childColumns = [RELATION_GENRE_ID],
-            onDelete = ForeignKey.CASCADE)
-    ])
-data class DataGenreRelation (
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class DataGenreRelation(
     val dataId: Int,
     val genreId: Int
 )

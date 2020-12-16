@@ -49,7 +49,7 @@ class DetailActivity : AppCompatActivity() {
             val category = intent.getStringExtra(EXTRA_TAG) as String
             val genreIds = intent.getIntArrayExtra(EXTRA_GENRE_IDS)
 
-            dataIntent = intent.getParcelableExtra(EXTRA_MOVIE_DETAIL) as DataModel
+            dataIntent = intent.getParcelableExtra<DataModel>(EXTRA_MOVIE_DETAIL) as DataModel
             dataIntent.category = category
             dataIntent.genres = genreIds?.toCollection(ArrayList())
             setData()

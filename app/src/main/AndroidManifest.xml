@@ -12,29 +12,31 @@
         android:protectionLevel="normal" />
 
     <application
-        android:name="com.github.hattamaulana.felm.app.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_rounded"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.github.hattamaulana.felm.app.ui.newrelease.NewReleaseActivity"
-            android:label="@string/lbl_new_release_movie" />
+
         <!-- Favorite Content Provider -->
         <provider
-            android:name="com.github.hattamaulana.felm.app.provider.FavoriteContentProvider"
+            android:name=".provider.FavoriteContentProvider"
             android:authorities="com.github.hattamaulana.felm"
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.github.hattamaulana.moviecatalogue.READ_DATABASE"
-            android:writePermission="com.github.hattamaulana.moviecatalogue.WRITE_DATABASE" /> <!-- Reminder Broadcast Receiver -->
+            android:writePermission="com.github.hattamaulana.moviecatalogue.WRITE_DATABASE" />
+
+        <!-- Reminder Broadcast Receiver -->
         <receiver
-            android:name="com.github.hattamaulana.felm.app.receiver.ReminderReceiver"
+            android:name=".receiver.ReminderReceiver"
             android:enabled="true"
-            android:exported="true" /> <!-- Widget Receiver -->
-        <receiver android:name="com.github.hattamaulana.felm.app.ui.widget.FavoriteWidgetProvider">
+            android:exported="true" />
+
+        <!-- Widget Receiver -->
+        <receiver android:name=".ui.widget.FavoriteWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -42,21 +44,31 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_widget_info" />
-        </receiver> <!-- Remote View Services -->
+        </receiver>
+
+        <!-- Remote View Services -->
         <service
-            android:name="com.github.hattamaulana.felm.app.service.StackWidgetService"
+            android:name=".service.StackWidgetService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_REMOTEVIEWS" /> <!-- Main Activity -->
-        <activity android:name="com.github.hattamaulana.felm.app.ui.MainActivity">
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!-- Main Activity -->
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Detail Activity -->
-        <activity android:name="com.github.hattamaulana.felm.app.ui.detail.DetailActivity" />
+        </activity>
+
+        <!-- Detail Activity -->
+        <activity android:name=".ui.detail.DetailActivity" />
+
+        <activity
+            android:name=".ui.newrelease.NewReleaseActivity"
+            android:label="@string/lbl_new_release_movie" />
     </application>
 
 </manifest>

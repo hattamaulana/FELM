@@ -6,10 +6,12 @@ import android.database.ContentObserver
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -66,17 +68,22 @@ class FavoriteFragment : Fragment() {
             }
         }
 
-        context?.favoriteContentObserver()
+        try {
+            context?.favoriteContentObserver()
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-            .get(FavoriteViewModel::class.java)
-            .apply {
-                getData(context as Context)
-                favorites.observe(this@FavoriteFragment, Observer { list ->
-                    val filtered = list.filter { it.category == type }
-                    adapter.update(filtered)
-                })
-            }
+            viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(FavoriteViewModel::class.java)
+                .apply {
+                    getData(context as Context)
+                    favorites.observe(this@FavoriteFragment, Observer { list ->
+                        val filtered = list.filter { it.category == type }
+                        adapter.update(filtered)
+                    })
+                }
+
+        } catch (e: SecurityException) {
+            Log.e(this::class.java.simpleName, "ERROR")
+        }
     }
 
     private fun Context.favoriteContentObserver () {

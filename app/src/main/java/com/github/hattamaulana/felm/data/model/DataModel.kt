@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
-const val DATA_TABLE_NAME = "felm.favorites"
+const val DATA_TABLE_NAME = "favorites"
 const val DATA_ID = "id"
 const val DATA_BACKDROP_PATH = "backdrop_path"
 const val DATA_POSTER_PATH = "poster_path"
