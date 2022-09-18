@@ -1,74 +1,34 @@
 package com.github.hattamaulana.felm.ui.catalogue
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.android.core.common.BaseAdapter
-import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.remote.MovieDbFactory.IMAGE_URI
 import com.github.hattamaulana.felm.data.model.DataModel
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.IMAGE_URI
+import com.github.hattamaulana.felm.databinding.ItemCatalogueBinding
 
 class CatalogueAdapter(
-    private val mContext: Context
-) : BaseAdapter() {
+    private val onItemSelected: (DataModel) -> Unit
+) : BaseAdapter<DataModel, ItemCatalogueBinding>(
+    ItemCatalogueBinding::inflate
+) {
 
-    private var movies: ArrayList<DataModel> = ArrayList()
-    private var mOnItemCallback: OnItemClickCallback? = null
+    override fun binding(
+        holder: ItemCatalogueBinding, item: DataModel, position: Int
+    ) = with(holder) {
+        Glide.with(root)
+            .load("$IMAGE_URI/w185/${item.posterPath}")
+            .fitCenter()
+            .into(imgMovie)
 
-    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(movie: DataModel) = with(view) {
-            Glide.with(mContext)
-                .load("$IMAGE_URI/w185/${movie.posterPath}")
-                .fitCenter()
-                .into(img_movie)
+        txtTitle.text = item.title
+        txtRating.text = item.rating.toString()
+        txtOverview.text = item.overview.takeIf { it?.length!! >= 200 }
+            ?.substring(0 until 200)
+            ?.split(" ".toRegex())
+            ?.dropLast(1)
+            ?.joinToString(" ") ?: item.overview
 
-            val overview = movie.overview as String
-
-            txt_title.text = movie.title
-            txt_rating.text = movie.rating.toString()
-            txt_overview.text = if (overview.length >= 200) {
-                val string = overview.substring(0 until 200)
-                    .split(" ".toRegex())
-                    .dropLast(1)
-                    .joinToString(" ")
-
-                "$string ..."
-            } else {
-                overview
-            }
-
-            view.setOnClickListener { mOnItemCallback?.onItemClicked(movie) }
-        }
-    }
-
-    /**
-     *
-     */
-    interface OnItemClickCallback {
-        fun onItemClicked(movie: DataModel)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        LayoutInflater.from(mContext).inflate(R.layout.item_catalogue, parent, false)
-    )
-
-    override fun getItemCount(): Int = movies.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movies[position])
-    }
-
-    fun setData(arg: List<DataModel>) {
-        movies.clear()
-        movies.addAll(arg)
-
-        notifyDataSetChanged()
-    }
-
-    fun setOnItemClckCallback(onItemClickCallback: OnItemClickCallback) {
-        mOnItemCallback = onItemClickCallback
+        root.setOnClickListener { onItemSelected(item) }
     }
 }
+

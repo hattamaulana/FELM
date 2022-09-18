@@ -1,9 +1,14 @@
 package com.github.hattamaulana.felm.data.model
 
+import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.github.hattamaulana.android.core.common.DiffUtilCallbackItem
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 const val DATA_TABLE_NAME = "favorites"
 const val DATA_ID = "id"
@@ -15,6 +20,7 @@ const val DATA_CATEGORY = "category"
 
 
 @Entity(tableName = DATA_TABLE_NAME)
+@Parcelize
 data class DataModel(
     @PrimaryKey(autoGenerate = false) var id: Int?,
     @ColumnInfo(name = DATA_BACKDROP_PATH) var backdropPath: String?,
@@ -23,7 +29,7 @@ data class DataModel(
     @ColumnInfo(name = DATA_OVERVIEW) var overview: String?,
     @ColumnInfo(name = "rating") var rating: Double?,
     @ColumnInfo(name = "release") var release: String?
-) : Parcelable {
+) : Parcelable, DiffUtilCallbackItem {
 
     @IgnoredOnParcel
     @ColumnInfo(name = DATA_CATEGORY)
@@ -32,4 +38,6 @@ data class DataModel(
     @IgnoredOnParcel
     @Ignore
     var genres: List<Int>? = null
+
+    override fun diff(): String = "$id"
 }

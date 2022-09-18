@@ -1,6 +1,5 @@
 package com.github.hattamaulana.felm.ui.catalogue
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -23,7 +22,7 @@ private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 @AndroidEntryPoint
 class CatalogueFragment : BaseFragment<FragmentCatalogueBinding>(
     FragmentCatalogueBinding::inflate
-), CatalogueAdapter.OnItemClickCallback {
+) {
 
     private lateinit var category: Array<String>
     private lateinit var adapter: CatalogueAdapter
@@ -35,11 +34,10 @@ class CatalogueFragment : BaseFragment<FragmentCatalogueBinding>(
 
     override fun initView(binding: FragmentCatalogueBinding) = with(binding) {
         category = resources.getStringArray(R.array.category)
-        adapter = CatalogueAdapter(requireContext())
-        adapter.setOnItemClckCallback(this@CatalogueFragment)
+        adapter = CatalogueAdapter(::onItemSelected)
 
         /** Initialize Linear Layout Manager */
-        val linearLayoutManager = LinearLayoutManager(view.context)
+        val linearLayoutManager = LinearLayoutManager(requireContext())
 
         recyclerMovies.layoutManager = linearLayoutManager
         recyclerMovies.adapter = adapter
@@ -49,7 +47,7 @@ class CatalogueFragment : BaseFragment<FragmentCatalogueBinding>(
     override fun initData() = with(viewModel) {
         catalogues.observe(viewLifecycleOwner, Observer { listData ->
             if ((listData != null) or isLoading) {
-                adapter.setData(listData)
+                adapter.submitList(listData)
                 binding?.progressBar?.visibility = View.GONE
             } else {
                 binding?.progressBar?.visibility = View.VISIBLE
@@ -57,7 +55,7 @@ class CatalogueFragment : BaseFragment<FragmentCatalogueBinding>(
         })
     }
 
-    override fun onItemClicked(movie: DataModel) {
+    private fun onItemSelected(movie: DataModel) {
         findNavController().navigate(R.id.catalogue_to_detail, Bundle().apply {
             val tag = if (viewModel.catalogeStatePosition == 0) TYPE_MOVIE else TYPE_TV
             putString(DetailActivity.EXTRA_TAG, tag)

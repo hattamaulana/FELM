@@ -1,41 +1,25 @@
 package com.github.hattamaulana.felm.ui.search
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.github.hattamaulana.felm.R
+import com.bumptech.glide.Glide
+import com.github.hattamaulana.android.core.common.BaseAdapter
 import com.github.hattamaulana.felm.data.model.DataModel
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory
+import com.github.hattamaulana.felm.databinding.ItemSearchResultBinding
 
-class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
+class SearchResultAdapter(
+    private val onItemSelected: (DataModel) -> Unit
+) : BaseAdapter<DataModel, ItemSearchResultBinding>(
+    ItemSearchResultBinding::inflate,
+) {
+    override fun binding(
+        holder: ItemSearchResultBinding, item: DataModel, position: Int
+    ) = with(holder) {
+        Glide.with(root)
+            .load("${MovieDbFactory.IMAGE_URI}/w185/${item.posterPath}")
+            .fitCenter()
+            .into(ivMovie)
 
-    private val listResult = mutableListOf<DataModel>()
-
-    private lateinit var clickCallback: (p0: DataModel)-> Unit
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_search_result, parent, false)
-
-        return SearchResultViewHolder(view)
-    }
-
-    override fun getItemCount(): Int = listResult.size
-
-    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
-        holder.bind(listResult[position])
-        holder.itemView.setOnClickListener { clickCallback(listResult[position]) }
-    }
-
-    /** Update data melalui fungsi ini */
-    fun update(args: List<DataModel>) {
-        listResult.clear()
-        listResult.addAll(args)
-
-        notifyDataSetChanged()
-    }
-
-    /** Set OnCLick Listener */
-    fun setOnClickListener(onClick: (data: DataModel)-> Unit) {
-        clickCallback = onClick
+        tvTitle.text = item.title
+        root.setOnClickListener { onItemSelected(item) }
     }
 }

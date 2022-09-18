@@ -20,7 +20,6 @@ import com.github.hattamaulana.felm.data.remote.MovieDbFactory.IMAGE_URI
 import com.github.hattamaulana.felm.databinding.ActivityDetailBinding
 import com.github.hattamaulana.felm.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
 @AndroidEntryPoint
@@ -79,7 +78,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(
             binding?.lblRelates?.visibility = visibility
             binding?.rvRelate?.visibility = visibility
 
-            similarAdapter.update(content)
+            similarAdapter.submitList(content)
         })
     }
 
@@ -92,17 +91,15 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(
     private fun setSimilarContent(category: String) {
         val layout = LinearLayoutManager(applicationContext)
             .apply { orientation = LinearLayoutManager.HORIZONTAL }
-        similarAdapter = SimilarContentAdapter().apply {
-            setOnCLickListener { data ->
-                val intent = Intent(this@DetailActivity,
-                    DetailActivity::class.java).apply {
-                    putExtra(EXTRA_TAG, category)
-                    putExtra(EXTRA_GENRE_IDS, data.genres?.toIntArray())
-                    putExtra(EXTRA_MOVIE_DETAIL, data)
-                }
-
-                startActivity(intent)
+        similarAdapter = SimilarContentAdapter { data ->
+            val intent = Intent(this@DetailActivity,
+                DetailActivity::class.java).apply {
+                putExtra(EXTRA_TAG, category)
+                putExtra(EXTRA_GENRE_IDS, data.genres?.toIntArray())
+                putExtra(EXTRA_MOVIE_DETAIL, data)
             }
+
+            startActivity(intent)
         }
 
         binding?.rvRelate?.layoutManager = layout
@@ -117,7 +114,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(
 
         ids?.forEach { id ->
             viewModel.findGenreByIdAsync(id) { data ->
-                adapter.add(data)
+                adapter.submitList(listOf(data))
             }
         }
 

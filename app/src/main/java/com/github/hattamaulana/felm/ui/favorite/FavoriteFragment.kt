@@ -15,23 +15,21 @@ private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
 class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(
     FragmentFavoriteBinding::inflate
-), FavoriteAdapter.OnClickCallback {
+)  {
 
-    private val adapter = FavoriteAdapter()
+    private val adapter = FavoriteAdapter(::onItemClicked, ::onRemoveClicked)
     private val viewModel: MainViewModel by activityViewModels()
 
     override fun initView(binding: FragmentFavoriteBinding) = with(binding) {
-        adapter.setCallback(this@FavoriteFragment)
-
         recyclerFavorite.layoutManager = LinearLayoutManager(context)
         recyclerFavorite.adapter = adapter
     }
 
     override fun initData() = with(viewModel) {
-        favorites.observe(viewLifecycleOwner) { list -> adapter.setData(list) }
+        favorites.observe(viewLifecycleOwner) { list -> adapter.submitList(list) }
     }
 
-    override fun onItemClicked(p0: DataModel) {
+    private fun onItemClicked(p0: DataModel) {
         findNavController().navigate(R.id.favorite_to_detail, Bundle().apply {
             putString(DetailActivity.EXTRA_TAG, p0.category)
             putIntArray(DetailActivity.EXTRA_GENRE_IDS, p0.genres?.toIntArray())
@@ -39,9 +37,13 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(
         })
     }
 
-    override fun onRemoveClicked(p0: DataModel) {
+    private fun onRemoveClicked(p0: DataModel) {
         viewModel.removeDataFromFavorite(p0)
-        adapter.removeData(p0)
+
+        val newList = adapter.currentList.toMutableList()
+            .apply { remove(p0) }
+
+        adapter.submitList(newList)
     }
 
     companion object {

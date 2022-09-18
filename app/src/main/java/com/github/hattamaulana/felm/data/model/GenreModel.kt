@@ -3,6 +3,7 @@ package com.github.hattamaulana.felm.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.github.hattamaulana.android.core.common.DiffUtilCallbackItem
 
 const val GENRE_TABLE_NAME = "genres"
 const val GENRE_ID = "id"
@@ -17,7 +18,9 @@ data class GenreModel(
 
     @ColumnInfo(name = GENRE_NAME)
     var name: String? = null
-) {
+): DiffUtilCallbackItem {
     @ColumnInfo(name = GENRE_CATEGORY)
     var category: String? = null
+
+    override fun diff(): String = "$id"
 }

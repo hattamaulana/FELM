@@ -53,14 +53,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             return@setOnCloseListener true
         }
 
-        searchAdapter = SearchResultAdapter().apply {
-            setOnClickListener { data ->
-                findNavController().navigate(R.id.search_to_detail, Bundle().apply {
-                    putString(DetailActivity.EXTRA_TAG, viewTypes[paramType])
-                    putParcelable(DetailActivity.EXTRA_MOVIE_DETAIL, data)
-                    putIntArray(DetailActivity.EXTRA_GENRE_IDS, data.genres?.toIntArray())
-                })
-            }
+        searchAdapter = SearchResultAdapter { data ->
+            findNavController().navigate(R.id.search_to_detail, Bundle().apply {
+                putString(DetailActivity.EXTRA_TAG, viewTypes[paramType])
+                putParcelable(DetailActivity.EXTRA_MOVIE_DETAIL, data)
+                putIntArray(DetailActivity.EXTRA_GENRE_IDS, data.genres?.toIntArray())
+            })
         }
 
         /** setup recycler view */
@@ -87,7 +85,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     }
 
     override fun initData() = with(viewModel) {
-        listResult.observe(viewLifecycleOwner, Observer { searchAdapter.update(it) })
+        listResult.observe(viewLifecycleOwner, Observer { searchAdapter.submitList(it) })
         totalPage.observe(viewLifecycleOwner, Observer { isLastPage = page == it })
     }
 
@@ -132,8 +130,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                 isLoading = true
                 page += 1
 
-                viewModel.searchApi(viewTypes[paramType], searchQuery, page) { isLoading = false }
+//                viewModel.searchApi(viewTypes[paramType], searchQuery, page) { isLoading = false }
             }
-
         }
 }
