@@ -15,5 +15,5 @@ dependencyResolutionManagement {
 
 include ':favorite'
 include ':app'
-rootProject.name='Movie Catalogue'
 include ':core'
+rootProject.name='Movie Catalogue'
