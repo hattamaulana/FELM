@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.hattamaulana.felm.data.MovieRepository
 import com.github.hattamaulana.felm.data.remote.MovieDbRepository
 import com.github.hattamaulana.felm.data.local.*
 import com.github.hattamaulana.felm.data.model.DataGenreRelation
@@ -14,15 +15,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val context: Context,
+    private val repository: MovieRepository,
+) : ViewModel() {
 
-    private lateinit var repo: MovieDbRepository
-    private lateinit var appDb: AppDatabase
-    private lateinit var relationDao: DataGenreDao
-    private lateinit var favoriteDao: FavoriteDao
-    private lateinit var genreDao: GenreDao
+    private var repo: MovieDbRepository = MovieDbRepository(context)
+    private var appDb: AppDatabase = DatabaseHelper.openDb(context)
+    private var relationDao: DataGenreDao = appDb.relationDataAndGenreDao()
+    private var favoriteDao: FavoriteDao = appDb.favoriteDao()
+    private var genreDao: GenreDao = appDb.genreDao()
 
     private val _catalogueTotalPage = MutableLiveData<Int>()
     private val sortBy = MutableLiveData<Map<String, Int>>()
@@ -31,16 +36,6 @@ class MainViewModel : ViewModel() {
     val favorites = MutableLiveData<List<DataModel>>()
     val catalogueTotalPage = _catalogueTotalPage.value
     var catalogeStatePosition: Int = 0
-
-    var context: Context? = null
-        set(value) {
-            repo = MovieDbRepository(value as Context)
-            appDb = DatabaseHelper.openDb(value)
-            genreDao = appDb.genreDao()
-            favoriteDao = appDb.favoriteDao()
-            relationDao = appDb.relationDataAndGenreDao()
-            field = value
-        }
 
     fun loadCatalogue(tag: String, sort: Int, page: Int = 1, callback: (() -> Unit)? = null) {
         repo.getDiscover(tag, sort, page) { list, totalPage ->

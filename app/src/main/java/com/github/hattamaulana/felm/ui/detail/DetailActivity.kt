@@ -1,50 +1,46 @@
 package com.github.hattamaulana.felm.ui.detail
 
 import android.content.Intent
-import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.github.hattamaulana.android.core.common.BaseActivity
 import com.github.hattamaulana.felm.R
+import com.github.hattamaulana.felm.data.model.DataModel
 import com.github.hattamaulana.felm.data.remote.MovieDbFactory
 import com.github.hattamaulana.felm.data.remote.MovieDbFactory.IMAGE_URI
-import com.github.hattamaulana.felm.data.model.DataModel
+import com.github.hattamaulana.felm.databinding.ActivityDetailBinding
 import com.github.hattamaulana.felm.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity<ActivityDetailBinding>(
+    ActivityDetailBinding::inflate
+) {
 
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel by viewModels<DetailViewModel>()
+
     private lateinit var dataIntent: DataModel
     private lateinit var similarAdapter: SimilarContentAdapter
 
     private var id: Int = -1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+    override fun initView(binding: ActivityDetailBinding)= with(binding) {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         /** Set support action bar with the title */
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
-
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-            .get(DetailViewModel::class.java)
-            .apply { context = this@DetailActivity }
 
         id = intent.getIntExtra(EXTRA_ID, -1)
         if (id == -1) {
@@ -54,44 +50,37 @@ class DetailActivity : AppCompatActivity() {
             dataIntent = intent.getParcelableExtra<DataModel>(EXTRA_MOVIE_DETAIL) as DataModel
             dataIntent.category = category
             dataIntent.genres = genreIds?.toCollection(ArrayList())
-            setData()
-
-            Log.d("TAG", "onCreate: category=$category")
         } else {
-            viewModel.getDataFavorite(id) { data ->
-                dataIntent = data
-                setData()
-            }
+            viewModel.getDataFavorite(id) { data -> dataIntent = data }
         }
-    }
 
-    private fun setData() {
         /** Set TextView for Title, Year of Release, and overview */
-        tv_title.text = dataIntent.title
-        tv_release.text = dataIntent.release
-        tv_overview.text = dataIntent.overview
+        tvTitle.text = dataIntent.title
+        tvRelease.text = dataIntent.release
+        tvOverview.text = dataIntent.overview
 
         /** Set Label Similar Movie or Tv Show from resource */
         val similar = applicationContext.resources.getStringArray(R.array.similar)
-        lbl_relates.text = similar[if (dataIntent.category == MovieDbFactory.TYPE_MOVIE) 0 else 1]
+        lblRelates.text = similar[if (dataIntent.category == MovieDbFactory.TYPE_MOVIE) 0 else 1]
 
         /** Set Image Backdrop and Poster */
-        setImage(dataIntent.backdropPath, iv_backdrop)
-        setImage(dataIntent.posterPath, iv_poster)
+        setImage(dataIntent.backdropPath, ivBackdrop)
+        setImage(dataIntent.posterPath, ivPoster)
 
         setGenre(dataIntent.genres?.toIntArray())
         setSimilarContent(dataIntent.category as String)
+    }
 
-        viewModel.apply {
-            getSimilarContent(dataIntent.category, dataIntent.id)
-            listSimilarContent.observe(this@DetailActivity, Observer { content ->
-                val visibility = if (content.isEmpty()) GONE else VISIBLE
-                divider_view_2.visibility = visibility
-                lbl_relates.visibility = visibility
-                rv_relate.visibility = visibility
-                similarAdapter.update(content)
-            })
-        }
+    override fun initData() = with(viewModel) {
+        getSimilarContent(dataIntent.category, dataIntent.id)
+        listSimilarContent.observe(this@DetailActivity, Observer { content ->
+            val visibility = if (content.isEmpty()) GONE else VISIBLE
+            binding?.dividerView2?.visibility = visibility
+            binding?.lblRelates?.visibility = visibility
+            binding?.rvRelate?.visibility = visibility
+
+            similarAdapter.update(content)
+        })
     }
 
     /** Set Image with Glide */
@@ -116,8 +105,8 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        rv_relate.layoutManager = layout
-        rv_relate.adapter = similarAdapter
+        binding?.rvRelate?.layoutManager = layout
+        binding?.rvRelate?.adapter = similarAdapter
     }
 
     /** Set Genre */
@@ -132,8 +121,8 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        rv_genre.layoutManager = layout
-        rv_genre.adapter = adapter
+        binding?.rvGenre?.layoutManager = layout
+        binding?.rvGenre?.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

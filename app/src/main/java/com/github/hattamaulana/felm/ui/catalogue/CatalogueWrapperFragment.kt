@@ -1,58 +1,61 @@
 package com.github.hattamaulana.felm.ui.catalogue
 
 import android.content.Context
-import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.hattamaulana.android.core.common.BaseFragment
 import com.github.hattamaulana.felm.R
+import com.github.hattamaulana.felm.databinding.FragmentCatalogueWrapperBinding
 import com.github.hattamaulana.felm.ui.MainViewModel
 import com.github.hattamaulana.felm.ui.TabLayoutAdapter
 import com.github.hattamaulana.felm.utils.TabChangeListener
 import com.github.hattamaulana.felm.utils.singleChoiceDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_catalogue_wrapper.*
 
 private var state: Int = 0
 
 @AndroidEntryPoint
-class CatalogueWrapperFragment : Fragment() {
+class CatalogueWrapperFragment : BaseFragment<FragmentCatalogueWrapperBinding>(
+    FragmentCatalogueWrapperBinding::inflate
+) {
 
     private lateinit var category: Array<String>
     private lateinit var sortBy: Array<String>
 
     private val viewModel: MainViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) : View? {
-        return inflater.inflate(R.layout.fragment_catalogue_wrapper, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
+    override fun initView(binding: FragmentCatalogueWrapperBinding) = with(binding) {
         setTitle()
-        (activity as AppCompatActivity).setSupportActionBar(view.findViewById(R.id.toolbar))
+        setHasOptionsMenu(true)
+
+        requireActivity().setActionBar(toolbar)
 
         category = resources.getStringArray(R.array.category)
         sortBy = resources.getStringArray(R.array.filtering_data)
 
-        loadData()
-        view_pager.adapter = TabLayoutAdapter(context as Context, childFragmentManager) {
+        viewPager.adapter = TabLayoutAdapter(context as Context, childFragmentManager) {
             CatalogueFragment.instance(it)
         }
 
-        view_pager.setCurrentItem(state, true)
-        view_pager.addOnPageChangeListener(TabChangeListener { position ->
+        viewPager.setCurrentItem(state, true)
+        viewPager.addOnPageChangeListener(TabChangeListener { position ->
             state = position
+
             setTitle()
-            loadData()
+            initData()
         })
 
-        tabs.setupWithViewPager(view_pager)
+        tabs.setupWithViewPager(viewPager)
+    }
+
+    override fun initData() = with(viewModel) {
+        catalogeStatePosition = state
+
+        val tag = category[state]
+        loadCatalogue(tag, getSortBy(tag) ?: 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -82,16 +85,10 @@ class CatalogueWrapperFragment : Fragment() {
 
     private fun setTitle() {
         val title = resources.getStringArray(R.array.title_toolbar)
-        toolbar.title = "List ${title[state]}"
+
+        binding?.toolbar?.title = "List ${title[state]}"
     }
 
-    private fun loadData() {
-        viewModel.apply {
-            catalogeStatePosition = state
-            val tag = category[state]
-            loadCatalogue(tag, getSortBy(tag) ?: 0)
-        }
-    }
 
     companion object {
         const val ARG_CATALOGUE = "list"

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         style="@style/AppThemeLight" >
 
-        <androidx.appcompat.widget.Toolbar
+        <Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

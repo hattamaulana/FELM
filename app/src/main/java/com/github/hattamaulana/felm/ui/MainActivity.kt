@@ -6,24 +6,25 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.github.hattamaulana.android.core.common.BaseActivity
 import com.github.hattamaulana.felm.App
 import com.github.hattamaulana.felm.R
 import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.felm.data.remote.MovieDbRepository
 import com.github.hattamaulana.felm.data.local.DatabaseHelper
+import com.github.hattamaulana.felm.databinding.ActivityMainBinding
 import com.github.hattamaulana.felm.receiver.ReminderReceiver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(
+    ActivityMainBinding::inflate
+) {
 
     private lateinit var appPreferences: App.SharedPref
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+    override fun initView(binding: ActivityMainBinding) = with(binding) {
         /** Set Toolbar without shadow */
         supportActionBar?.elevation = 0f
 
@@ -36,13 +37,19 @@ class MainActivity : AppCompatActivity() {
             listOf(TYPE_TV, TYPE_MOVIE).forEach { type -> storeGenre(type) }
         }
 
+
         /** Set Bottom Navigation On Navigation Item Selected */
         val navController = findNavController(R.id.home_fragment)
-        bottom_navigation.setupWithNavController(navController)
+        bottomNavigation.setupWithNavController(navController)
+    }
 
-        /** Registering Activity ViewModel */
-        val viewModel: MainViewModel by viewModels()
-        viewModel.context = applicationContext
+    override fun initData() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
 
     /**

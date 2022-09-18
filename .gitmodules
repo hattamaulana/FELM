@@ -1,3 +1,3 @@
 [submodule "com.github.hattamaulana.android.core"]
 	path = com.github.hattamaulana.android.core
-	url = git@me.github.com:hattamaulana/android-dev-com.github.hattamaulana.android.core.git
+	url = https://github.com/hattamaulana/android-dev-core.git

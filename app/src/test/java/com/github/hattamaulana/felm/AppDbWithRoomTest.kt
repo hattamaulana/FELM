@@ -1,7 +1,7 @@
 //package com.github.hattamaulana.felm.app
 //
 //import android.content.Context
-//import androidx.test.core.app.ApplicationProvider
+//import androidx.test.com.github.hattamaulana.android.core.app.ApplicationProvider
 //import com.github.hattamaulana.felm.app.data.database.AppDatabase
 //import com.github.hattamaulana.felm.app.data.database.AppDbProvider
 //import com.github.hattamaulana.felm.app.data.database.FavoriteDao
@@ -10,7 +10,7 @@
 //import kotlinx.coroutines.CoroutineScope
 //import kotlinx.coroutines.Dispatchers
 //import kotlinx.coroutines.launch
-//import org.hamcrest.core.IsEqual.equalTo
+//import org.hamcrest.com.github.hattamaulana.android.core.IsEqual.equalTo
 //import org.junit.After
 //import org.junit.Assert.assertThat
 //import org.junit.Before

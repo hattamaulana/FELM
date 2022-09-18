@@ -20,7 +20,7 @@
             app:layout_scrollFlags="scroll|enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.com.github.hattamaulana.android.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -122,5 +122,5 @@
                 app:layout_constraintTop_toBottomOf="@id/lbl_genre"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.com.github.hattamaulana.android.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
