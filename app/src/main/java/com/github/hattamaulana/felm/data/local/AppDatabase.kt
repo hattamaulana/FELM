@@ -1,4 +1,4 @@
-package com.github.hattamaulana.felm.data.database
+package com.github.hattamaulana.felm.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

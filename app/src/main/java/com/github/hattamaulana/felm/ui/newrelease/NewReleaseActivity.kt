@@ -8,12 +8,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_MOVIE
 import com.github.hattamaulana.felm.ui.MainActivity
 import com.github.hattamaulana.felm.ui.detail.DetailActivity
 import com.github.hattamaulana.felm.utils.PaginationListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_new_release.*
 
+@AndroidEntryPoint
 class NewReleaseActivity : AppCompatActivity() {
 
     private lateinit var viewModel: NewReleaseViewModel

@@ -6,14 +6,16 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.felm.data.api.MovieDbRepository
-import com.github.hattamaulana.felm.data.database.*
+import com.github.hattamaulana.felm.data.remote.MovieDbRepository
+import com.github.hattamaulana.felm.data.local.*
 import com.github.hattamaulana.felm.data.model.DataGenreRelation
 import com.github.hattamaulana.felm.data.model.DataModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class MainViewModel : ViewModel() {
 
     private lateinit var repo: MovieDbRepository

@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.felm.data.api.MovieDbRepository
+import com.github.hattamaulana.felm.data.remote.MovieDbRepository
 import com.github.hattamaulana.felm.data.model.DataModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+@HiltViewModel
 class NewReleaseViewModel : ViewModel() {
 
     private val _totalPage =  MutableLiveData<Int>()

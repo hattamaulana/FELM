@@ -1,4 +1,4 @@
-package com.github.hattamaulana.felm.data.api
+package com.github.hattamaulana.felm.data.remote
 
 import android.content.Context
 import android.util.Log
@@ -8,8 +8,8 @@ import com.androidnetworking.common.ANRequest
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.API_KEY
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.API_URI
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.API_KEY
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.API_URI
 import com.github.hattamaulana.felm.data.model.DataModel
 import com.github.hattamaulana.felm.data.model.GenreModel
 import kotlinx.coroutines.CoroutineScope

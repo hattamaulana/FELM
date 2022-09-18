@@ -1,12 +1,9 @@
 package com.github.hattamaulana.felm.data.model
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.android.parcel.Parcelize
 
 const val DATA_TABLE_NAME = "favorites"
 const val DATA_ID = "id"
@@ -16,7 +13,7 @@ const val DATA_TITLE = "title"
 const val DATA_OVERVIEW = "overview"
 const val DATA_CATEGORY = "category"
 
-@Parcelize
+
 @Entity(tableName = DATA_TABLE_NAME)
 data class DataModel(
     @PrimaryKey(autoGenerate = false) var id: Int?,

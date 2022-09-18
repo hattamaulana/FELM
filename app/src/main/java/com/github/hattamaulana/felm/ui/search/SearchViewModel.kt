@@ -3,14 +3,16 @@ package com.github.hattamaulana.felm.ui.search
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.hattamaulana.felm.data.api.MovieDbRepository
-import com.github.hattamaulana.felm.data.database.DatabaseHelper
-import com.github.hattamaulana.felm.data.database.FavoriteDao
+import com.github.hattamaulana.felm.data.remote.MovieDbRepository
+import com.github.hattamaulana.felm.data.local.DatabaseHelper
+import com.github.hattamaulana.felm.data.local.FavoriteDao
 import com.github.hattamaulana.felm.data.model.DataModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class SearchViewModel : ViewModel() {
 
     private lateinit var repo: MovieDbRepository

@@ -1,4 +1,4 @@
-package com.github.hattamaulana.felm.data.database
+package com.github.hattamaulana.felm.data.local
 
 import android.content.Context
 import android.database.Cursor

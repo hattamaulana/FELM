@@ -11,16 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_MOVIE
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_TV
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.felm.data.model.DataModel
 import com.github.hattamaulana.felm.ui.MainViewModel
 import com.github.hattamaulana.felm.ui.detail.DetailActivity
 import com.github.hattamaulana.felm.utils.PaginationListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_catalogue.*
 
 private const val ARG_SECTION_NUMBER = "ARG_SECTION_NUMBER"
 
+@AndroidEntryPoint
 class CatalogueFragment : Fragment(), CatalogueAdapter.OnItemClickCallback {
 
     private lateinit var category: Array<String>

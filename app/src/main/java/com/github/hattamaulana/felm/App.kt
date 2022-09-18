@@ -2,8 +2,9 @@ package com.github.hattamaulana.felm
 
 import android.app.Application
 import android.content.Context
-import com.androidnetworking.AndroidNetworking
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App : Application() {
 
     class SharedPref(context: Context) {
@@ -40,10 +41,5 @@ class App : Application() {
             const val NOTIFICATION_EARLY_MORNING = "NOTIFICATION_EARLY_MORNING"
             const val NOTIFICATION_NEW_RELEASE = "NOTIFICATION_NEW_RELEASE"
         }
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        AndroidNetworking.initialize(applicationContext)
     }
 }

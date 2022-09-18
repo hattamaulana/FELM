@@ -12,9 +12,11 @@ import androidx.fragment.app.Fragment
 import com.github.hattamaulana.felm.App
 import com.github.hattamaulana.felm.R
 import com.github.hattamaulana.felm.receiver.ReminderReceiver
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_setting.*
 import java.util.*
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var sharedPref: App.SharedPref

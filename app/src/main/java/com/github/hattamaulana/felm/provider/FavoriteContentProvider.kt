@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import com.github.hattamaulana.felm.data.database.DatabaseHelper
+import com.github.hattamaulana.felm.data.local.DatabaseHelper
 import com.github.hattamaulana.felm.data.model.DATA_TABLE_NAME
 import com.github.hattamaulana.felm.data.model.GENRE_TABLE_NAME
 

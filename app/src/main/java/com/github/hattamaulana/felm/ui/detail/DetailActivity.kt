@@ -16,13 +16,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.IMAGE_URI
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.IMAGE_URI
 import com.github.hattamaulana.felm.data.model.DataModel
 import com.github.hattamaulana.felm.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DetailViewModel

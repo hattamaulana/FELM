@@ -12,10 +12,12 @@ import com.github.hattamaulana.felm.ui.MainViewModel
 import com.github.hattamaulana.felm.ui.TabLayoutAdapter
 import com.github.hattamaulana.felm.utils.TabChangeListener
 import com.github.hattamaulana.felm.utils.singleChoiceDialog
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_catalogue_wrapper.*
 
 private var state: Int = 0
 
+@AndroidEntryPoint
 class CatalogueWrapperFragment : Fragment() {
 
     private lateinit var category: Array<String>

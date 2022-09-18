@@ -2,10 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
+
     defaultConfig {
         applicationId "com.github.hattamaulana.felm.app"
         minSdkVersion 21
@@ -62,9 +64,16 @@ dependencies {
     // Data
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'com.amitshekhar.android:jackson-android-networking:1.0.2'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
+
+    // Dependency Injection
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
     // Testing
     testImplementation 'junit:junit:4.13.1'

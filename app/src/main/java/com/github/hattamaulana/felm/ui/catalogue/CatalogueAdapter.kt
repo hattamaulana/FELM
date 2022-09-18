@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.IMAGE_URI
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.IMAGE_URI
 import com.github.hattamaulana.felm.data.model.DataModel
 import kotlinx.android.synthetic.main.item_catalogue.view.*
 

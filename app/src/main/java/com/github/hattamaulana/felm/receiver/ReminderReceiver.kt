@@ -7,8 +7,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_MOVIE
-import com.github.hattamaulana.felm.data.api.MovieDbRepository
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.felm.data.remote.MovieDbRepository
 import com.github.hattamaulana.felm.ui.MainActivity
 import com.github.hattamaulana.felm.ui.detail.DetailActivity
 import com.github.hattamaulana.felm.ui.newrelease.NewReleaseActivity

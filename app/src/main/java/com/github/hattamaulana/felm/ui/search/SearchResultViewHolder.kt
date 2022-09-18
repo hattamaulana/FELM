@@ -3,7 +3,7 @@ package com.github.hattamaulana.felm.ui.search
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.hattamaulana.felm.data.api.MovieDbFactory
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory
 import com.github.hattamaulana.felm.data.model.DataModel
 import kotlinx.android.synthetic.main.item_search_result.view.*
 

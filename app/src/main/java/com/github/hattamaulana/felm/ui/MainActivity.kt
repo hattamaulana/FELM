@@ -8,13 +8,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.github.hattamaulana.felm.App
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_MOVIE
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_TV
-import com.github.hattamaulana.felm.data.api.MovieDbRepository
-import com.github.hattamaulana.felm.data.database.DatabaseHelper
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_TV
+import com.github.hattamaulana.felm.data.remote.MovieDbRepository
+import com.github.hattamaulana.felm.data.local.DatabaseHelper
 import com.github.hattamaulana.felm.receiver.ReminderReceiver
-import kotlinx.android.synthetic.main.activity_main.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appPreferences: App.SharedPref

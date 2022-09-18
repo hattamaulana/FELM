@@ -1,4 +1,4 @@
-package com.github.hattamaulana.felm.data.api
+package com.github.hattamaulana.felm.data.remote
 
 import com.github.hattamaulana.felm.data.model.DataModel
 import com.github.hattamaulana.felm.data.model.GenreModel

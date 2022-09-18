@@ -9,9 +9,9 @@ import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory
-import com.github.hattamaulana.felm.data.database.DatabaseHelper
-import com.github.hattamaulana.felm.data.database.FavoriteDao
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory
+import com.github.hattamaulana.felm.data.local.DatabaseHelper
+import com.github.hattamaulana.felm.data.local.FavoriteDao
 import com.github.hattamaulana.felm.data.model.DataModel
 import com.github.hattamaulana.felm.ui.widget.FavoriteWidgetProvider
 import kotlinx.coroutines.runBlocking

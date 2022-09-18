@@ -12,12 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hattamaulana.felm.R
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_MOVIE
-import com.github.hattamaulana.felm.data.api.MovieDbFactory.TYPE_TV
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_MOVIE
+import com.github.hattamaulana.felm.data.remote.MovieDbFactory.TYPE_TV
 import com.github.hattamaulana.felm.ui.catalogue.CatalogueWrapperFragment.Companion.ARG_CATALOGUE
 import com.github.hattamaulana.felm.ui.detail.DetailActivity
 import com.github.hattamaulana.felm.utils.PaginationListener
 import com.github.hattamaulana.felm.utils.singleChoiceDialog
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
 
 /**
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
  * Use the [SearchFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class SearchFragment :
     Fragment(),
     SearchView.OnQueryTextListener {
